@@ -1,0 +1,22 @@
+{
+  "name": "tinderbox_ci",
+  "version": "1.0.0",
+  "description": "A school project for Tinderbox, using Codeigniter PHP frameework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WolffDev/TinderboxCI.git"
+  },
+  "author": "Anna Venesz, Zsolt Laszlo, Christian Gundersen, Dennis Jensen(because FUCK YOU), David Wolff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WolffDev/TinderboxCI/issues"
+  },
+  "homepage": "https://github.com/WolffDev/TinderboxCI#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
