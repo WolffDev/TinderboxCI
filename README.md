@@ -20,7 +20,8 @@ npm install
 gulp watch
 ````
 ## Deplaoyment
-When you are done with editing and want to optimised the css, js, and images for production, run the build command, and the output files is in the dist folder
+To deploy, minify css and js files
 ````
 gulp build
 ```
+Output files to /public/dist/

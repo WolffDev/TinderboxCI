@@ -9,3 +9,4 @@ compiled
 .codekit-cache
 config.codekit
 desktop.ini
+public/dist
