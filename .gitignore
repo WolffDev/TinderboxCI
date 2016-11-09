@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+.npm-debug.log
+tmp
+.sass-cache
+*.css.map
+research
+compiled
+.codekit-cache
+config.codekit
+desktop.ini
