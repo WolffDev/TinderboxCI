@@ -5,3 +5,8 @@
 h1 {
     font-size: 14em;
 }
+$color1: red;
+
+h1 {
+    color: $color1;
+}

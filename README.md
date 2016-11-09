@@ -12,16 +12,16 @@ The final product is a mobilefirst webapp, that uses an API created with Codeign
 ## Development
 - Have [node.js](https://nodejs.org/en/) install on your local machine.
 - Use Terminal for MacOSX or CommandPromt for Windows, and type the following (be sure to "cd" into the project directory first)
-````
+```
 npm install
 ```
 - Then you can start the SASS compiler in the background, and start editing the *.scss files
-````
+```
 gulp watch
-````
+```
 ## Deplaoyment
 To deploy, minify css and js files
-````
+```
 gulp build
 ```
 Output files to /public/dist/

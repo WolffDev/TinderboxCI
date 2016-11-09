@@ -13,7 +13,6 @@ gulp.task('sass', function() {
     return gulp.src('public/sass/style.scss') // source file
         .pipe(sass()) // Converts Sass to CSS with gulp-sass
         .pipe(gulp.dest('public/css')) // source destination folder
-
 });
 
 gulp.task('compress', function(cb) {
