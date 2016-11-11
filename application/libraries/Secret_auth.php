@@ -24,7 +24,7 @@ class Secret_auth {
     }
 
     public function handle_login() {
-        
+        $this->ci->load->model('users_model');
     }
 
     public function check_token() {

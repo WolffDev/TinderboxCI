@@ -62,6 +62,15 @@ class Users_model extends CI_Model {
         return false;
     }
 
+    public function get_user_by_email($email, $password) {
+        $query = sprintf('SELECT email, password
+            FROM users
+            WHERE email = "%"
+            LIMIT 1'
+            , $email);
+        $result = $this->db->query($query);
+    }
+
 
 
 
