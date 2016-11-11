@@ -20,7 +20,6 @@ class Secret_auth {
                 'errorCode' => 'Method Not Allowed'
             ]))
             ->_display();
-        return false;
         die();
     }
 
