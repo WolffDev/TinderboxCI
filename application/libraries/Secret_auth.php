@@ -1,6 +1,7 @@
 <?php
-class Auth {
+class Secret_auth {
     private $ci;
+
     public function __construct() {
         $this->ci =& get_instance();
     }
@@ -10,18 +11,20 @@ class Auth {
 
         if($allowed_method === $method) {
             return true;
-        };
-
+        }
         $this->ci->output
             ->set_header('HTTP 1.1 405 Method Not Allowed')
             ->set_header('Content-Type: application/json')
-            ->set_output(json_encoded([
+            ->set_output(json_encode([
                 'error' => 405,
-                'errorCode' => 'Method not Allowed'
+                'errorCode' => 'Method Not Allowed'
             ]))
             ->_display();
+        return false;
         die();
     }
+
+
 
     
 

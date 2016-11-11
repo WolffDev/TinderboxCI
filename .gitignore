@@ -10,3 +10,4 @@ compiled
 config.codekit
 desktop.ini
 public/dist
+application/config/database.php
