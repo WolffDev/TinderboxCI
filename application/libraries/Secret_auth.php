@@ -23,6 +23,22 @@ class Secret_auth {
         die();
     }
 
+    public function handle_login() {
+        
+    }
+
+    public function check_token() {
+        
+    }
+
+    public function escape_string() {
+        
+    }
+
+    public function escape_int() {
+        
+    }
+
 
 
     

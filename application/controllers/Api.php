@@ -61,7 +61,7 @@ class Api extends CI_Controller {
 						'status' 		=> 201,
 						'statusCode' 	=> 'Created',
 						'response' 		=> [
-							'msg' 	=> 'User Created',
+							'message' 	=> 'User Created',
 							'id' 	=> $res
 						]
 					]))
@@ -77,7 +77,7 @@ class Api extends CI_Controller {
 				'status' => 406,
 				'statusCode' => 'Not Acceptable',
 				'response' => [
-					'msg' => 'Check the JSON data - properties are not correctly'
+					'message' => 'Check the JSON data - properties are not correctly'
 				]
 			]))
 			->_display();
@@ -121,7 +121,7 @@ class Api extends CI_Controller {
 						'status' => 200,
 						'statusCode' => 'OK',
 						'response' => [
-							'msg' => 'User Updated',
+							'message' => 'User Updated',
 							'id' => $res
 						]
 					]))
@@ -137,7 +137,25 @@ class Api extends CI_Controller {
 				'status' => 406,
 				'statusCode' => 'Not Acceptable',
 				'response' => [
-					'msg' => 'Check the JSON data - properties are not set correctly'
+					'message' => 'Check the JSON data - properties are not set correctly'
+				]
+			]))
+			->_display();
+		die();
+	}
+
+	public function delete_user($id) {
+		$this->secret_auth->method('DELETE');
+		$res = $this->users_model->delete_user($id);
+
+		$this->output
+			->set_header('HTTP/1.1 200 OK')
+			->set_header('Content-Type: application/json')
+			->set_output(json_encode([
+				'status' => 200,
+				'statusCode' => 'OK',
+				'response' => [
+					'message' => 'User is deleted from the database'
 				]
 			]))
 			->_display();
