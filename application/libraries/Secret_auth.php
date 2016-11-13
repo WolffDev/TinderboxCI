@@ -17,7 +17,7 @@ class Secret_auth {
             ->set_header('Content-Type: application/json')
             ->set_output(json_encode([
                 'error' => 405,
-                'errorCode' => 'Method Not Allowed'
+                'errorCode' => 'Method Not Allowed.'
             ]))
             ->_display();
         die();
@@ -25,20 +25,62 @@ class Secret_auth {
 
     public function handle_login() {
         $this->ci->load->model('users_model');
-    }
-
-    public function check_token() {
         
-    }
+        if(!isset(getallheaders()['Authorization'])) {
+            $this->ci->output
+                ->set_header('401 Unauthorized')
+                ->set_header('Content-Type: json/application')
+                ->set_output(json_encode([
+                    'error' => 401,
+                    'errorCode' => 'Unauthorized',
+                    'response' => [
+                        'message' => 'No Authorization set.',
+                        'warning' => 'Your IP has been recorded and will be blocked if you keep connecting without Authorization.'
+                    ]
+                ]))
+                ->_display();
+            die();
+        }
 
-    public function escape_string() {
+        $basic_auth = getallheaders()['Authorization'];
+        $encoded_login = explode(' ', $basic_auth)[1];
+        $decoded_login = base64_decode($encoded_login);
+        $credentials = explode(':', $decoded_login);
+
+        $userdata = $this->ci->users_model->get_user_by_email_password($credentials[0], $credentials[1]);
         
-    }
+        if($userdata) {
+            $this->ci->output
+                ->set_header('200 OK')
+                ->set_header('Content-Type: json/application')
+                ->set_output(json_encode([
+                    'status' => 200,
+                    'statusCode' => 'OK',
+                    'response' => [
+                        'email' => $userdata[0],
+                        'token' => $userdata[1]
+                    ]
+                ]))
+                ->_display();
+            die();
+        }
 
-    public function escape_int() {
-        
-    }
+        $this->ci->output
+            ->set_header('401 Unauthorized')
+            ->set_header('Content-Type: json/application')
+            ->set_output(json_encode([
+                'error' => 401,
+                'errorCode' => 'Unauthorized',
+                'response' => [
+                    'message' => 'Wrong username and/or password.',
+                    'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked.'
+                ]
+            ]))
+            ->_display();
+        die();
 
+
+    }
 
 
     

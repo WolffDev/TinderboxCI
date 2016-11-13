@@ -62,15 +62,51 @@ class Users_model extends CI_Model {
         return false;
     }
 
-    public function get_user_by_email($email, $password) {
-        $query = sprintf('SELECT email, password
+    public function get_user_by_email_password($email, $password) {
+        $query = sprintf('SELECT uid, email, password
             FROM users
-            WHERE email = "%"
+            WHERE email = "%s"
             LIMIT 1'
             , $email);
         $result = $this->db->query($query);
+        $row = $result->row();
+
+        if(password_verify($password, $row->password)) {
+            $token = bin2hex(openssl_random_pseudo_bytes(21));
+            $this->insert_token_user($row->uid, $token);
+            $res = [$email, $token];
+            return $res;
+        }
+        return false;
+        die();
     }
 
+    public function insert_token_user($uid, $token) {
+        $query = sprintf('UPDATE users
+            SET
+            token_val = "%s",
+            token_create = "%s"
+            WHERE
+            uid = "%s"'
+            , $token
+            , date('Y-m-d H:i:s')
+            , $uid);
+        $result = $this->db->query($query);
+        
+    }
+
+    public function check_token($args = []) {
+        $query = sprintf('SELECT token_val FROM users WHERE email = "%s" LIMIT 1 '
+        , $args['email']);
+        $result = $this->db->query($query);
+        $row = $result->row();
+        if($row->token_val === $args['token']) {
+            return true;
+        }
+        return false;
+        die();
+
+    }
 
 
 
