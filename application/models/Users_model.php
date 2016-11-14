@@ -76,6 +76,7 @@ class Users_model extends CI_Model {
             $this->insert_token_user($row->uid, $token);
             $res = [$email, $token];
             return $res;
+            die();
         }
         return false;
         die();
@@ -95,13 +96,15 @@ class Users_model extends CI_Model {
         
     }
 
-    public function check_token($args = []) {
+    public function check_token($email, $token) {
+        
         $query = sprintf('SELECT token_val FROM users WHERE email = "%s" LIMIT 1 '
-        , $args['email']);
+        , $email);
         $result = $this->db->query($query);
         $row = $result->row();
-        if($row->token_val === $args['token']) {
+        if($row->token_val === $token) {
             return true;
+            die();
         }
         return false;
         die();

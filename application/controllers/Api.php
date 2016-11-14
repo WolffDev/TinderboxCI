@@ -12,6 +12,7 @@ class Api extends CI_Controller {
 
 	public function users() {
 		$this->secret_auth->method('GET');
+		$this->secret_auth->check_token();
 		$this->output 
 			->set_header('HTTP/1.1 200 OK')
 			->set_header('Content-Type: application/json')
@@ -168,23 +169,7 @@ class Api extends CI_Controller {
 		$this->secret_auth->handle_login();
 	}
 
-	public function check_token($args = []) {
-		$this->secret_auth->method('POST');
-		$post = file_get_contents('php://input');
-        $post = json_decode($post);
 
-		$res = $this->users_model->check_token([
-			'email' => $post->email,
-			'token' => $post->token
-		]);
-
-		if($res) {
-			echo 'YES';
-			die();
-		}
-		echo 'NO!';
-		die();
-	}
 
 	public function all_shifts($id) {
 		$this->secret_auth->method('GET');
