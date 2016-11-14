@@ -78,22 +78,6 @@ class Secret_auth {
             ]))
             ->_display();
         die();
-
-
     }
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
 
 }
