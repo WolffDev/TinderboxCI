@@ -7,7 +7,7 @@ class Api extends CI_Controller {
 		parent::__construct();
 		$this->load->library('secret_auth');
 		$this->load->model('users_model');
-		$this->load->model('shifts_model');
+		// $this->load->model('shifts_model');
     }
 
 	public function users() {

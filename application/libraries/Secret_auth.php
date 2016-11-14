@@ -31,9 +31,9 @@ class Secret_auth {
                 ->set_header('401 Unauthorized')
                 ->set_header('Content-Type: json/application')
                 ->set_output(json_encode([
-                    'error'     => 401,
+                    'error' => 401,
                     'errorCode' => 'Unauthorized',
-                    'response'  => [
+                    'response' => [
                         'message' => 'No Authorization set.',
                         'warning' => 'Your IP has been recorded and will be blocked if you keep connecting without Authorization.'
                     ]
@@ -88,11 +88,11 @@ class Secret_auth {
                 ->set_header('401 Unauthorized')
                 ->set_header('Content-Type: json/application')
                 ->set_output(json_encode([
-                    'error'     => 401,
+                    'error' => 401,
                     'errorCode' => 'Unauthorized',
-                    'response'  => [
-                        'message'   => 'No Token is set',
-                        'warning'   => 'Your UP has been recorded. If you keep connecting without the right token, your IP will be blocked'
+                    'response' => [
+                        'message' => 'No Token is set',
+                        'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
                     ]
                 ]))
                 ->_display();
@@ -116,11 +116,11 @@ class Secret_auth {
             ->set_header('401 Unauthorized')
             ->set_header('Content-Type: json/application')
             ->set_output(json_encode([
-                'error'     => 401,
+                'error' => 401,
                 'errorCode' => 'Unauthorized',
-                'response'  => [
-                    'message'   => 'Wrong Token',
-                    'warning'   => 'Your UP has been recorded. Continuous failed tries will get your IP blocked'
+                'response' => [
+                    'message' => 'Wrong Token',
+                    'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
                 ]
             ]))
             ->_display();
