@@ -7,6 +7,7 @@ class Api extends CI_Controller {
 		parent::__construct();
 		$this->load->library('secret_auth');
 		$this->load->model('users_model');
+		$this->load->model('shifts_model');
     }
 
 	public function users() {
@@ -38,7 +39,7 @@ class Api extends CI_Controller {
 		$post = (array)$post;
 		$args_check = array('firstname', 'lastname', 'email', 'password');
 
-		// first, flips key/value in $args_check, then comapres the two arrays, lastly test the count
+		// first, flips key/value in $args_check, then compares the two arrays, lastly test the count
 		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
 			// convert $post back to an object, in order to use it with JSON
 			$post = (object)$post;
@@ -62,8 +63,8 @@ class Api extends CI_Controller {
 						'status' 		=> 201,
 						'statusCode' 	=> 'Created',
 						'response' 		=> [
-							'message' 	=> 'User Created',
-							'id' 		=> $res
+							'message' 		=> 'User Created',
+							'id' 			=> $res
 						]
 					]))
 					->_display();
@@ -185,13 +186,144 @@ class Api extends CI_Controller {
 		die();
 	}
 
+	public function all_shifts($id) {
+		$this->secret_auth->method('GET');
+		$this->output
+			->set_header('HTTP/1.1 200 OK')
+			->set_header('Content-Type: application/json')
+			->set_output(json_encode($this->shifts_model->get_all_shifts()))
+			->_display();
+		die();
+	}
 
+	public function shifts($id) {
+		$this->secret_auth->method('GET');
+		$this->output
+			->set_header('HTTP/1.1 200 OK')
+			->set_header('Content-Type: application/json')
+			->set_output(json_encode($this->shifts_model->get_shifts()))
+			->_display();
+		die();
+	}
 
+	public function add_shift() {
+		$this->secret_auth->method('POST'); 
+		$post = file_get_contents('php://input');
+		$post = json_decode($post);
 
+		$post = (array)$post;
+		$args_check = array('shift_name', 'shift_content', 'shift_station', 'shift_location', 'shift_start', 'shift_end');
 
+		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
 
+			$post = (object)$post;
+		
+			$res = $this->shifts_model->set_shift([
+				'shift_name' => $post->shift_name,
+				'shift_content' => $post->shift_content,
+				'shift_station' => $post->shift_station,
+				'shift_location' => $post->shift_location,
+				'shift_start' => $post->shift_start,
+				'shift_end' => $post->shift_end
+			]);
+			if($res) {
+				$this->output
+					->set_header('HTTP/1.1 201 Created')
+					->set_header('Content-Type: application/json')
+					->set_output(json_encode([
+						'status'		=> 201,
+						'statusCode'	=> 'Created',
+						'response' 		=> [
+							'message'		=>'User Created',
+							'id'			=> $res
+						]	
+					]))
+					->_display();
+				die();
+			}
+		}
 
+		$this->output
+			->set_header('HTTP/1.1 406 Not Acceptable')
+			->set_header('Content-Type: application/json')
+			->set_output(json_encode([
+				'error' => 406,
+				'errorCode' => 'Not Acceptable',
+				'response' => [
+					'message' => 'Check the JSON data - properties are not correctly'
+				]
+			]))
+			->_display();
+		die();
 
+	}
 
+	public function update_shift($id) {
+		$this->secret_auth->method('PATCH');
+		$post = file_get_contents('php://input');
+		$post = json_decode($post);
 
+		$post = (array)$post;
+		$args_check = array('shift_name', 'shift_content', 'shift_station', 'shift_location', 'shift_start', 'shift_end');
+
+		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
+
+			$post = (object)$post;
+
+			$res = $this->shift_model->update_shift([
+				'shift_name' => $post->shift_name,
+				'shift_content' => $post->shift_content,
+				'shift_station' => $post->shift_station,
+				'shift_location' => $post->shift_location,
+				'shift_start' => $post->shift_start,
+				'shift_end' => $post->shift_end
+			]);
+			if($res) {
+				$this->output
+					->set_header('HTTP/1.1 200 OK')
+					->set_header('Content-Type: application/json')
+					->set_output(json_encode([
+						'status'		=> 200,
+						'statusCode'	=> 'OK',
+						'response' 		=> [
+							'message'		=>'User Updated',
+							'id'			=> $res
+						]	
+					]))
+					->_display();
+				die();
+			}
+		}
+
+		$this->output
+			->set_header('HTTP/1.1 406 Not Acceptable')
+			->set_header('Content-Type: application/json')
+			->set_output(json_encode([
+				'error' => 406,
+				'errorCode' => 'Not Acceptable',
+				'response' => [
+					'message' => 'Check the JSON data - properties are not correctly'
+				]
+			]))
+			->_display();
+		die();
+	}
+
+	public function delete_shift($id) {
+		$this->secret_auth->method('DELETE');
+		$res = $this->shifts_model->delete_shift($id);
+
+		$this->output
+			->set_header('HTTP/1.1 200 OK')
+			->set_header('Content-Type: application/json')
+			->set_output(json_encode([
+				'status' => 200,
+				'statusCode' => 'OK',
+				'response' => [
+					'message' => 'Shift is deleted from the database'
+				]
+			]))
+			->_display();
+		die();
+	}
 }

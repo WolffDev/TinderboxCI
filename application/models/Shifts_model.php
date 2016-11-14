@@ -10,13 +10,15 @@ class Shifts_model extends CI_Model {
 
     public function get_shifts($id) {
         $query = sprintf('SELECT
-        shift_name, shift_content, shift_station, shift_location, shift_start, shiftend
+         sid, shift_name, shift_content, shift_station, shift_location, shift_start, shiftend
         FROM shifts
         WHERE userid = "%s" '
         , $id);
         $result = $this->db->query($query);
-        return $result->row();
+        return $result->result();
     }
+
+   
 
     public function set_shift($args = []) {
         $query = sprintf('INSERT INTO shifts
@@ -52,7 +54,7 @@ class Shifts_model extends CI_Model {
             , $args['shift_station']
             , $args['shift_location']
             , $args['shift_start']
-            , $args['shift_end']);
+            , $args['shift_end']
             , $args['sid']);
         $result = $this->db->query($query);
         return $args['sid'];
@@ -68,11 +70,6 @@ class Shifts_model extends CI_Model {
         return false;
     }
     
-
-
-}
-
-
 
 
 }
