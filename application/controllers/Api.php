@@ -52,20 +52,20 @@ class Api extends CI_Controller {
 
 			$res = $this->users_model->set_user([
 				'firstname' => $post->firstname,
-				'lastname' 	=> $post->lastname,
-				'email' 	=> $post->email,
-				'password' 	=> $password
+				'lastname' => $post->lastname,
+				'email' => $post->email,
+				'password' => $password
 			]);
 			if($res) {
 				$this->output
 					->set_header('HTTP/1.1 201 Created')
 					->set_header('Content-Type: application/json')
 					->set_output(json_encode([
-						'status' 		=> 201,
-						'statusCode' 	=> 'Created',
-						'response' 		=> [
-							'message' 		=> 'User Created',
-							'id' 			=> $res
+						'status' => 201,
+						'statusCode' => 'Created',
+						'response' => [
+							'message' => 'User Created',
+							'id' => $res
 						]
 					]))
 					->_display();
@@ -107,11 +107,11 @@ class Api extends CI_Controller {
 			$password = password_hash($post->password, PASSWORD_BCRYPT, $options);
 
 			$send_args = [
-				'uid' 		=> $id,
+				'uid' => $id,
 				'firstname' => $post->firstname,
-				'lastname' 	=> $post->lastname,
-				'email' 	=> $post->email,
-				'password' 	=> $password
+				'lastname' => $post->lastname,
+				'email' => $post->email,
+				'password' => $password
 			];
 
 			$res = $this->users_model->update_user($send_args);
@@ -216,11 +216,11 @@ class Api extends CI_Controller {
 					->set_header('HTTP/1.1 201 Created')
 					->set_header('Content-Type: application/json')
 					->set_output(json_encode([
-						'status'		=> 201,
-						'statusCode'	=> 'Created',
-						'response' 		=> [
-							'message'		=>'User Created',
-							'id'			=> $res
+						'status' => 201,
+						'statusCode' => 'Created',
+						'response' => [
+							'message' =>'User Created',
+							'id' => $res
 						]	
 					]))
 					->_display();
@@ -268,11 +268,11 @@ class Api extends CI_Controller {
 					->set_header('HTTP/1.1 200 OK')
 					->set_header('Content-Type: application/json')
 					->set_output(json_encode([
-						'status'		=> 200,
-						'statusCode'	=> 'OK',
-						'response' 		=> [
-							'message'		=>'User Updated',
-							'id'			=> $res
+						'status' => 200,
+						'statusCode' => 'OK',
+						'response' => [
+							'message' =>'User Updated',
+							'id' => $res
 						]	
 					]))
 					->_display();
