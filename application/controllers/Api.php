@@ -1,4 +1,4 @@
-<?php
+ <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
@@ -43,6 +43,7 @@ class Api extends CI_Controller {
 		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
 			// convert $post back to an object, in order to use it with JSON
 			$post = (object)$post;
+			
 			$options = [
 			'cost' => 8,
 			];
