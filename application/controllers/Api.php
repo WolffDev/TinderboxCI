@@ -63,7 +63,7 @@ class Api extends CI_Controller {
 						'statusCode' 	=> 'Created',
 						'response' 		=> [
 							'message' 	=> 'User Created',
-							'id' 	=> $res
+							'id' 		=> $res
 						]
 					]))
 					->_display();
@@ -75,8 +75,8 @@ class Api extends CI_Controller {
 			->set_header('HTTP/1.1 406 Not Acceptable')
 			->set_header('Content-Type: application/json')
 			->set_output(json_encode([
-				'status' => 406,
-				'statusCode' => 'Not Acceptable',
+				'error' => 406,
+				'errorCode' => 'Not Acceptable',
 				'response' => [
 					'message' => 'Check the JSON data - properties are not correctly'
 				]
@@ -135,8 +135,8 @@ class Api extends CI_Controller {
 			->set_header('HTTP/1.1 406 Not Acceptable')
 			->set_header('Content-Type: application/json')
 			->set_output(json_encode([
-				'status' => 406,
-				'statusCode' => 'Not Acceptable',
+				'error' => 406,
+				'errorCode' => 'Not Acceptable',
 				'response' => [
 					'message' => 'Check the JSON data - properties are not set correctly'
 				]
@@ -160,6 +160,28 @@ class Api extends CI_Controller {
 				]
 			]))
 			->_display();
+		die();
+	}
+
+	public function login() {
+		$this->secret_auth->handle_login();
+	}
+
+	public function check_token($args = []) {
+		$this->secret_auth->method('POST');
+		$post = file_get_contents('php://input');
+        $post = json_decode($post);
+
+		$res = $this->users_model->check_token([
+			'email' => $post->email,
+			'token' => $post->token
+		]);
+
+		if($res) {
+			echo 'YES';
+			die();
+		}
+		echo 'NO!';
 		die();
 	}
 
