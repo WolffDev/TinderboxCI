@@ -31,9 +31,9 @@ class Secret_auth {
                 ->set_header('401 Unauthorized')
                 ->set_header('Content-Type: json/application')
                 ->set_output(json_encode([
-                    'error' => 401,
+                    'error'     => 401,
                     'errorCode' => 'Unauthorized',
-                    'response' => [
+                    'response'  => [
                         'message' => 'No Authorization set.',
                         'warning' => 'Your IP has been recorded and will be blocked if you keep connecting without Authorization.'
                     ]
@@ -79,5 +79,59 @@ class Secret_auth {
             ->_display();
         die();
     }
+
+    public function check_token() {
+        $this->ci->load->model('users_model');
+
+        if(!isset(getallheaders()['SecretToken'])) {
+            $this->ci->output
+                ->set_header('401 Unauthorized')
+                ->set_header('Content-Type: json/application')
+                ->set_output(json_encode([
+                    'error'     => 401,
+                    'errorCode' => 'Unauthorized',
+                    'response'  => [
+                        'message'   => 'No Token is set',
+                        'warning'   => 'Your UP has been recorded. If you keep connecting without the right token, your IP will be blocked'
+                    ]
+                ]))
+                ->_display();
+            die();
+        }
+
+        $basic_token = getallheaders()['SecretToken'];
+        $decoded_token = base64_decode($basic_token);
+        $credentials = explode(':', $decoded_token);
+
+        // Needs to send email also, for checking !!!
+        $token_check = $this->ci->users_model->check_token($credentials[0], $credentials[1]);
+        if($token_check) {
+            return true;
+            die();
+        }
+
+
+
+        $this->ci->output
+            ->set_header('401 Unauthorized')
+            ->set_header('Content-Type: json/application')
+            ->set_output(json_encode([
+                'error'     => 401,
+                'errorCode' => 'Unauthorized',
+                'response'  => [
+                    'message'   => 'Wrong Token',
+                    'warning'   => 'Your UP has been recorded. Continuous failed tries will get your IP blocked'
+                ]
+            ]))
+            ->_display();
+        die();
+
+		// if($res) {
+		// 	echo 'YES';
+		// 	die();
+		// }
+		// echo 'NO!';
+		// die();
+	}
 
 }
