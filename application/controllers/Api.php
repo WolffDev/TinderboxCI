@@ -1,4 +1,4 @@
- <?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
@@ -7,7 +7,7 @@ class Api extends CI_Controller {
 		parent::__construct();
 		$this->load->library('secret_auth');
 		$this->load->model('users_model');
-		// $this->load->model('shifts_model');
+		$this->load->model('shifts_model');
     }
 
 	public function users() {
@@ -171,7 +171,7 @@ class Api extends CI_Controller {
 
 
 
-	public function all_shifts($id) {
+	public function all_shifts() {
 		$this->secret_auth->method('GET');
 		$this->output
 			->set_header('HTTP/1.1 200 OK')
@@ -255,13 +255,14 @@ class Api extends CI_Controller {
 
 			$post = (object)$post;
 
-			$res = $this->shift_model->update_shift([
+			$res = $this->shifts_model->update_shift([
 				'shift_name' => $post->shift_name,
 				'shift_content' => $post->shift_content,
 				'shift_station' => $post->shift_station,
 				'shift_location' => $post->shift_location,
 				'shift_start' => $post->shift_start,
-				'shift_end' => $post->shift_end
+				'shift_end' => $post->shift_end,
+				'sid' => $id
 			]);
 			if($res) {
 				$this->output

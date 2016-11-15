@@ -40,7 +40,7 @@ class Shifts_model extends CI_Model {
     }
 
     public function update_shift($args = []) {
-        $query = sprintf('UPDATE shift
+        $query = sprintf('UPDATE shifts
             SET
             shift_name = "%s",
             shift_content = "%s",
@@ -48,7 +48,7 @@ class Shifts_model extends CI_Model {
             shift_location = "%s",
             shift_start = "%s",
             shift_end = "%s"
-            WHERE sid = %d '
+            WHERE sid = "%s" '
             , $args['shift_name']
             , $args['shift_content']
             , $args['shift_station']

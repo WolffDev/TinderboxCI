@@ -110,8 +110,6 @@ class Secret_auth {
             die();
         }
 
-
-
         $this->ci->output
             ->set_header('401 Unauthorized')
             ->set_header('Content-Type: json/application')
@@ -133,5 +131,12 @@ class Secret_auth {
 		// echo 'NO!';
 		// die();
 	}
+
+    public function http_response($status, $statustext, $response) {
+        // Validate 
+        if(!is_int($status)) {
+            die('Wrong Data');
+        }
+    }
 
 }
