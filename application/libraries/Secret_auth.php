@@ -169,7 +169,7 @@ class Secret_auth {
                         and there have to be 8-12 characters -> {8,12}
                         */
                     case 'email':
-                        if(!filter_var($data, FILTER_VALIDATE_EMAIL)) {
+                        if(!filter_var($data, FILTER_VALIDATE_EMAIL) || empty($data)) {
                             $this->http_response(400, 'Bad Request', [
                                 'message' => 'You did not pass a valid email'
                             ]);

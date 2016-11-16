@@ -18,8 +18,10 @@ class Api extends CI_Controller {
 
 	public function user($id = null) {
 		$this->secret_auth->method('GET');
+		// validate
 		$this->secret_auth->super_escape('validate', 'int', $id);
-		$id = $this->secret_auth->super_escape('sanitize', 1, $id);
+		// Sanitize
+		$id = $this->secret_auth->super_escape('sanitize', 2, $id);
 		$this->secret_auth->http_response(200, 'OK', $this->users_model->get_user($id));
 	}
 
@@ -84,17 +86,31 @@ class Api extends CI_Controller {
 		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
 			// convert $post back to an object, in order to use it with JSON
 			$post = (object)$post;
+
+			// Validate
+			$this->secret_auth->super_escape('validate', 'string', $post->firstname);
+			$this->secret_auth->super_escape('validate', 'string', $post->lastname);
+			$this->secret_auth->super_escape('validate', 'email', $post->email);
+			$this->secret_auth->super_escape('validate', 'password', $post->password);
+
+			// Sanitize
+			$safe_firstname = $this->secret_auth->super_escape('sanitize', 2, $post->firstname);
+			$safe_lastname = $this->secret_auth->super_escape('sanitize', 2, $post->lastname);
+			$safe_email = $this->secret_auth->super_escape('sanitize', 2, $post->email);
+			$safe_password = $this->secret_auth->super_escape('sanitize', 2, $post->password);
+
+
 			$options = [
 			'cost' => 8,
 			];
-			$password = password_hash($post->password, PASSWORD_BCRYPT, $options);
+			$safe_password = password_hash($safe_password, PASSWORD_BCRYPT, $options);
 
 			$send_args = [
 				'uid' => $id,
-				'firstname' => $post->firstname,
-				'lastname' => $post->lastname,
-				'email' => $post->email,
-				'password' => $password
+				'firstname' => $safe_firstname,
+				'lastname' => $safe_lastname,
+				'email' => $safe_email,
+				'password' => $safe_password
 			];
 
 			$res = $this->users_model->update_user($send_args);
@@ -112,7 +128,14 @@ class Api extends CI_Controller {
 
 	public function delete_user($id = null) {
 		$this->secret_auth->method('DELETE');
-		$res = $this->users_model->delete_user($id);
+
+		// validate
+		$this->secret_auth->super_escape('validate', 'int', $id);
+
+		// Sanitize
+		$safe_id = $this->secret_auth->super_escape('sanitize', 2, $id);
+
+		$res = $this->users_model->delete_user($safe_id);
 
 		$this->secret_auth->http_response(200, 'OK', ['message' => 'User deleted from the database']);
 	}
@@ -129,7 +152,14 @@ class Api extends CI_Controller {
 
 	public function shifts($id = null) {
 		$this->secret_auth->method('GET');
-		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_shifts($id));
+
+		// validate
+		$this->secret_auth->super_escape('validate', 'int', $id);
+
+		// Sanitize
+		$safe_id = $this->secret_auth->super_escape('sanitize', 2, $id);
+
+		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_shifts($safe_id));
 	}
 
 	public function add_shift() {
