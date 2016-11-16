@@ -10,7 +10,7 @@ class Shifts_model extends CI_Model {
 
     public function get_shifts($id) {
         $query = sprintf('SELECT
-         sid, shift_name, shift_content, shift_station, shift_location, shift_start, shiftend
+         sid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end
         FROM shifts
         WHERE userid = "%s" '
         , $id);
