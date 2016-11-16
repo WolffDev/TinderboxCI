@@ -186,7 +186,7 @@ class Api extends CI_Controller {
 		$this->output
 			->set_header('HTTP/1.1 200 OK')
 			->set_header('Content-Type: application/json')
-			->set_output(json_encode($this->shifts_model->get_shifts()))
+			->set_output(json_encode($this->shifts_model->get_shifts($id)))
 			->_display();
 		die();
 	}
