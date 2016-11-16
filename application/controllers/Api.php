@@ -16,7 +16,7 @@ class Api extends CI_Controller {
 		$this->secret_auth->http_response(200 , 'OK', $this->users_model->get_all_users());
 	}
 
-	public function user($id) {
+	public function user($id == null) {
 		$this->secret_auth->method('GET');
 /* *** *** ***
 *
@@ -61,7 +61,7 @@ class Api extends CI_Controller {
 		$this->secret_auth->http_response(406, 'Not Acceptable', ['message' => 'Check the JSON data - properties are not correctly']);
 	}
 
-	public function update_user($id) {
+	public function update_user($id = null) {
 		$this->secret_auth->method('PATCH');
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
@@ -100,7 +100,7 @@ class Api extends CI_Controller {
 		$this->secret_auth->http_response(406, 'Not Acceptable', ['message' => 'Check the JSON data - properties are not set correctly']);
 	}
 
-	public function delete_user($id) {
+	public function delete_user($id = null) {
 		$this->secret_auth->method('DELETE');
 		$res = $this->users_model->delete_user($id);
 
@@ -111,14 +111,12 @@ class Api extends CI_Controller {
 		$this->secret_auth->handle_login();
 	}
 
-
-
 	public function all_shifts() {
 		$this->secret_auth->method('GET');
 		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_all_shifts());
 	}
 
-	public function shifts($id) {
+	public function shifts($id = null) {
 		$this->secret_auth->method('GET');
 		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_shifts($id));
 	}
@@ -157,7 +155,7 @@ class Api extends CI_Controller {
 
 	}
 
-	public function update_shift($id) {
+	public function update_shift($id = null) {
 		$this->secret_auth->method('PATCH');
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
@@ -191,7 +189,7 @@ class Api extends CI_Controller {
 		]);
 	}
 
-	public function delete_shift($id) {
+	public function delete_shift($id = null) {
 		$this->secret_auth->method('DELETE');
 		$res = $this->shifts_model->delete_shift($id);
 

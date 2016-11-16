@@ -8,7 +8,7 @@ class Users_model extends CI_Model {
         return $result->result();
     }
 
-    public function get_user($id) {
+    public function get_user($id = null) {
         $query = sprintf('SELECT
         uid, firstname, lastname, email
         FROM users
@@ -53,7 +53,7 @@ class Users_model extends CI_Model {
 
     }
 
-    public function delete_user($id) {
+    public function delete_user($id = null) {
         $query = sprintf('DELETE FROM users WHERE uid = %d'
             , $id);
         if($this->db->query($query)) {
@@ -62,7 +62,7 @@ class Users_model extends CI_Model {
         return false;
     }
 
-    public function get_user_by_email_password($email, $password) {
+    public function get_user_by_email_password($email = null, $password = null) {
         $query = sprintf('SELECT uid, email, password
             FROM users
             WHERE email = "%s"
@@ -82,7 +82,7 @@ class Users_model extends CI_Model {
         die();
     }
 
-    public function insert_token_user($uid, $token) {
+    public function insert_token_user($uid = null, $token = null) {
         $query = sprintf('UPDATE users
             SET
             token_val = "%s",
@@ -96,7 +96,7 @@ class Users_model extends CI_Model {
         
     }
 
-    public function check_token($email, $token) {
+    public function check_token($email = null, $token = null) {
         
         $query = sprintf('SELECT token_val FROM users WHERE email = "%s" LIMIT 1 '
         , $email);

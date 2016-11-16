@@ -8,7 +8,7 @@ class Shifts_model extends CI_Model {
         return $result->result();
     }
 
-    public function get_shifts($id) {
+    public function get_shifts($id = null) {
         $query = sprintf('SELECT
          sid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end
         FROM shifts
@@ -61,7 +61,7 @@ class Shifts_model extends CI_Model {
 
     }
 
-    public function delete_shift($id) {
+    public function delete_shift($id = null) {
         $query = sprintf('DELETE FROM shifts WHERE sid = %d'
             , $id); 
         if($this->db->query($query)) {
