@@ -13,16 +13,13 @@ class Api extends CI_Controller {
 	public function users() {
 		$this->secret_auth->method('GET');
 		$this->secret_auth->check_token();
-		$this->secret_auth->http_response(200 , 'OK', $this->users_model->get_all_users());
+		$this->secret_auth->http_response(200, 'OK', $this->users_model->get_all_users());
 	}
 
-	public function user($id == null) {
+	public function user($id = null) {
 		$this->secret_auth->method('GET');
-/* *** *** ***
-*
-* NEED Sanitize, Validate, Escaping
-*
-*** *** *** */
+		$this->secret_auth->super_escape('validate', 'int', $id);
+		$id = $this->secret_auth->super_escape('sanitize', 1, $id);
 		$this->secret_auth->http_response(200, 'OK', $this->users_model->get_user($id));
 	}
 
@@ -40,15 +37,28 @@ class Api extends CI_Controller {
 			// convert $post back to an object, in order to use it with JSON
 			$post = (object)$post;
 			
-			$password = password_hash($post->password, PASSWORD_BCRYPT, [
+			// Validate
+			$this->secret_auth->super_escape('validate', 'string', $post->firstname);
+			$this->secret_auth->super_escape('validate', 'string', $post->lastname);
+			$this->secret_auth->super_escape('validate', 'email', $post->email);
+			$this->secret_auth->super_escape('validate', 'password', $post->password);
+
+			// Sanitize
+			$safe_firstname = $this->secret_auth->super_escape('sanitize', 2, $post->firstname);
+			$safe_lastname = $this->secret_auth->super_escape('sanitize', 2, $post->lastname);
+			$safe_email = $this->secret_auth->super_escape('sanitize', 2, $post->email);
+			$safe_password = $this->secret_auth->super_escape('sanitize', 2, $post->password);
+
+
+			$safe_password = password_hash($safe_password, PASSWORD_BCRYPT, [
 			'cost' => 10,
 			]);
 
 			$res = $this->users_model->set_user([
-				'firstname' => $post->firstname,
-				'lastname' => $post->lastname,
-				'email' => $post->email,
-				'password' => $password
+				'firstname' => $safe_firstname,
+				'lastname' => $safe_lastname,
+				'email' => $safe_email,
+				'password' => $safe_password
 			]);
 			if($res) {
 				$this->secret_auth->http_response(201, 'Created', [
@@ -108,6 +118,7 @@ class Api extends CI_Controller {
 	}
 
 	public function login() {
+		$this->secret_auth->method('GET');
 		$this->secret_auth->handle_login();
 	}
 

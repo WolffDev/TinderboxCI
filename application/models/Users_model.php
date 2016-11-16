@@ -15,7 +15,10 @@ class Users_model extends CI_Model {
         WHERE uid = "%s" '
         , $id);
         $result = $this->db->query($query);
-        return $result->row();
+        if($result) {
+            return $result->row();
+        }
+        return false;
     }
 
     public function set_user($args = []) {
@@ -62,7 +65,7 @@ class Users_model extends CI_Model {
         return false;
     }
 
-    public function get_user_by_email_password($email = null, $password = null) {
+    public function get_user_by_email_password($email, $password) {
         $query = sprintf('SELECT uid, email, password
             FROM users
             WHERE email = "%s"
