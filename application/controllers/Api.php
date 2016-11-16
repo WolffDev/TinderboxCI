@@ -13,22 +13,17 @@ class Api extends CI_Controller {
 	public function users() {
 		$this->secret_auth->method('GET');
 		$this->secret_auth->check_token();
-		$this->output 
-			->set_header('HTTP/1.1 200 OK')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode($this->users_model->get_all_users()))
-			->_display();
-		die();
+		$this->secret_auth->http_response(200 , 'OK', $this->users_model->get_all_users());
 	}
 
 	public function user($id) {
 		$this->secret_auth->method('GET');
-		$this->output
-			->set_header('HTTP/1.1 200 OK')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode($this->users_model->get_user($id)))
-			->_display();
-		die();
+/* *** *** ***
+*
+* NEED Sanitize, Validate, Escaping
+*
+*** *** *** */
+		$this->secret_auth->http_response(200, 'OK', $this->users_model->get_user($id));
 	}
 
 	public function add_user() {
@@ -45,10 +40,9 @@ class Api extends CI_Controller {
 			// convert $post back to an object, in order to use it with JSON
 			$post = (object)$post;
 			
-			$options = [
-			'cost' => 8,
-			];
-			$password = password_hash($post->password, PASSWORD_BCRYPT, $options);
+			$password = password_hash($post->password, PASSWORD_BCRYPT, [
+			'cost' => 10,
+			]);
 
 			$res = $this->users_model->set_user([
 				'firstname' => $post->firstname,
@@ -57,35 +51,14 @@ class Api extends CI_Controller {
 				'password' => $password
 			]);
 			if($res) {
-				$this->output
-					->set_header('HTTP/1.1 201 Created')
-					->set_header('Content-Type: application/json')
-					->set_output(json_encode([
-						'status' => 201,
-						'statusCode' => 'Created',
-						'response' => [
-							'message' => 'User Created',
-							'id' => $res
-						]
-					]))
-					->_display();
-				die();
+				$this->secret_auth->http_response(201, 'Created', [
+					'message' => 'User Created',
+					'id' => $res
+				]);
 			}
 		}
 		
-		$this->output
-			->set_header('HTTP/1.1 406 Not Acceptable')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode([
-				'error' => 406,
-				'errorCode' => 'Not Acceptable',
-				'response' => [
-					'message' => 'Check the JSON data - properties are not correctly'
-				]
-			]))
-			->_display();
-		die();
-
+		$this->secret_auth->http_response(406, 'Not Acceptable', ['message' => 'Check the JSON data - properties are not correctly']);
 	}
 
 	public function update_user($id) {
@@ -117,52 +90,21 @@ class Api extends CI_Controller {
 			$res = $this->users_model->update_user($send_args);
 			
 			if($res) {
-				$this->output
-					->set_header('HTTP/1.1 200 OK')
-					->set_header('Content-Type: application/json')
-					->set_output(json_encode([
-						'status' => 200,
-						'statusCode' => 'OK',
-						'response' => [
-							'message' => 'User Updated',
-							'id' => $res
-						]
-					]))
-					->_display();
-				die();
+				$this->secret_auth->http_response(200, 'OK', [
+					'message' => 'User Updated',
+					'id' => $res
+					]);
 			}
 		}
 		
-		$this->output
-			->set_header('HTTP/1.1 406 Not Acceptable')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode([
-				'error' => 406,
-				'errorCode' => 'Not Acceptable',
-				'response' => [
-					'message' => 'Check the JSON data - properties are not set correctly'
-				]
-			]))
-			->_display();
-		die();
+		$this->secret_auth->http_response(406, 'Not Acceptable', ['message' => 'Check the JSON data - properties are not set correctly']);
 	}
 
 	public function delete_user($id) {
 		$this->secret_auth->method('DELETE');
 		$res = $this->users_model->delete_user($id);
 
-		$this->output
-			->set_header('HTTP/1.1 200 OK')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode([
-				'status' => 200,
-				'statusCode' => 'OK',
-				'response' => [
-					'message' => 'User is deleted from the database'
-				]
-			]))
-			->_display();
-		die();
+		$this->secret_auth->http_response(200, 'OK', ['message' => 'User deleted from the database']);
 	}
 
 	public function login() {
@@ -173,22 +115,12 @@ class Api extends CI_Controller {
 
 	public function all_shifts() {
 		$this->secret_auth->method('GET');
-		$this->output
-			->set_header('HTTP/1.1 200 OK')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode($this->shifts_model->get_all_shifts()))
-			->_display();
-		die();
+		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_all_shifts());
 	}
 
 	public function shifts($id) {
 		$this->secret_auth->method('GET');
-		$this->output
-			->set_header('HTTP/1.1 200 OK')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode($this->shifts_model->get_shifts()))
-			->_display();
-		die();
+		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_shifts($id));
 	}
 
 	public function add_shift() {
@@ -212,19 +144,10 @@ class Api extends CI_Controller {
 				'shift_end' => $post->shift_end
 			]);
 			if($res) {
-				$this->output
-					->set_header('HTTP/1.1 201 Created')
-					->set_header('Content-Type: application/json')
-					->set_output(json_encode([
-						'status' => 201,
-						'statusCode' => 'Created',
-						'response' => [
-							'message' =>'User Created',
-							'id' => $res
-						]	
-					]))
-					->_display();
-				die();
+				$this->secret_auth->http_response(201, 'Created', [
+					'message' => 'Shift Created',
+					'id' => $res
+				]);
 			}
 		}
 

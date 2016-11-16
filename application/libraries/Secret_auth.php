@@ -12,34 +12,18 @@ class Secret_auth {
         if($allowed_method === $method) {
             return true;
         }
-        $this->ci->output
-            ->set_header('HTTP 1.1 405 Method Not Allowed')
-            ->set_header('Content-Type: application/json')
-            ->set_output(json_encode([
-                'error' => 405,
-                'errorCode' => 'Method Not Allowed.'
-            ]))
-            ->_display();
-        die();
+
+        $this->http_response(405, 'Method Not Allowed', 'Check your HTTP request');
     }
 
     public function handle_login() {
         $this->ci->load->model('users_model');
         
         if(!isset(getallheaders()['Authorization'])) {
-            $this->ci->output
-                ->set_header('401 Unauthorized')
-                ->set_header('Content-Type: json/application')
-                ->set_output(json_encode([
-                    'error' => 401,
-                    'errorCode' => 'Unauthorized',
-                    'response' => [
-                        'message' => 'No Authorization set.',
-                        'warning' => 'Your IP has been recorded and will be blocked if you keep connecting without Authorization.'
-                    ]
-                ]))
-                ->_display();
-            die();
+            $this->http_response(401, 'SMUT POMFRIT', [
+                'message' => 'Unauthorized',
+                'warning' => 'Your IP has been recorded and will be blocked if you keep connecting without Authorization'
+            ]);
         }
 
         $basic_auth = getallheaders()['Authorization'];
@@ -50,53 +34,26 @@ class Secret_auth {
         $userdata = $this->ci->users_model->get_user_by_email_password($credentials[0], $credentials[1]);
         
         if($userdata) {
-            $this->ci->output
-                ->set_header('200 OK')
-                ->set_header('Content-Type: json/application')
-                ->set_output(json_encode([
-                    'status' => 200,
-                    'statusCode' => 'OK',
-                    'response' => [
-                        'email' => $userdata[0],
-                        'token' => $userdata[1]
-                    ]
-                ]))
-                ->_display();
-            die();
+            $this->http_response(200, 'OK', [
+                'email' => $userdata[0],
+                'token' => $userdata[1]
+            ]);
         }
 
-        $this->ci->output
-            ->set_header('401 Unauthorized')
-            ->set_header('Content-Type: json/application')
-            ->set_output(json_encode([
-                'error' => 401,
-                'errorCode' => 'Unauthorized',
-                'response' => [
-                    'message' => 'Wrong username and/or password.',
-                    'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked.'
-                ]
-            ]))
-            ->_display();
-        die();
+        $this->http_response(401, 'Unauthorized', [
+            'message' => 'Wrong Username and/or Password',
+            'warning' => 'You IP has ben recorded. Continuous failed attempts will get your IP blocked'
+        ]);
     }
 
     public function check_token() {
         $this->ci->load->model('users_model');
 
         if(!isset(getallheaders()['SecretToken'])) {
-            $this->ci->output
-                ->set_header('401 Unauthorized')
-                ->set_header('Content-Type: json/application')
-                ->set_output(json_encode([
-                    'error' => 401,
-                    'errorCode' => 'Unauthorized',
-                    'response' => [
-                        'message' => 'No Token is set',
-                        'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
-                    ]
-                ]))
-                ->_display();
-            die();
+            $this->http_response(401, 'Unauthorized', [
+                'message' => 'Token is not set',
+                'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
+            ]);
         }
 
         $basic_token = getallheaders()['SecretToken'];
@@ -110,33 +67,47 @@ class Secret_auth {
             die();
         }
 
-        $this->ci->output
-            ->set_header('401 Unauthorized')
-            ->set_header('Content-Type: json/application')
-            ->set_output(json_encode([
-                'error' => 401,
-                'errorCode' => 'Unauthorized',
-                'response' => [
-                    'message' => 'Wrong Token',
-                    'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
-                ]
-            ]))
-            ->_display();
-        die();
+        $this->http_response(401, 'Unauthorized', [
+            'message' => 'Wrong Token',
+            'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
+        ]);
 
-		// if($res) {
-		// 	echo 'YES';
-		// 	die();
-		// }
-		// echo 'NO!';
-		// die();
+		if($res) {
+			echo 'YES';
+			die();
+		}
+		echo 'NO!';
+		die();
 	}
 
-    public function http_response($status, $statustext, $response) {
+    public function http_response($status, $statusText, $response) {
         // Validate 
         if(!is_int($status)) {
             die('Wrong Data');
         }
+        if(!is_string($statusText)) {
+            die('Wrong Data');
+        }
+
+        // Sanitize
+        $status = trim(strip_tags($status));
+        $status = str_replace('"', '', $status);
+        $statusText = trim(strip_tags($statusText));
+
+        //  Escape
+        $safe_http_status = sprintf('HTTP/1.1 %d %s '
+        , (int)$status
+        , (string)$statusText);
+
+        if(is_string($response) || is_object($response) || is_array($response)) {
+            $this->ci->output
+                ->set_header($safe_http_status)
+                ->set_header('Content-Type: application/json')
+                ->set_output(json_encode($response))
+                ->_display();
+            die();
+        }
+        die('Wrong Data');
     }
 
 }
