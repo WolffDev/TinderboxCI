@@ -151,18 +151,9 @@ class Api extends CI_Controller {
 			}
 		}
 
-		$this->output
-			->set_header('HTTP/1.1 406 Not Acceptable')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode([
-				'error' => 406,
-				'errorCode' => 'Not Acceptable',
-				'response' => [
-					'message' => 'Check the JSON data - properties are not correctly'
-				]
-			]))
-			->_display();
-		die();
+		$this->secret_auth->http_response(406, 'Not Acceptable', [
+			'message' => 'Check the JSON data - properties are not correct' 
+		]);
 
 	}
 
@@ -188,51 +179,24 @@ class Api extends CI_Controller {
 				'sid' => $id
 			]);
 			if($res) {
-				$this->output
-					->set_header('HTTP/1.1 200 OK')
-					->set_header('Content-Type: application/json')
-					->set_output(json_encode([
-						'status' => 200,
-						'statusCode' => 'OK',
-						'response' => [
-							'message' =>'User Updated',
-							'id' => $res
-						]	
-					]))
-					->_display();
-				die();
+				$this->secret_auth->http_response(200, 'OK', [
+					'message' => 'Shift Updated',
+					'id' => $res
+				]);
 			}
 		}
 
-		$this->output
-			->set_header('HTTP/1.1 406 Not Acceptable')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode([
-				'error' => 406,
-				'errorCode' => 'Not Acceptable',
-				'response' => [
-					'message' => 'Check the JSON data - properties are not correctly'
-				]
-			]))
-			->_display();
-		die();
+		$this->secret_auth->http_response(406, 'Not Acceptable', [
+			'message' => 'Check the JSON data - properties are not correct'
+		]);
 	}
 
 	public function delete_shift($id) {
 		$this->secret_auth->method('DELETE');
 		$res = $this->shifts_model->delete_shift($id);
 
-		$this->output
-			->set_header('HTTP/1.1 200 OK')
-			->set_header('Content-Type: application/json')
-			->set_output(json_encode([
-				'status' => 200,
-				'statusCode' => 'OK',
-				'response' => [
-					'message' => 'Shift is deleted from the database'
-				]
-			]))
-			->_display();
-		die();
+		$this->secret_auth->http_response(200, 'OK', [
+			'message' => 'Shift is deleted from the database'
+		]);
 	}
 }

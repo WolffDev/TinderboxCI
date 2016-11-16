@@ -110,4 +110,82 @@ class Secret_auth {
         die('Wrong Data');
     }
 
+    public function super_escape($ops = null, $type = null, $data =null) {
+        switch($ops) {
+            case 'validate':
+                switch($type) {
+                    case 'int':
+                        if(!preg_match('/^[0-9]+$/')) {
+                            $this->http_response(400, 'Bad Request', [
+                                'message' => 'You did not pass an integer'
+                            ]);
+                        } else {
+                            return true;
+                        }
+                        break;
+                    case 'string':
+                        if(!is_string($data)) {
+                            $this->http_response(400, 'Bad Request', [
+                                'message' => 'You did not pass a string'
+                            ]);
+                        } else {
+                            return true;
+                        }
+                        break;
+                    case 'array':
+                        if(!is_array($data)) {
+                            $this->http_response(400, 'Bad Request', [
+                                'message' => 'You did not pass an array'
+                            ]);
+                        } else {
+                            return true;
+                        }
+                        break;
+                    case 'object':
+                        if(!is_object($data)) {
+                            $this->http_response(400, 'Bad Request', [
+                                'message' => 'You did not pass an object'
+                            ]);
+                            break;
+                        } else {
+                            return true;
+                        }
+                }
+                break;
+            case 'sanitize':
+                switch($type) {
+                    case 1:
+                        $data = trim(strip_tags($data));
+                        return $data;
+                        break;
+                    case 2:
+                        $data = trim(strip_tags($data));
+                        $data = str_replace('"', '', $data);
+                        $data = str_replace("'", '', $data);
+                        return $data;
+                        break;
+                }
+                break;
+            case 'escape':
+                switch($type) {
+                    case 'int':
+                        return (int)$data;
+                        break;
+                    case 'string':
+                        return (string)$data;
+                        break;
+                }
+                break;
+            default:
+                $this->http_response(400, 'Bad Request', [
+                    'message' => 'Missing 1 or more parameters'
+                ]);
+                die();
+        }
+    }
+
+
+
+
+
 }
