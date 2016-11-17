@@ -99,7 +99,7 @@ class Users_model extends CI_Model {
             , $this->db->escape_like_str($token)
             , date('Y-m-d H:i:s')
             , $this->db->escape_like_str($uid));
-        $result = $this->db->query($query);
+        $this->db->query($query);
         
     }
 

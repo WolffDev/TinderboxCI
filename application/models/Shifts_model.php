@@ -2,7 +2,7 @@
 class Shifts_model extends CI_Model {
      
     public function get_all_shifts() {
-        $result = $this->db->query('SELECT sid, userid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end
+        $result = $this->db->query('SELECT sid, shift_userid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end
             FROM shifts
             ORDER BY created DESC');
         return $result->result();
