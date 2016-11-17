@@ -22,9 +22,10 @@ class Shifts_model extends CI_Model {
 
     public function set_shift($args = []) {
         $query = sprintf('INSERT INTO shifts
-            (shift_name, shift_content, shift_station, shift_location, shift_start, shift_end)
+            (shift_userid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end)
             VALUES
-            ("%s", "%s", "%s", "%s", "%s", "%s")'
+            (%d, "%s", "%s", "%s", "%s", "%s", "%s")'
+            , $args['shift_userid']
             , $args['shift_name']
             , $args['shift_content']
             , $args['shift_station']
@@ -42,6 +43,7 @@ class Shifts_model extends CI_Model {
     public function update_shift($args = []) {
         $query = sprintf('UPDATE shifts
             SET
+            shift_userid = %d,
             shift_name = "%s",
             shift_content = "%s",
             shift_station = "%s",
@@ -49,6 +51,7 @@ class Shifts_model extends CI_Model {
             shift_start = "%s",
             shift_end = "%s"
             WHERE sid = "%s" '
+            , $args['shift_userid']
             , $args['shift_name']
             , $args['shift_content']
             , $args['shift_station']
@@ -63,11 +66,14 @@ class Shifts_model extends CI_Model {
 
     public function delete_shift($id = null) {
         $query = sprintf('DELETE FROM shifts WHERE sid = %d'
-            , $id); 
-        if($this->db->query($query)) {
+            , $id);
+        $this->db->query($query)
+
+        if($this->db->affected_rows() > 0) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
     
 

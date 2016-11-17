@@ -59,10 +59,14 @@ class Users_model extends CI_Model {
     public function delete_user($id = null) {
         $query = sprintf('DELETE FROM users WHERE uid = %d'
             , $id);
-        if($this->db->query($query)) {
+        $this->db->query($query);
+        
+        if($this->db->affected_rows() > 0) {
             return true;
+        } else {
+            return false;
         }
-        return false;
+       
     }
 
     public function get_user_by_email_password($email, $password) {

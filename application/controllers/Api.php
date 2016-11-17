@@ -137,7 +137,15 @@ class Api extends CI_Controller {
 
 		$res = $this->users_model->delete_user($safe_id);
 
-		$this->secret_auth->http_response(200, 'OK', ['message' => 'User deleted from the database']);
+		if($res) {
+			$this->secret_auth->http_response(200, 'OK', [
+				'message' => 'User deleted from the database'
+			]);
+		}
+
+		$this->secret_auth->http_response(404, 'Not Found', [
+			'message' => 'User not found in the database'
+		]);
 	}
 
 	public function login() {
@@ -168,19 +176,38 @@ class Api extends CI_Controller {
 		$post = json_decode($post);
 
 		$post = (array)$post;
-		$args_check = array('shift_name', 'shift_content', 'shift_station', 'shift_location', 'shift_start', 'shift_end');
+		$args_check = array('shift_userid', 'shift_name', 'shift_content', 'shift_station', 'shift_location', 'shift_start', 'shift_end');
 
 		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
-
 			$post = (object)$post;
+
+			// Validate
+			$this->secret_auth->super_escape('validate', 'int', $post->shift_userid);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_name);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_content);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_station);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_location);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_start);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_end);
+
+			// Sanitize
+			$safe_shift_userid = $this->secret_auth->super_escape('sanitize', 2, $post->shift_userid);
+			$safe_shift_name = $this->secret_auth->super_escape('sanitize', 2, $post->shift_name);
+			$safe_shift_content = $this->secret_auth->super_escape('sanitize', 2, $post->shift_content);
+			$safe_shift_station = $this->secret_auth->super_escape('sanitize', 2, $post->shift_station);
+			$safe_shift_location = $this->secret_auth->super_escape('sanitize', 2, $post->shift_location);
+			$safe_shift_start = $this->secret_auth->super_escape('sanitize', 2, $post->shift_start);
+			$safe_shift_end = $this->secret_auth->super_escape('sanitize', 2, $post->shift_end);
 		
 			$res = $this->shifts_model->set_shift([
-				'shift_name' => $post->shift_name,
-				'shift_content' => $post->shift_content,
-				'shift_station' => $post->shift_station,
-				'shift_location' => $post->shift_location,
-				'shift_start' => $post->shift_start,
-				'shift_end' => $post->shift_end
+
+				'shift_userid' => $safe_shift_userid,
+				'shift_name' => $safe_shift_name,
+				'shift_content' => $safe_shift_content,
+				'shift_station' => $safe_shift_station,
+				'shift_location' => $safe_shift_location,
+				'shift_start' => $safe_shift_start,
+				'shift_end' => $safe_shift_end
 			]);
 			if($res) {
 				$this->secret_auth->http_response(201, 'Created', [
@@ -198,24 +225,49 @@ class Api extends CI_Controller {
 
 	public function update_shift($id = null) {
 		$this->secret_auth->method('PATCH');
+
+		// Validate
+		$this->secret_auth->super_escape('validate', 'int', $id);
+		// Sanitize
+		$safe_id = $this->secret_auth->super_escape('sanitize', 2, $id);
+
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
 
 		$post = (array)$post;
-		$args_check = array('shift_name', 'shift_content', 'shift_station', 'shift_location', 'shift_start', 'shift_end');
+		$args_check = array('shift_userid', 'shift_name', 'shift_content', 'shift_station', 'shift_location', 'shift_start', 'shift_end');
 
 		if(count(array_intersect_key(array_flip($args_check), $post)) === count($args_check)) {
 
 			$post = (object)$post;
 
+			// Validate
+			$this->secret_auth->super_escape('validate', 'int', $post->shift_userid);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_name);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_content);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_station);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_location);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_start);
+			$this->secret_auth->super_escape('validate', 'string', $post->shift_end);
+
+			// Sanitize
+			$safe_shift_userid = $this->secret_auth->super_escape('sanitize', 2, $post->shift_userid);
+			$safe_shift_name = $this->secret_auth->super_escape('sanitize', 2, $post->shift_name);
+			$safe_shift_content = $this->secret_auth->super_escape('sanitize', 2, $post->shift_content);
+			$safe_shift_station = $this->secret_auth->super_escape('sanitize', 2, $post->shift_station);
+			$safe_shift_location = $this->secret_auth->super_escape('sanitize', 2, $post->shift_location);
+			$safe_shift_start = $this->secret_auth->super_escape('sanitize', 2, $post->shift_start);
+			$safe_shift_end = $this->secret_auth->super_escape('sanitize', 2, $post->shift_end);
+
 			$res = $this->shifts_model->update_shift([
-				'shift_name' => $post->shift_name,
-				'shift_content' => $post->shift_content,
-				'shift_station' => $post->shift_station,
-				'shift_location' => $post->shift_location,
-				'shift_start' => $post->shift_start,
-				'shift_end' => $post->shift_end,
-				'sid' => $id
+				'shift_userid' => $safe_shift_userid,
+				'shift_name' => $safe_shift_name,
+				'shift_content' => $safe_shift_content,
+				'shift_station' => $safe_shift_station,
+				'shift_location' => $safe_shift_location,
+				'shift_start' => $safe_shift_start,
+				'shift_end' => $safe_shift_end,
+				'sid' => $safe_id
 			]);
 			if($res) {
 				$this->secret_auth->http_response(200, 'OK', [
@@ -232,7 +284,13 @@ class Api extends CI_Controller {
 
 	public function delete_shift($id = null) {
 		$this->secret_auth->method('DELETE');
-		$res = $this->shifts_model->delete_shift($id);
+
+		// Validate
+		$this->secret_auth->super_escape('validate', 'int', $id);
+		// Sanitize
+		$safe_id = $this->secret_auth->super_escape('sanitize', 2, $id);
+
+		$res = $this->shifts_model->delete_shift($safe_id);
 
 		$this->secret_auth->http_response(200, 'OK', [
 			'message' => 'Shift is deleted from the database'
