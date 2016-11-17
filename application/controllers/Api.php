@@ -299,7 +299,7 @@ class Api extends CI_Controller {
 		} else {
 			$this->secret_auth->http_response(404, 'Not Found', [
 				'message' => 'Shift not found'
-			])
+			]);
 		}
 	}
 }

@@ -13,7 +13,7 @@ class Shifts_model extends CI_Model {
          sid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end
         FROM shifts
         WHERE userid = "%s" '
-        , $id);
+        , $this->db->escape_like_str($id));
         $result = $this->db->query($query);
         return $result->result();
     }
@@ -25,13 +25,13 @@ class Shifts_model extends CI_Model {
             (shift_userid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end)
             VALUES
             (%d, "%s", "%s", "%s", "%s", "%s", "%s")'
-            , $args['shift_userid']
-            , $args['shift_name']
-            , $args['shift_content']
-            , $args['shift_station']
-            , $args['shift_location']
-            , $args['shift_start']
-            , $args['shift_end']);
+            , $this->db->escape_like_str($args['shift_userid'])
+            , $this->db->escape_like_str($args['shift_name'])
+            , $this->db->escape_like_str($args['shift_content'])
+            , $this->db->escape_like_str($args['shift_station'])
+            , $this->db->escape_like_str($args['shift_location'])
+            , $this->db->escape_like_str($args['shift_start'])
+            , $this->db->escape_like_str($args['shift_end']));
         $this->db->query($query);
         $id = $this->db->insert_id();
         if(is_int($id) && $id > 0) {
@@ -51,14 +51,14 @@ class Shifts_model extends CI_Model {
             shift_start = "%s",
             shift_end = "%s"
             WHERE sid = "%s" '
-            , $args['shift_userid']
-            , $args['shift_name']
-            , $args['shift_content']
-            , $args['shift_station']
-            , $args['shift_location']
-            , $args['shift_start']
-            , $args['shift_end']
-            , $args['sid']);
+            , $this->db->escape_like_str($args['shift_userid'])
+            , $this->db->escape_like_str($args['shift_name'])
+            , $this->db->escape_like_str($args['shift_content'])
+            , $this->db->escape_like_str($args['shift_station'])
+            , $this->db->escape_like_str($args['shift_location'])
+            , $this->db->escape_like_str($args['shift_start'])
+            , $this->db->escape_like_str($args['shift_end'])
+            , $this->db->escape_like_str($args['sid']));
         $result = $this->db->query($query);
         return $args['sid'];
 
@@ -66,8 +66,8 @@ class Shifts_model extends CI_Model {
 
     public function delete_shift($id = null) {
         $query = sprintf('DELETE FROM shifts WHERE sid = %d'
-            , $id);
-        $this->db->query($query)
+            , $this->db->escape_like_str($id));
+        $this->db->query($query);
 
         if($this->db->affected_rows() > 0) {
             return true;

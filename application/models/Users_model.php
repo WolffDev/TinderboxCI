@@ -13,7 +13,7 @@ class Users_model extends CI_Model {
         uid, firstname, lastname, email
         FROM users
         WHERE uid = "%s" '
-        , $id);
+        , $this->db->escape_like_str($id));
         $result = $this->db->query($query);
         if($result) {
             return $result->row();
@@ -26,10 +26,10 @@ class Users_model extends CI_Model {
             (firstname, lastname, email, password)
             VALUES
             ("%s", "%s", "%s", "%s")'
-            , $args['firstname']
-            , $args['lastname']
-            , $args['email']
-            , $args['password']);
+            , $this->db->escape_like_str($args['firstname'])
+            , $this->db->escape_like_str($args['lastname'])
+            , $this->db->escape_like_str($args['email'])
+            , $this->db->escape_like_str($args['password']));
         $this->db->query($query);
         $id = $this->db->insert_id();
         if(is_int($id) && $id > 0) {
@@ -46,11 +46,11 @@ class Users_model extends CI_Model {
             email = "%s",
             password = "%s"
             WHERE uid = %d '
-            , $args['firstname']
-            , $args['lastname']
-            , $args['email']
-            , $args['password']
-            , $args['uid']);
+            , $this->db->escape_like_str($args['firstname'])
+            , $this->db->escape_like_str($args['lastname'])
+            , $this->db->escape_like_str($args['email'])
+            , $this->db->escape_like_str($args['password'])
+            , $this->db->escape_like_str($args['uid']));
         $result = $this->db->query($query);
         return $args['uid'];
 
@@ -58,9 +58,9 @@ class Users_model extends CI_Model {
 
     public function delete_user($id = null) {
         $query = sprintf('DELETE FROM users WHERE uid = %d'
-            , $id);
+            , $this->db->escape_like_str($id));
         $this->db->query($query);
-        
+
         if($this->db->affected_rows() > 0) {
             return true;
         } else {
@@ -74,7 +74,7 @@ class Users_model extends CI_Model {
             FROM users
             WHERE email = "%s"
             LIMIT 1'
-            , $email);
+            , $this->db->escape_like_str($email));
         $result = $this->db->query($query);
         $row = $result->row();
 
@@ -96,9 +96,9 @@ class Users_model extends CI_Model {
             token_create = "%s"
             WHERE
             uid = "%s"'
-            , $token
+            , $this->db->escape_like_str($token)
             , date('Y-m-d H:i:s')
-            , $uid);
+            , $this->db->escape_like_str($uid));
         $result = $this->db->query($query);
         
     }
@@ -106,7 +106,7 @@ class Users_model extends CI_Model {
     public function check_token($email = null, $token = null) {
         
         $query = sprintf('SELECT token_val FROM users WHERE email = "%s" LIMIT 1 '
-        , $email);
+        , $this->db->escape_like_str($email));
         $result = $this->db->query($query);
         $row = $result->row();
         if($row->token_val === $token) {
