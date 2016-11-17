@@ -43,9 +43,15 @@ class Secret_auth {
         $userdata = $this->ci->users_model->get_user_by_email_password($safe_email, $safe_password);
         
         if($userdata) {
+            $token = array_pop($userdata);
+            $res_email = array_pop($userdata);
+            $token = (string)$token;
+
+            $res_token = $res_email . ':' . $token;
+
+            $encoded_token = base64_encode($res_token);
             $this->http_response(200, 'OK', [
-                'email' => $userdata[0],
-                'token' => $userdata[1]
+                'SecretToken' => $encoded_token
             ]);
         } else {
             $this->http_response(401, 'Unauthorized', [
