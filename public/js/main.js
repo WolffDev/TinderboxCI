@@ -5,6 +5,33 @@ jQuery(function() {
 
 const URL = 'http://localhost:8888/tissekone/';
 
+/*=====================================
+=            Topnavigation            =
+=====================================*/
+
+function topNav() {
+	jQuery.ajax({
+		url: URL + 'api/users',
+		contentType: 'application/json',
+		type: 'GET',
+		success: function(data, status, response)
+		{
+			console.log(status);
+			console.log(data);
+		}
+		var html = 
+
+			jQuery('#container').html(html); //overwrites the content from the view
+	})
+};
+
+
+/*=====  End of Topnavigation  ======*/
+
+
+/*=============================================
+=            Mainmenu                        =
+=============================================*/
 
 function mainMenu() {
 	jQuery.ajax({
@@ -22,21 +49,6 @@ function mainMenu() {
 	})
 };
 
-function topNav() {
-	jQuery.ajax({
-		url: URL + 'api/users',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response)
-		{
-			console.log(status);
-			console.log(data);
-		}
-		var html = 
-
-			jQuery('#container').html(html); //overwrites the content from the view
-	})
-};
 
 function map() {
 	jQuery.ajax({
@@ -93,3 +105,66 @@ function faq() {
 		
 	})
 }
+
+/*=====  End of Mainmenu  ======*/
+
+/*==================================
+=            Burgermenu            =
+==================================*/
+
+function changeImage() {
+	jQuery.ajax({
+		url: URL + 'api/users',
+		contentType: 'application/json',
+		type: 'GET'
+		success: function(data, status, response)
+		{
+			console.log(status)
+			console.log(data)
+		}
+		var html = 
+
+			jQuery('#container').html(html); //overwrites the content from the view
+
+	})
+};
+
+function settings() {
+	jQuery.ajax({
+		url: URL + 'api/settings',
+		contentType: 'application/json',
+		type: 'PUT'
+		success: function(data, status, response)
+		{
+			console.log(status)
+			console.log(data)
+		}
+		var html = 
+
+			jQuery('#container').html(html); //overwrites the content from the view
+
+	})
+};
+
+function notification() {
+	jQuery.ajax({
+		url: URL + 'api/notification',
+		contentType: 'application/json',
+		type: 'GET'
+		success: function(data, status, response)
+		{
+			console.log(status)
+			console.log(data)
+		}
+		var html = 
+
+			jQuery('#container').html(html); //overwrites the content from the view
+
+	})
+};
+
+
+/*=====  End of Burgermenu  ======*/
+
+
+
