@@ -17,6 +17,6 @@
 <!-- Compiled and minified JavaScript -->
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-<script src="<?php echo base_url('public/js/main.js'); ?>"></script>
+<script src="<?php echo base_url('tissekone/public/js/main.js'); ?>"></script>
 </body>
 </html>
