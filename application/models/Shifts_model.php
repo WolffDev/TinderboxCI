@@ -12,7 +12,7 @@ class Shifts_model extends CI_Model {
         $query = sprintf('SELECT
          sid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end
         FROM shifts
-        WHERE userid = "%s" '
+        WHERE shift_userid = "%s" '
         , $this->db->escape_like_str($id));
         $result = $this->db->query($query);
         return $result->result();

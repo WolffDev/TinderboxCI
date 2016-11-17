@@ -3,7 +3,7 @@ jQuery(function() {
 	mainMenu();
 });
 
-const URL = 'http://localhost:8888/tissekone/';
+const URL = 'http://webtinderbox:8888/';
 
 /*=============================
 =            Login            =
@@ -18,7 +18,7 @@ function login() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>Log-in</h1>';
+			var html = '<h1>Log-in</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
@@ -43,7 +43,7 @@ function topNav() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>topNav</h1>';
+			var html = '<h1>topNav</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -60,14 +60,14 @@ function topNav() {
 
 function mainMenu() {
 	jQuery.ajax({
-		url: URL + 'api/shifts/1', //load token
+		url: URL + 'api/shifts/44', //load token
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>Mainmenu</h1>';
+			var html = '<h1>Mainmenu</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -84,7 +84,7 @@ function map() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>map</h1>';
+			var html = '<h1>map</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
@@ -101,7 +101,7 @@ function chat() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>chat</h1>';
+			var html = '<h1>chat</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -115,7 +115,7 @@ function information() {
 		success: function()
 		{
 		
-		var html = '<h1>info</h1>';
+			var html = '<h1>info</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -130,7 +130,7 @@ function faq() {
 		success: function()
 		{
 
-		var html = '<h1>FAQ</h1>';
+			var html = '<h1>FAQ</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -152,7 +152,7 @@ function changeImage() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>changeImage</h1>';
+			var html = '<h1>changeImage</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
@@ -169,7 +169,7 @@ function settings() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>Settings</h1>';
+			var html = '<h1>Settings</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
@@ -186,7 +186,7 @@ function notification() {
 		{
 			console.log(status);
 			console.log(data);
-		var html = '<h1>notification</h1>';
+			var html = '<h1>notification</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
