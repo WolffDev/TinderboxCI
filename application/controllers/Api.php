@@ -139,12 +139,12 @@ class Api extends CI_Controller {
 
 		if($res) {
 			$this->secret_auth->http_response(200, 'OK', [
-				'message' => 'User deleted from the database'
+				'message' => 'User deleted'
 			]);
 		}
 
 		$this->secret_auth->http_response(404, 'Not Found', [
-			'message' => 'User not found in the database'
+			'message' => 'User not found'
 		]);
 	}
 
@@ -291,9 +291,15 @@ class Api extends CI_Controller {
 		$safe_id = $this->secret_auth->super_escape('sanitize', 2, $id);
 
 		$res = $this->shifts_model->delete_shift($safe_id);
-
-		$this->secret_auth->http_response(200, 'OK', [
-			'message' => 'Shift is deleted from the database'
-		]);
+		
+		if($res) {
+			$this->secret_auth->http_response(200, 'OK', [
+				'message' => 'Shift is deleted'
+			]);
+		} else {
+			$this->secret_auth->http_response(404, 'Not Found', [
+				'message' => 'Shift not found'
+			])
+		}
 	}
 }
