@@ -36,20 +36,26 @@ function login() {
 
 function topNav() {
 	jQuery.ajax({
-		url: URL + 'api/users',
+		// url: URL + 'api/users',
 		contentType: 'application/json',
-		type: 'GET',
+		// type: 'GET',
 		success: function(data, status, response)
 		{
 			console.log(status);
 			console.log(data);
-			var html = '<h1>topNav</h1>';
+			var html = '<h1>topNav</h1>'
+					+ '<button class="waves-effect waves-light btn btn-back">back</button>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
 	})
 };
 
+/*
+ * Buttons
+ */
+
+ jQuery('#container').on('click', '.btn-back', mainMenu);
 
 /*=====  End of Topnavigation  ======*/
 
@@ -67,7 +73,11 @@ function mainMenu() {
 		{
 			console.log(status);
 			console.log(data);
-			var html = '<h1>Mainmenu</h1>';
+			var html = '<h1>Mainmenu</h1>'
+					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
+					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -77,14 +87,15 @@ function mainMenu() {
 
 function map() {
 	jQuery.ajax({
-		url: URL + 'api/shifts',
+		url: URL + 'api/shifts/44',
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
 			console.log(status);
 			console.log(data);
-			var html = '<h1>map</h1>';
+			var html = topNav()
+					+ '<h1>map</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
@@ -94,14 +105,15 @@ function map() {
 
 function chat() {
 	jQuery.ajax({
-		url: URL + 'api/shifts',
+		url: URL + 'api/shifts/44',
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
+			// console.log(status);
 			console.log(data);
-			var html = '<h1>chat</h1>';
+			var html = topNav()
+					+'<h1>chat</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -110,12 +122,12 @@ function chat() {
 
 function information() {
 	jQuery.ajax({
-		url: URL + 'api/information',
 		contentType: 'application/json',
 		success: function()
 		{
 		
-			var html = '<h1>info</h1>';
+			var html = topNav()
+					+'<h1>info</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -125,24 +137,33 @@ function information() {
 
 function faq() {
 	jQuery.ajax({
-		url: URL + 'api/faq',
 		contentType: 'application/json',
 		success: function()
 		{
 
-			var html = '<h1>FAQ</h1>';
+			var html = topNav()
+					+'<h1>FAQ</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
 	})
+
 }
+
+/*
+ * Buttons
+ */
+
+ jQuery('#container').on('click', '.btn-map', map);
+ jQuery('#container').on('click', '.btn-chat', chat);
+ jQuery('#container').on('click', '.btn-info', information);
+ jQuery('#container').on('click', '.btn-faq', faq);
 
 /*=====  End of Mainmenu  ======*/
 
 /*==================================
 =            Burgermenu            =
 ==================================*/
-
 function changeImage() {
 	jQuery.ajax({
 		url: URL + 'api/users',

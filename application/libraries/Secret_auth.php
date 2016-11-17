@@ -42,6 +42,7 @@ class Secret_auth {
 
         $userdata = $this->ci->users_model->get_user_by_email_password($safe_email, $safe_password);
         
+        // Needs to return userid, email, token as an array, to use it in Store.js = REFACTOR
         if($userdata) {
             $token = array_pop($userdata);
             $res_email = array_pop($userdata);
