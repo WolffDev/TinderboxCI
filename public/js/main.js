@@ -4,9 +4,11 @@ jQuery(function() {
 	} else {
 		mainMenu();
 	}
+	// mainMenu();
 });
 
 const URL = 'http://webtinderbox:8888/';
+const RESS = 'public/';
 
 /*=============================
 =          Welcome            =
@@ -15,11 +17,47 @@ function loginScreen() {
 	storeCheck();
 	store.clear();
     function storeCheck() {
+		// Use something else than alert()
         if (!store.enabled) {
             alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
             return false;
         }
     }
+
+	var html = 
+		'<div class="row">'
+			+'<div class="col s12">'
+				+'<div class="login-container">'
+					+'<div class="login-logo center">'
+						+'<img src="'+ RESS +'img/login-logo.png">'
+					+'</div>'
+					+'<div class="login-input">'
+						+'<div class="row">'
+							+'<div class="input-field col s12">'
+								+'<input id="email" name="email" type="text" class="" required>'
+								+'<label for="email">Email</label>'
+							+'</div>'
+						+'</div>'
+						+'<div class="row">'
+							+'<div class="input-field col s12">'
+								+'<input id="password" name="password" type="password" class="" required>'
+								+'<label for="password">Password</label>'
+							+'</div>'
+						+'</div>'
+						+'</div class="row">'
+							+'<div class="col s12 center">'
+								+'<button class="btn waves-effect waves-light btn-submit">'
+									+'Log ind'
+								+'</button>'
+							+'</div>'
+						+'</div>'
+					+'</div>'
+				+'</div>'
+			+'</div>'
+		+'</div>';
+
+	jQuery('#app').html(html);
+
 }
 
 
@@ -32,18 +70,22 @@ function loginScreen() {
 =============================*/
 
 function login() {
+	var email = jQuery('#email').val();
+	var password = jQuery('#password').val();
+	
+
 	jQuery.ajax({
-		url: URL + 'api/users',
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader ("Authorization", "Basic " + btoa(email + ":" + password));
+		},
+		url: URL + 'api/login',
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			var html = '<h1>Log-in</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
+			console.log(data);
 		}
-	})
+	}).done(mainMenu());
 };
 
 
@@ -83,12 +125,14 @@ function topNav() {
 =============================================*/
 
 function mainMenu() {
+	console.log("Main menu loaded!");
 	jQuery.ajax({
 		url: URL + 'api/shifts/1', //load token
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
+			console.log(data);
 			var html = '<h1>Mainmenu</h1>'
 					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
 					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
@@ -158,14 +202,6 @@ function faq() {
 
 }
 
-/*
- * Buttons
- */
-
- jQuery('#app').on('click', '.btn-map', map);
- jQuery('#app').on('click', '.btn-chat', chat);
- jQuery('#app').on('click', '.btn-info', information);
- jQuery('#app').on('click', '.btn-faq', faq);
 
 /*=====  End of Mainmenu  ======*/
 
@@ -220,5 +256,14 @@ function notification() {
 
 /*=====  End of Burgermenu  ======*/
 
+/*==================================
+=              BUTTONS             =
+==================================*/
+
+ jQuery('#app').on('click', '.btn-submit', login);
+ jQuery('#app').on('click', '.btn-map', map);
+ jQuery('#app').on('click', '.btn-chat', chat);
+ jQuery('#app').on('click', '.btn-info', information);
+ jQuery('#app').on('click', '.btn-faq', faq);
 
 
