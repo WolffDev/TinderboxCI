@@ -43,6 +43,9 @@ class Secret_auth {
         $userdata = $this->ci->users_model->get_user_by_email_password($safe_email, $safe_password);
         
         // Needs to return userid, email, token as an array, to use it in Store.js = REFACTOR
+        /******************
+        * REFACTOR!!!!!!
+        ******************/
         if($userdata) {
             $token = array_pop($userdata);
             $res_email = array_pop($userdata);
@@ -64,13 +67,15 @@ class Secret_auth {
 
     public function check_token() {
         $this->ci->load->model('users_model');
+        $this->ci->load->helper('url');
         $this->method('GET');
 
         if(!isset(getallheaders()['SecretToken'])) {
-            $this->http_response(401, 'Unauthorized', [
-                'message' => 'Token is not set',
-                'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
-            ]);
+            redirect('/', 'location', 'dassad');
+            // $this->http_response(401, 'Unauthorized', [
+            //     'message' => 'Token is not set',
+            //     'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
+            // ]);
         }
 
         $basic_token = getallheaders()['SecretToken'];
@@ -90,10 +95,7 @@ class Secret_auth {
             return true;
             die();
         } else {
-            redirect('/login', 'location', $this->http_response(401, 'Unauthorized', [
-                'message' => 'Wrong or no Token',
-                'warning' => 'Your IP has been recorded. Continuous failed attampts will get your IP blocked'
-            ]));
+            redirect('/', 'location', 301);
             // $this->http_response(401, 'Unauthorized', [
             //     'message' => 'Wrong Token',
             //     'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'

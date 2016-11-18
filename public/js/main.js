@@ -1,9 +1,31 @@
 jQuery(function() {
-	// topNav(1);
-	mainMenu();
+	if(store.get('token') === undefined) {
+		loginScreen();
+	} else {
+		mainMenu();
+	}
 });
 
 const URL = 'http://webtinderbox:8888/';
+
+/*=============================
+=          Welcome            =
+=============================*/
+function loginScreen() {
+	storeCheck();
+	store.clear();
+    function storeCheck() {
+        if (!store.enabled) {
+            alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
+            return false;
+        }
+    }
+}
+
+
+
+
+
 
 /*=============================
 =            Login            =
@@ -18,7 +40,7 @@ function login() {
 		{
 			var html = '<h1>Log-in</h1>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 
 		}
 	})
@@ -42,7 +64,7 @@ function topNav() {
 			var html = '<h1>topNav</h1>'
 					+ '<button class="waves-effect waves-light btn btn-back">back</button>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 		}
 	})
 };
@@ -51,7 +73,7 @@ function topNav() {
  * Buttons
  */
 
- jQuery('#container').on('click', '.btn-back', mainMenu);
+ jQuery('#app').on('click', '.btn-back', mainMenu);
 
 /*=====  End of Topnavigation  ======*/
 
@@ -73,7 +95,7 @@ function mainMenu() {
 					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
 					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 		}
 	})
 };
@@ -88,7 +110,7 @@ function map() {
 		{
 			var html = topNav();
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 
 		}
 	})
@@ -103,7 +125,7 @@ function chat() {
 		{
 			var html = topNav();
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 		}
 	})
 }
@@ -115,7 +137,7 @@ function information() {
 		{
 			var html = topNav();
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 		}
 	})
 
@@ -130,7 +152,7 @@ function faq() {
 			var html = topNav();
 			html += '<h1>TEST</h1>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 		}
 	})
 
@@ -140,10 +162,10 @@ function faq() {
  * Buttons
  */
 
- jQuery('#container').on('click', '.btn-map', map);
- jQuery('#container').on('click', '.btn-chat', chat);
- jQuery('#container').on('click', '.btn-info', information);
- jQuery('#container').on('click', '.btn-faq', faq);
+ jQuery('#app').on('click', '.btn-map', map);
+ jQuery('#app').on('click', '.btn-chat', chat);
+ jQuery('#app').on('click', '.btn-info', information);
+ jQuery('#app').on('click', '.btn-faq', faq);
 
 /*=====  End of Mainmenu  ======*/
 
@@ -159,7 +181,7 @@ function changeImage() {
 		{
 			var html = '<h1>changeImage</h1>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 
 		}
 	})
@@ -174,7 +196,7 @@ function settings() {
 		{
 			var html = '<h1>Settings</h1>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 
 		}
 	})
@@ -189,7 +211,7 @@ function notification() {
 		{
 			var html = '<h1>notification</h1>';
 
-			jQuery('#container').html(html); //overwrites the content from the view
+			jQuery('#app').html(html); //overwrites the content from the view
 
 		}
 	})
