@@ -16,8 +16,6 @@ function login() {
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
 			var html = '<h1>Log-in</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
@@ -41,8 +39,6 @@ function topNav() {
 		// type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
 			var html = '<h1>topNav</h1>'
 					+ '<button class="waves-effect waves-light btn btn-back">back</button>';
 
@@ -71,8 +67,6 @@ function mainMenu() {
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
 			var html = '<h1>Mainmenu</h1>'
 					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
 					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
@@ -92,10 +86,7 @@ function map() {
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
-			var html = topNav()
-					+ '<h1>map</h1>';
+			var html = topNav();
 
 			jQuery('#container').html(html); //overwrites the content from the view
 
@@ -110,10 +101,7 @@ function chat() {
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			// console.log(status);
-			console.log(data);
-			var html = topNav()
-					+'<h1>chat</h1>';
+			var html = topNav();
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -125,9 +113,7 @@ function information() {
 		contentType: 'application/json',
 		success: function()
 		{
-		
-			var html = topNav()
-					+'<h1>info</h1>';
+			var html = topNav();
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -141,8 +127,8 @@ function faq() {
 		success: function()
 		{
 
-			var html = topNav()
-					+'<h1>FAQ</h1>';
+			var html = topNav();
+			html += '<h1>TEST</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
 		}
@@ -171,8 +157,6 @@ function changeImage() {
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
 			var html = '<h1>changeImage</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
@@ -188,8 +172,6 @@ function settings() {
 		type: 'PUT',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
 			var html = '<h1>Settings</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view
@@ -205,8 +187,6 @@ function notification() {
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(status);
-			console.log(data);
 			var html = '<h1>notification</h1>';
 
 			jQuery('#container').html(html); //overwrites the content from the view

@@ -90,10 +90,14 @@ class Secret_auth {
             return true;
             die();
         } else {
-            $this->http_response(401, 'Unauthorized', [
-                'message' => 'Wrong Token',
-                'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
-            ]);
+            redirect('/login', 'location', $this->http_response(401, 'Unauthorized', [
+                'message' => 'Wrong or no Token',
+                'warning' => 'Your IP has been recorded. Continuous failed attampts will get your IP blocked'
+            ]));
+            // $this->http_response(401, 'Unauthorized', [
+            //     'message' => 'Wrong Token',
+            //     'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
+            // ]);
         }
 	}
 
