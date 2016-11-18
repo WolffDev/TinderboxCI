@@ -66,7 +66,7 @@ function topNav() {
 
 function mainMenu() {
 	jQuery.ajax({
-		url: URL + 'api/shifts/44', //load token
+		url: URL + 'api/shifts/1', //load token
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
@@ -87,7 +87,7 @@ function mainMenu() {
 
 function map() {
 	jQuery.ajax({
-		url: URL + 'api/shifts/44',
+		url: URL + 'api/shifts/1',
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
@@ -105,7 +105,7 @@ function map() {
 
 function chat() {
 	jQuery.ajax({
-		url: URL + 'api/shifts/44',
+		url: URL + 'api/shifts/1',
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
