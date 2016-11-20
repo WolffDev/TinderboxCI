@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: url("../img/bg.jpg");
+    background-image: url("../img/bg2.jpg");
     background-repeat: no-repeat;
     background-size: auto;
 }
@@ -14,7 +14,7 @@ body {
 *        LOGIN      *
 ********************/
 .login-container {
-
+    position: relative;
     .login-logo {
         padding: 80px 18px 50px;
         img {
@@ -24,8 +24,21 @@ body {
         }
     }
     .login-input {
+        padding-bottom: 60px;
         max-width: 400px;
         margin: 0 auto;
+        .forgot-pw {
+            position: absolute;
+            right: 18px;
+            bottom: -30px;
+            a {
+                font-size: 1.2rem;
+                color: $text_grey;
+                &:hover {
+                    color: rgba($yellow, .7);
+                }
+            }
+        }
         input {
             font-size: 1.2rem;
             color: rgba($beige, .7);
