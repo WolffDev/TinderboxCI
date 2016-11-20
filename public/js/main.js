@@ -1,5 +1,5 @@
 jQuery(function() {
-	if(store.get('token') === undefined) {
+	if(store.get('user') === undefined) {
 		loginScreen();
 	} else {
 		mainMenu();
@@ -61,10 +61,6 @@ function loginScreen() {
 }
 
 
-
-
-
-
 /*=============================
 =            Login            =
 =============================*/
@@ -76,16 +72,23 @@ function login() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
-			xhr.setRequestHeader ("Authorization", "Basic " + btoa(email + ":" + password));
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
 		url: URL + 'api/login',
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(data);
+			store.set('user', {
+				userid: data.userid,
+				firstname: data.firstname,
+				lastname: data.lastname,
+				email: data.email,
+				token: data.secretToken
+			});
 		}
-	}).done(mainMenu());
+	})
+	.done(mainMenu());
 };
 
 
@@ -111,11 +114,6 @@ function topNav() {
 	})
 };
 
-/*
- * Buttons
- */
-
- jQuery('#app').on('click', '.btn-back', mainMenu);
 
 /*=====  End of Topnavigation  ======*/
 
@@ -127,21 +125,21 @@ function topNav() {
 function mainMenu() {
 	console.log("Main menu loaded!");
 	jQuery.ajax({
-		url: URL + 'api/shifts/44', //load token
+		url: URL + 'api/users', //load token
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response)
 		{
-			console.log(data);
-			var html = '<h1>Mainmenu</h1>'
+			
+		}
+	});
+	var html = '<h1>Mainmenu</h1>'
 					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
 					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
 					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
 					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
 
 			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
 };
 
 
@@ -260,10 +258,9 @@ function notification() {
 =              BUTTONS             =
 ==================================*/
 
- jQuery('#app').on('click', '.btn-submit', login);
- jQuery('#app').on('click', '.btn-map', map);
- jQuery('#app').on('click', '.btn-chat', chat);
- jQuery('#app').on('click', '.btn-info', information);
- jQuery('#app').on('click', '.btn-faq', faq);
-
-
+jQuery('#app').on('click', '.btn-submit', login);
+jQuery('#app').on('click', '.btn-map', map);
+jQuery('#app').on('click', '.btn-chat', chat);
+jQuery('#app').on('click', '.btn-info', information);
+jQuery('#app').on('click', '.btn-faq', faq);
+jQuery('#app').on('click', '.btn-back', mainMenu);

@@ -47,15 +47,18 @@ class Secret_auth {
         * REFACTOR!!!!!!
         ******************/
         if($userdata) {
-            $token = array_pop($userdata);
-            $res_email = array_pop($userdata);
+            $token = $userdata['token'];
             $token = (string)$token;
 
-            $res_token = $res_email . ':' . $token;
+            $res_token = $userdata['email'] . ':' . $token;
 
             $encoded_token = base64_encode($res_token);
             $this->http_response(200, 'OK', [
-                'SecretToken' => $encoded_token
+                'userid' => $userdata['userid'],
+                'firstname' => $userdata['firstname'],
+                'lastname' => $userdata['lastname'],
+                'email' => $userdata['email'],
+                'secretToken' => $encoded_token
             ]);
         } else {
             $this->http_response(401, 'Unauthorized', [
