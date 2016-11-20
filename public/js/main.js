@@ -141,7 +141,8 @@ function mainMenu() {
 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
 				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
 				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
+				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+				+ '<button class="waves-effect waves-light btn btn-logout">Logout</button>';
 		jQuery('#app').html(html); //overwrites the content from the view
 	};
 };
@@ -210,3 +211,4 @@ jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
 jQuery('#app').on('click', '.btn-faq', faq);
 jQuery('#app').on('click', '.btn-back', mainMenu);
+jQuery('#app').on('click', '.btn-logout', loginScreen);
