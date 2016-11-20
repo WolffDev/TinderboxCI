@@ -46,8 +46,8 @@ function loginScreen() {
 						+'</div>'
 						+'</div class="row">'
 							+'<div class="col s12 center">'
-								+'<button class="btn waves-effect waves-light btn-submit">'
-									+'Log ind'
+								+'<button class="btn waves-effect red waves-dark btn-login-submit">'
+									+'Login'
 								+'</button>'
 							+'</div>'
 						+'</div>'
@@ -78,16 +78,22 @@ function login() {
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response) {
-			store.set('user', {
+			
+		},
+		error: function(xhr, status, error) {
+			var err = JSON.parse(xhr.responseText);
+			responseHandling(err);
+		}
+	}).done(function(data, status, response) {
+		store.set('user', {
 				userid: data.userid,
 				firstname: data.firstname,
 				lastname: data.lastname,
 				email: data.email,
 				token: data.secretToken
 			});
-		}
-	})
-	.done(mainMenu());
+			mainMenu();
+	});
 };
 
 
@@ -135,10 +141,10 @@ function mainMenu() {
 		},
 		error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
-			console.log(err);
+			responseHandling(err);
 		}
 	});
-	function loadMainMenu(a,b,c) {
+	function loadMainMenu() {
 		var html =
 			'<h1>Mainmenu</h1>'
 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
@@ -254,11 +260,16 @@ function notification() {
 
 /*=====  End of Burgermenu  ======*/
 
+
+function responseHandling(data){
+	Materialize.toast(data.message, 4000);
+}
+
 /*==================================
 =              BUTTONS             =
 ==================================*/
 
-jQuery('#app').on('click', '.btn-submit', login);
+jQuery('#app').on('click', '.btn-login-submit', login);
 jQuery('#app').on('click', '.btn-map', map);
 jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);

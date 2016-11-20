@@ -34,7 +34,7 @@ class Secret_auth {
 
         // Validate
         $this->super_escape('validate', 'email', $credentials[0]);
-        $this->super_escape('validate', 'password', $credentials[1]);
+        $this->super_escape('validate', 'string', $credentials[1]);
 
         // Sanitize
         $safe_email = $this->super_escape('sanitize', 2, $credentials[0]);
@@ -42,10 +42,6 @@ class Secret_auth {
 
         $userdata = $this->ci->users_model->get_user_by_email_password($safe_email, $safe_password);
         
-        // Needs to return userid, email, token as an array, to use it in Store.js = REFACTOR
-        /******************
-        * REFACTOR!!!!!!
-        ******************/
         if($userdata) {
             $token = $userdata['token'];
             $token = (string)$token;
@@ -186,9 +182,9 @@ class Secret_auth {
                         */
                     case 'email':
                         if(!filter_var($data, FILTER_VALIDATE_EMAIL) || empty($data)) {
-                            $this->http_response(400, 'Bad Request', [
+                            redirect('/', 'location', $this->http_response(400, 'Bad Request', [
                                 'message' => 'You did not pass a valid email'
-                            ]);
+                            ]));
                         }
                         break;
 

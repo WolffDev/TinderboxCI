@@ -1,1 +1,30 @@
 @import "colors";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+/********************
+*        LOGIN      *
+********************/
+.login-container {
+
+    .login-logo {
+        padding: 80px 18px 50px;
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+    }
+    .login-input {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}

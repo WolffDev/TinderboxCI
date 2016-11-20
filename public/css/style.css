@@ -1,11 +1,21 @@
-testing2 {
-  color: red; }
+* {
+  box-sizing: border-box; }
 
-.testing {
-  width: 71.42857%; }
+body {
+  background-image: url("../img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: auto; }
 
-h1 {
-  font-size: 14em; }
+/********************
+*        LOGIN      *
+********************/
+.login-container .login-logo {
+  padding: 80px 18px 50px; }
+  .login-container .login-logo img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%; }
 
-h1 {
-  color: red; }
+.login-container .login-input {
+  max-width: 400px;
+  margin: 0 auto; }
