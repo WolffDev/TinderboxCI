@@ -126,22 +126,22 @@ function topNav() {
 
 function mainMenu() {
 	console.log("Main menu loaded!");
-	jQuery.ajax({
-		url: URL + 'api/shifts/44', //load token
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response)
-		{
-			console.log(data);
-			var html = '<h1>Mainmenu</h1>'
-					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
-					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
-					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
+	// jQuery.ajax({
+	// 	url: URL + 'api/shifts/', //load token
+	// 	contentType: 'application/json',
+	// 	type: 'GET',
+	// 	success: function(data, status, response)
+	// 	{
+	// 		console.log(data);
+	// 		var html = '<h1>Mainmenu</h1>'
+	// 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
+	// 				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+	// 				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+	// 				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
 
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
+	// 		jQuery('#app').html(html); //overwrites the content from the view
+	// 	}
+	// })
 };
 
 
