@@ -26,5 +26,31 @@ body {
     .login-input {
         max-width: 400px;
         margin: 0 auto;
+        input {
+            font-size: 1.2rem;
+            color: rgba($beige, .7);
+            &:focus {
+                color: $beige;
+                border-bottom: 1px solid $yellow;
+                box-shadow: 0 1px 0 0 $yellow; 
+                &+label {
+                    color: $yellow;
+                }
+            }
+            &+label {
+                font-size: 1.2rem;
+            }
+        }
+    }
+    .btn-login-submit {
+        min-width: 305px;
+        border-radius: 60px;
+        color:  $beige;
+        text-transform: uppercase;
+        background-color: rgba(153, 153, 153, 0.2);
+        &:hover {
+            background-color: $yellow;
+            color: $teal;
+        }
     }
 }

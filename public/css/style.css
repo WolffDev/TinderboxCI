@@ -19,3 +19,24 @@ body {
 .login-container .login-input {
   max-width: 400px;
   margin: 0 auto; }
+  .login-container .login-input input {
+    font-size: 1.2rem;
+    color: rgba(253, 249, 244, 0.7); }
+    .login-container .login-input input:focus {
+      color: #fdf9f4;
+      border-bottom: 1px solid #ffd962;
+      box-shadow: 0 1px 0 0 #ffd962; }
+      .login-container .login-input input:focus + label {
+        color: #ffd962; }
+    .login-container .login-input input + label {
+      font-size: 1.2rem; }
+
+.login-container .btn-login-submit {
+  min-width: 305px;
+  border-radius: 60px;
+  color: #fdf9f4;
+  text-transform: uppercase;
+  background-color: rgba(153, 153, 153, 0.2); }
+  .login-container .btn-login-submit:hover {
+    background-color: #ffd962;
+    color: #043540; }
