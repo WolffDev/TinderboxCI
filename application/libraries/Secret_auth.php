@@ -33,8 +33,8 @@ class Secret_auth {
         $credentials = explode(':', $decoded_login);
 
         // Validate
-        $this->super_escape('validate', 'email', $credentials[0]);
-        $this->super_escape('validate', 'string', $credentials[1]);
+        $this->super_escape('validate', 'emailLogin', $credentials[0]);
+        $this->super_escape('validate', 'passwordLogin', $credentials[1]);
 
         // Sanitize
         $safe_email = $this->super_escape('sanitize', 2, $credentials[0]);
@@ -163,13 +163,13 @@ class Secret_auth {
                         }
                         break;
                     case 'password':
-                        if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{8,24}$/', $data)) {
+                        if(preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{8,24}$/', $data)) {
+                            return true;
+                        } else {
                             $this->http_response(400, 'Bad Request', [
                                 'message' => 'Password does not meet the requirements',
                                 'require' => 'one number, one small letter, one special character !@#$%/, between 8 and 24 long'
                             ]);
-                        } else {
-                            return true;
                         }
                         break;
                         /*
@@ -180,10 +180,30 @@ class Secret_auth {
                         and it has to be a number, a letter or one of the following: !@#$%\/ -> [0-9A-Za-z!@#$%\/]
                         and there have to be 8-12 characters -> {8,12}
                         */
+
+
+                    case 'passwordLogin':
+                        if(preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{8,24}$/', $data)) {
+                            return true;
+                        } else {
+                            $this->http_response(400, 'Bad Request', [
+                                'message' => 'Email and/or password is wrong'
+                            ]);
+                        }
+                        break;
+
                     case 'email':
                         if(!filter_var($data, FILTER_VALIDATE_EMAIL) || empty($data)) {
                             redirect('/', 'location', $this->http_response(400, 'Bad Request', [
                                 'message' => 'You did not pass a valid email'
+                            ]));
+                        }
+                        break;
+
+                    case 'emailLogin':
+                        if(!filter_var($data, FILTER_VALIDATE_EMAIL) || empty($data)) {
+                            redirect('/', 'location', $this->http_response(400, 'Bad Request', [
+                                'message' => 'Email and/or password is wrong'
                             ]));
                         }
                         break;

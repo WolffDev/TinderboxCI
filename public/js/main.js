@@ -15,7 +15,7 @@ const RESS = 'public/';
 =============================*/
 function loginScreen() {
 	storeCheck();
-	store.clear();
+	localStorage.removeItem('user');
     function storeCheck() {
 		// Use something else than alert()
         if (!store.enabled) {
@@ -78,7 +78,6 @@ function login() {
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response) {
-			
 		},
 		error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
