@@ -1,5 +1,5 @@
 jQuery(function() {
-	if(store.get('user') === undefined) {
+	if(store.get('user') === undefined || jQuery.isEmptyObject(store.get('user'))) {
 		loginScreen();
 	} else {
 		mainMenu();
@@ -106,19 +106,6 @@ function login() {
 =            Topnavigation            =
 =====================================*/
 
-function topNav() {
-	jQuery.ajax({
-		// url: URL + 'api/users',
-		contentType: 'application/json',
-		// type: 'GET',
-		success: function(data, status, response) {
-			var html = '<h1>topNav</h1>'
-					+ '<button class="waves-effect waves-light btn btn-back">back</button>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-};
 
 
 /*=====  End of Topnavigation  ======*/
@@ -139,13 +126,15 @@ function mainMenu() {
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response) {
-			loadMainMenu();
 		},
 		error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
 			responseHandling(err);
 		}
+	}).done(function() {
+		loadMainMenu();
 	});
+
 	function loadMainMenu() {
 		var html =
 			'<h1>Mainmenu</h1>'
@@ -159,56 +148,27 @@ function mainMenu() {
 
 
 function map() {
-	jQuery.ajax({
-		url: URL + 'api/shifts/44',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response) {
-			var html = topNav();
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+	html = '<h1>MAP</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
+	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function chat() {
-	jQuery.ajax({
-		url: URL + 'api/shifts/44',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response) {
-			var html = topNav();
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
+	html = '<h1>CHAT</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
+	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 function information() {
-	jQuery.ajax({
-		contentType: 'application/json',
-		success: function() {
-			var html = topNav();
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-
+	html = '<h1>INFORMATION</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
+	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 function faq() {
-	jQuery.ajax({
-		contentType: 'application/json',
-		success: function() {
-
-			var html = topNav();
-			html += '<h1>TEST</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-
+	html = '<h1>FAQ</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
+	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 
@@ -218,45 +178,18 @@ function faq() {
 =            Burgermenu            =
 ==================================*/
 function changeImage() {
-	jQuery.ajax({
-		url: URL + 'api/users',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response) {
-			var html = '<h1>changeImage</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+	var html = '<h1>changeImage</h1>';
+	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function settings() {
-	jQuery.ajax({
-		url: URL + 'api/settings',
-		contentType: 'application/json',
-		type: 'PUT',
-		success: function(data, status, response) {
-			var html = '<h1>Settings</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+	var html = '<h1>Settings</h1>';
+	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function notification() {
-	jQuery.ajax({
-		url: URL + 'api/notification',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response) {
-			var html = '<h1>notification</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+	var html = '<h1>notification</h1>';
+	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 

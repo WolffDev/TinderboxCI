@@ -10,8 +10,12 @@
 <body>
 	<div id="response"></div>
 	<div id="app">
-		<div class="loading">
-			<p>Loading</p>
+		<div class="row">
+			<div class="col s12 center">
+				<div class="loading">
+					<p>Loading</p>
+				</div>
+			</div>
 		</div>
 	</div>
 <!-- Compiled and minified JavaScript -->

@@ -7,6 +7,13 @@ body {
   background-size: auto; }
 
 /********************
+*       LOADING     *
+********************/
+.loading {
+  color: #ffd962;
+  font-size: 4rem; }
+
+/********************
 *        LOGIN      *
 ********************/
 .login-container {
