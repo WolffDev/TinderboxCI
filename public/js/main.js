@@ -77,8 +77,7 @@ function login() {
 		url: URL + 'api/login',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			store.set('user', {
 				userid: data.userid,
 				firstname: data.firstname,
@@ -104,8 +103,7 @@ function topNav() {
 		// url: URL + 'api/users',
 		contentType: 'application/json',
 		// type: 'GET',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			var html = '<h1>topNav</h1>'
 					+ '<button class="waves-effect waves-light btn btn-back">back</button>';
 
@@ -123,23 +121,32 @@ function topNav() {
 =============================================*/
 
 function mainMenu() {
+	var user = store.get('user');
 	console.log("Main menu loaded!");
 	jQuery.ajax({
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("SecretToken", user.token);
+		},
 		url: URL + 'api/users', //load token
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
-			
+		success: function(data, status, response) {
+			loadMainMenu();
+		},
+		error: function(xhr, status, error) {
+			var err = JSON.parse(xhr.responseText);
+			console.log(err);
 		}
 	});
-	var html = '<h1>Mainmenu</h1>'
-					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
-					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
-					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
+	function loadMainMenu(a,b,c) {
+		var html =
+			'<h1>Mainmenu</h1>'
+				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
+				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
+		jQuery('#app').html(html); //overwrites the content from the view
+	};
 };
 
 
@@ -148,8 +155,7 @@ function map() {
 		url: URL + 'api/shifts/44',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			var html = topNav();
 
 			jQuery('#app').html(html); //overwrites the content from the view
@@ -163,8 +169,7 @@ function chat() {
 		url: URL + 'api/shifts/44',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			var html = topNav();
 
 			jQuery('#app').html(html); //overwrites the content from the view
@@ -175,8 +180,7 @@ function chat() {
 function information() {
 	jQuery.ajax({
 		contentType: 'application/json',
-		success: function()
-		{
+		success: function() {
 			var html = topNav();
 
 			jQuery('#app').html(html); //overwrites the content from the view
@@ -188,8 +192,7 @@ function information() {
 function faq() {
 	jQuery.ajax({
 		contentType: 'application/json',
-		success: function()
-		{
+		success: function() {
 
 			var html = topNav();
 			html += '<h1>TEST</h1>';
@@ -211,8 +214,7 @@ function changeImage() {
 		url: URL + 'api/users',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			var html = '<h1>changeImage</h1>';
 
 			jQuery('#app').html(html); //overwrites the content from the view
@@ -226,8 +228,7 @@ function settings() {
 		url: URL + 'api/settings',
 		contentType: 'application/json',
 		type: 'PUT',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			var html = '<h1>Settings</h1>';
 
 			jQuery('#app').html(html); //overwrites the content from the view
@@ -241,8 +242,7 @@ function notification() {
 		url: URL + 'api/notification',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
+		success: function(data, status, response) {
 			var html = '<h1>notification</h1>';
 
 			jQuery('#app').html(html); //overwrites the content from the view

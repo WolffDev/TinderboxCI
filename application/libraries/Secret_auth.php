@@ -74,11 +74,11 @@ class Secret_auth {
         $this->method('GET');
 
         if(!isset(getallheaders()['SecretToken'])) {
-            redirect('/', 'location', 'dassad');
-            // $this->http_response(401, 'Unauthorized', [
-            //     'message' => 'Token is not set',
-            //     'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
-            // ]);
+            // redirect('/', 'location', 'dassad');
+            $this->http_response(401, 'Unauthorized', [
+                'message' => 'Token is not set',
+                'warning' => 'Your IP has been recorded. If you keep connecting without the right token, your IP will be blocked'
+            ]);
         }
 
         $basic_token = getallheaders()['SecretToken'];
@@ -98,11 +98,11 @@ class Secret_auth {
             return true;
             die();
         } else {
-            redirect('/', 'location', 301);
-            // $this->http_response(401, 'Unauthorized', [
-            //     'message' => 'Wrong Token',
-            //     'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
-            // ]);
+            // redirect('/', 'location', 301);
+            $this->http_response(401, 'Unauthorized', [
+                'message' => 'Wrong Token',
+                'warning' => 'Your IP has been recorded. Continuous failed attempts will get your IP blocked'
+            ]);
         }
 	}
 
