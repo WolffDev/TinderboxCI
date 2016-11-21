@@ -123,7 +123,7 @@ function mainMenu() {
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader("SecretToken", user.token);
 		},
-		url: URL + 'api/users', //load token
+		url: URL + 'api/shifts/' + user.userid, //load token
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response) {
@@ -132,11 +132,12 @@ function mainMenu() {
 			var err = JSON.parse(xhr.responseText);
 			responseHandling(err);
 		}
-	}).done(function() {
-		loadMainMenu();
+	}).done(function(data) {
+		loadMainMenu(data);
 	});
 
-	function loadMainMenu() {
+	function loadMainMenu(shifts) {
+		console.log(shifts.length, shifts);
 		var header =
 			'<input type="checkbox" id="sidebarToggler">'
 			+'<header class="z-depth-2">'
@@ -234,7 +235,7 @@ function settings() {
 };
 
 function notification(event) {
-	var html = '<h1>notification ' + event.data.fn + '</h1>';
+	var html = '<h1>notification ' + event.data.title + '</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
@@ -262,7 +263,7 @@ jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
 jQuery('#app').on('click', '.btn-faq', faq);
 jQuery('#app').on('click', '.btn-back', mainMenu);
-jQuery('#app').on('click', '.btn-notification', {fn: "notification"}, notification);
+jQuery('#app').on('click', '.btn-notification', {title: "notification"}, notification);
 jQuery('#app').on('click', '.btn-settings', settings);
 jQuery('#app').on('click', '.btn-logout', loginScreen);
 
