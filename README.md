@@ -19,7 +19,13 @@ npm install
 ```
 gulp watch
 ```
-## Deplaoyment
+- To further develop on your local machine, you have to change the following files, to your local settings
+```
+public/js/main.js:10
+application/config/database.php:78-81
+application/config/config.php:26
+```
+## Deplaoouyayment
 To deploy, minify css and js files
 ```
 gulp build
