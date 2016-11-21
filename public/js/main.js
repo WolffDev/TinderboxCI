@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://webtinderbox:8888/';
+const URL = 'http://localhost:8888/tissekone/';
 const RESS = 'public/';
 
 /*=============================
@@ -118,6 +118,24 @@ function login() {
 function mainMenu() {
 	var user = store.get('user');
 	console.log("Main menu loaded!");
+// <<<<<<< HEAD
+	// jQuery.ajax({
+	// 	url: URL + 'api/shifts/', //load token
+	// 	contentType: 'application/json',
+	// 	type: 'GET',
+	// 	success: function(data, status, response)
+	// 	{
+	// 		console.log(data);
+	// 		var html = '<h1>Mainmenu</h1>'
+	// 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
+	// 				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+	// 				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+	// 				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
+
+	// 		jQuery('#app').html(html); //overwrites the content from the view
+	// 	}
+	// })
+// =======
 	jQuery.ajax({
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader("SecretToken", user.token);
@@ -145,6 +163,7 @@ function mainMenu() {
 				+ '<button class="waves-effect waves-light btn btn-logout">Logout</button>';
 		jQuery('#app').html(html); //overwrites the content from the view
 	};
+// >>>>>>> 89aa0a32f9595de854a9a88d7ceabd438386c52f
 };
 
 
