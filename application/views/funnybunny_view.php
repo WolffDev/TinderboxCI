@@ -9,14 +9,15 @@
 </head>
 <body>
 	<div id="response"></div>
+	<div id="loading"></div>
 	<div id="app">
-		<div class="row">
+		<!--<div class="row">
 			<div class="col s12 center">
 				<div class="loading">
 					<p>Loading...</p>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	</div>
 <!-- Compiled and minified JavaScript -->
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>

@@ -152,14 +152,24 @@ function mainMenu() {
 					+'<div class="sidebar-wrapper">'
 						+'<div class="sidebar-profile">'
 							+'<img src="'+ RESS +'img/user.jpg" alt="">'
-							+'<h2>FunnyBunny</h2>'
-							+'<p>funnybunny@gmail.com</p>'
+							+'<h2>'
+								+ user.firstname
+							+'</h2>'
+							+'<p>'
+								+ user.email
+							+'</p>'
 						+'</div>'
 						+'<div class="sidebar-links">'
 							+'<ul>'
-								+'<li><img src="'+ RESS +'img/alarm.svg">Noticication</li>'
-								+'<li><img src="'+ RESS +'img/settings.svg">Settings</li>'
-								+'<li class="btn-logout"><img src="'+ RESS +'img/exit.svg">Logout</li>'
+								+'<li class="btn-notification">'
+									+'<img src="'+ RESS +'img/alarm.svg">Noticication'
+								+'</li>'
+								+'<li class="btn-settings">'
+									+'<img src="'+ RESS +'img/settings.svg">Settings'
+								+'</li>'
+								+'<li class="btn-logout">'
+									+'<img src="'+ RESS +'img/exit.svg">Logout'
+								+'</li>'
 							+'</ul>'
 						+'</div>'
 						+'<div class="sidebar-copy">'
@@ -168,9 +178,6 @@ function mainMenu() {
 					+'</div>'
 				+'</div>'
 			+'</header>';
-
-
-
 
 		var html =
 			'<h1>Mainmenu</h1>'
@@ -185,25 +192,25 @@ function mainMenu() {
 
 
 function map() {
-	html = '<h1>MAP</h1>';
+	var html = '<h1>MAP</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function chat() {
-	html = '<h1>CHAT</h1>';
+	var html = '<h1>CHAT</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 function information() {
-	html = '<h1>INFORMATION</h1>';
+	var html = '<h1>INFORMATION</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 function faq() {
-	html = '<h1>FAQ</h1>';
+	var html = '<h1>FAQ</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 }
@@ -216,16 +223,19 @@ function faq() {
 ==================================*/
 function changeImage() {
 	var html = '<h1>changeImage</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function settings() {
 	var html = '<h1>Settings</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
-function notification() {
-	var html = '<h1>notification</h1>';
+function notification(event) {
+	var html = '<h1>notification ' + event.data.fn + '</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
@@ -233,18 +243,27 @@ function notification() {
 /*=====  End of Burgermenu  ======*/
 
 
+/**================================================== *
+ * ==========  Custom Functions  ========== *
+ * ================================================== */
 function responseHandling(data){
 	Materialize.toast(data.message, 4000);
 }
 
-/*==================================
-=              BUTTONS             =
-==================================*/
+/* =======  End of Custom Functions  ======= */
 
+
+/**================================================== *
+ * ==========  Buttons  ========== *
+ * ================================================== */
 jQuery('#app').on('click', '.btn-login-submit', login);
 jQuery('#app').on('click', '.btn-map', map);
 jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
 jQuery('#app').on('click', '.btn-faq', faq);
 jQuery('#app').on('click', '.btn-back', mainMenu);
+jQuery('#app').on('click', '.btn-notification', {fn: "notification"}, notification);
+jQuery('#app').on('click', '.btn-settings', settings);
 jQuery('#app').on('click', '.btn-logout', loginScreen);
+
+/* =======  End of Buttons  ======= */
