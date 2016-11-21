@@ -7,16 +7,17 @@ body {
   background-repeat: no-repeat;
   background-size: auto; }
 
-/********************
-*       LOADING     *
-********************/
+/**================================================== *
+ * ==========  Loading Section  ========== *
+ * ================================================== */
 .loading {
   color: #ffd962;
   font-size: 4rem; }
 
-/********************
-*        LOGIN      *
-********************/
+/* =======  End of Loading Section  ======= */
+/**================================================== *
+ * ==========  Login Section  ========== *
+ * ================================================== */
 .login-container {
   position: relative; }
   .login-container .login-logo {
@@ -58,3 +59,114 @@ body {
     .login-container .btn-login-submit:hover {
       background-color: #ffd962;
       color: #043540; }
+
+/* =======  End of Login Section  ======= */
+/**================================================== *
+ * ==========  Header section  ========== *
+ * ================================================== */
+header {
+  background-color: #043540;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  text-decoration: none;
+  height: 50px;
+  width: 100%;
+  z-index: 10; }
+
+.logo img {
+  height: 40px; }
+
+.toggle-sidebar {
+  position: fixed;
+  top: -4px;
+  right: 20px;
+  font-size: 40px;
+  color: #fdf9f4;
+  cursor: pointer; }
+
+.toggle-close {
+  position: relative;
+  margin: 2px 0 0 267px;
+  font-size: 40px;
+  display: block;
+  cursor: pointer; }
+
+#sidebarToggler {
+  display: none; }
+
+#sidebarToggler:checked + header .sidebar {
+  right: 0px; }
+
+.sidebar {
+  margin: 0;
+  position: fixed;
+  top: 0px;
+  right: -350px;
+  bottom: 0px;
+  z-index: 20;
+  width: 320px;
+  background-color: #043540;
+  transition: .3s ease-in-out;
+  overflow-y: scroll; }
+  .sidebar ul {
+    color: #9e9e9e;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none; }
+    .sidebar ul li {
+      padding: 0 0 0 80px;
+      cursor: pointer;
+      border-bottom: 2px solid #1e4a53;
+      position: relative;
+      height: 65px;
+      line-height: 65px; }
+      .sidebar ul li:hover {
+        background-color: #ffd962;
+        color: #000; }
+      .sidebar ul li img {
+        height: 35px;
+        position: absolute;
+        top: 15px;
+        left: 35px; }
+
+.sidebar-profile {
+  color: #fdf9f4;
+  text-align: center;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #1e4a53; }
+  .sidebar-profile p {
+    color: #548681; }
+  .sidebar-profile img {
+    border-radius: 50%;
+    display: block;
+    height: 150px;
+    margin: 0 auto; }
+
+.sidebar-copy {
+  color: #548681;
+  text-align: center;
+  padding-top: 40px; }
+
+/* =======  End of Header section  ======= */
+/*=================================
+=            Main menu            =
+=================================*/
+/*=====  End of Main menu  ======*/
+/*===========================
+=            Map            =
+===========================*/
+/*=====  End of Map  ======*/
+/*============================
+=            Chat            =
+============================*/
+/*=====  End of Chat  ======*/
+/*===========================
+=            FAQ            =
+===========================*/
+/*=====  End of FAQ  ======*/
+/*============================
+=            Info            =
+============================*/
+/*=====  End of Info  ======*/

@@ -137,14 +137,49 @@ function mainMenu() {
 	});
 
 	function loadMainMenu() {
+		var header =
+			'<input type="checkbox" id="sidebarToggler">'
+			+'<header class="z-depth-2">'
+				+'<div class="logo">'
+					+'<img src="'+ RESS +'img/logo.png">'
+				+'</div>'
+				+'<label class="toggle-sidebar" for="sidebarToggler">'
+					+'<img src="'+ RESS +'img/menu.png" alt="" style="padding-top: 15px;">'
+				+'</label>'
+
+				+'<div class="sidebar z-depth-2">'
+					+'<label class="toggle-close" for="sidebarToggler">✕</label>'
+					+'<div class="sidebar-wrapper">'
+						+'<div class="sidebar-profile">'
+							+'<img src="'+ RESS +'img/user.jpg" alt="">'
+							+'<h2>FunnyBunny</h2>'
+							+'<p>funnybunny@gmail.com</p>'
+						+'</div>'
+						+'<div class="sidebar-links">'
+							+'<ul>'
+								+'<li><img src="'+ RESS +'img/alarm.svg">Noticication</li>'
+								+'<li><img src="'+ RESS +'img/settings.svg">Settings</li>'
+								+'<li class="btn-logout"><img src="'+ RESS +'img/exit.svg">Logout</li>'
+							+'</ul>'
+						+'</div>'
+						+'<div class="sidebar-copy">'
+							+'<p>Tinderbox &copy; 2017<br>Version: Bravo Two Zero</p>'
+						+'</div>'
+					+'</div>'
+				+'</div>'
+			+'</header>';
+
+
+
+
 		var html =
 			'<h1>Mainmenu</h1>'
 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
 				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
 				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
-				+ '<button class="waves-effect waves-light btn btn-logout">Logout</button>';
-		jQuery('#app').html(html); //overwrites the content from the view
+				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
+		var sendHtml = header + html;
+		jQuery('#app').html(sendHtml); //overwrites the content from the view
 	};
 };
 
