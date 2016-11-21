@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://webtinderbox:8888/';
+const URL = 'http://localhost/TinderboxCI/';
 const RESS = 'public/';
 
 /*=============================
@@ -80,8 +80,7 @@ function login() {
 		url: URL + 'api/login',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response) {
-		},
+
 		error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
 			responseHandling(err);
