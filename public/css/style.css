@@ -1,11 +1,60 @@
-testing2 {
-  color: red; }
+* {
+  box-sizing: border-box; }
 
-.testing {
-  width: 71.42857%; }
+body {
+  background-color: #043540;
+  background-image: url("../img/bg2.jpg");
+  background-repeat: no-repeat;
+  background-size: auto; }
 
-h1 {
-  font-size: 14em; }
+/********************
+*       LOADING     *
+********************/
+.loading {
+  color: #ffd962;
+  font-size: 4rem; }
 
-h1 {
-  color: red; }
+/********************
+*        LOGIN      *
+********************/
+.login-container {
+  position: relative; }
+  .login-container .login-logo {
+    padding: 80px 18px 50px; }
+    .login-container .login-logo img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%; }
+  .login-container .login-input {
+    padding-bottom: 60px;
+    max-width: 400px;
+    margin: 0 auto; }
+    .login-container .login-input .forgot-pw {
+      position: absolute;
+      right: 18px;
+      bottom: -30px; }
+      .login-container .login-input .forgot-pw a {
+        font-size: 1.2rem;
+        color: #9e9e9e; }
+        .login-container .login-input .forgot-pw a:hover {
+          color: rgba(255, 217, 98, 0.7); }
+    .login-container .login-input input {
+      font-size: 1.2rem;
+      color: rgba(253, 249, 244, 0.7); }
+      .login-container .login-input input:focus {
+        color: #fdf9f4;
+        border-bottom: 1px solid #ffd962;
+        box-shadow: 0 1px 0 0 #ffd962; }
+        .login-container .login-input input:focus + label {
+          color: #ffd962; }
+      .login-container .login-input input + label {
+        font-size: 1.2rem; }
+  .login-container .btn-login-submit {
+    min-width: 305px;
+    border-radius: 60px;
+    color: #fdf9f4;
+    text-transform: uppercase;
+    background-color: rgba(153, 153, 153, 0.2); }
+    .login-container .btn-login-submit:hover {
+      background-color: #ffd962;
+      color: #043540; }

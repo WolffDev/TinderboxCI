@@ -18,8 +18,6 @@ class Shifts_model extends CI_Model {
         return $result->result();
     }
 
-   
-
     public function set_shift($args = []) {
         $query = sprintf('INSERT INTO shifts
             (shift_userid, shift_name, shift_content, shift_station, shift_location, shift_start, shift_end)
@@ -61,7 +59,6 @@ class Shifts_model extends CI_Model {
             , $this->db->escape_like_str($args['sid']));
         $result = $this->db->query($query);
         return $args['sid'];
-
     }
 
     public function delete_shift($id = null) {
