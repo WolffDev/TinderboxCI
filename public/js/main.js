@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://localhost:8888/tissekone/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -118,24 +118,7 @@ function login() {
 function mainMenu() {
 	var user = store.get('user');
 	console.log("Main menu loaded!");
-// <<<<<<< HEAD
-	// jQuery.ajax({
-	// 	url: URL + 'api/shifts/', //load token
-	// 	contentType: 'application/json',
-	// 	type: 'GET',
-	// 	success: function(data, status, response)
-	// 	{
-	// 		console.log(data);
-	// 		var html = '<h1>Mainmenu</h1>'
-	// 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
-	// 				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
-	// 				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-	// 				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
 
-	// 		jQuery('#app').html(html); //overwrites the content from the view
-	// 	}
-	// })
-// =======
 	jQuery.ajax({
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader("SecretToken", user.token);
@@ -154,39 +137,80 @@ function mainMenu() {
 	});
 
 	function loadMainMenu() {
+		var header =
+			'<input type="checkbox" id="sidebarToggler">'
+			+'<header class="z-depth-2">'
+				+'<div class="logo">'
+					+'<img src="'+ RESS +'img/logo.png">'
+				+'</div>'
+				+'<label class="toggle-sidebar" for="sidebarToggler">'
+					+'<img src="'+ RESS +'img/menu.png" alt="" style="padding-top: 15px;">'
+				+'</label>'
+
+				+'<div class="sidebar z-depth-2">'
+					+'<label class="toggle-close" for="sidebarToggler">✕</label>'
+					+'<div class="sidebar-wrapper">'
+						+'<div class="sidebar-profile">'
+							+'<img src="'+ RESS +'img/user.jpg" alt="">'
+							+'<h2>'
+								+ user.firstname
+							+'</h2>'
+							+'<p>'
+								+ user.email
+							+'</p>'
+						+'</div>'
+						+'<div class="sidebar-links">'
+							+'<ul>'
+								+'<li class="btn-notification">'
+									+'<img src="'+ RESS +'img/alarm.svg">Noticication'
+								+'</li>'
+								+'<li class="btn-settings">'
+									+'<img src="'+ RESS +'img/settings.svg">Settings'
+								+'</li>'
+								+'<li class="btn-logout">'
+									+'<img src="'+ RESS +'img/exit.svg">Logout'
+								+'</li>'
+							+'</ul>'
+						+'</div>'
+						+'<div class="sidebar-copy">'
+							+'<p>Tinderbox &copy; 2017<br>Version: Bravo Two Zero</p>'
+						+'</div>'
+					+'</div>'
+				+'</div>'
+			+'</header>';
+
 		var html =
 			'<h1>Mainmenu</h1>'
 				+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
 				+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
 				+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
-				+ '<button class="waves-effect waves-light btn btn-logout">Logout</button>';
-		jQuery('#app').html(html); //overwrites the content from the view
+				+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
+		var sendHtml = header + html;
+		jQuery('#app').html(sendHtml); //overwrites the content from the view
 	};
-// >>>>>>> 89aa0a32f9595de854a9a88d7ceabd438386c52f
 };
 
 
 function map() {
-	html = '<h1>MAP</h1>';
+	var html = '<h1>MAP</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function chat() {
-	html = '<h1>CHAT</h1>';
+	var html = '<h1>CHAT</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 function information() {
-	html = '<h1>INFORMATION</h1>';
+	var html = '<h1>INFORMATION</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 }
 
 function faq() {
-	html = '<h1>FAQ</h1>';
+	var html = '<h1>FAQ</h1>';
 	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 }
@@ -199,16 +223,19 @@ function faq() {
 ==================================*/
 function changeImage() {
 	var html = '<h1>changeImage</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
 function settings() {
 	var html = '<h1>Settings</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
-function notification() {
-	var html = '<h1>notification</h1>';
+function notification(event) {
+	var html = '<h1>notification ' + event.data.fn + '</h1>';
+	html += '<button class="btn waves-effect btn-back">Back</button>';
 	jQuery('#app').html(html); //overwrites the content from the view
 };
 
@@ -216,18 +243,27 @@ function notification() {
 /*=====  End of Burgermenu  ======*/
 
 
+/**================================================== *
+ * ==========  Custom Functions  ========== *
+ * ================================================== */
 function responseHandling(data){
 	Materialize.toast(data.message, 4000);
 }
 
-/*==================================
-=              BUTTONS             =
-==================================*/
+/* =======  End of Custom Functions  ======= */
 
+
+/**================================================== *
+ * ==========  Buttons  ========== *
+ * ================================================== */
 jQuery('#app').on('click', '.btn-login-submit', login);
 jQuery('#app').on('click', '.btn-map', map);
 jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
 jQuery('#app').on('click', '.btn-faq', faq);
 jQuery('#app').on('click', '.btn-back', mainMenu);
+jQuery('#app').on('click', '.btn-notification', {fn: "notification"}, notification);
+jQuery('#app').on('click', '.btn-settings', settings);
 jQuery('#app').on('click', '.btn-logout', loginScreen);
+
+/* =======  End of Buttons  ======= */
