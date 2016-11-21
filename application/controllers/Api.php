@@ -18,6 +18,7 @@ class Api extends CI_Controller {
 
 	public function user($id = null) {
 		$this->secret_auth->method('GET');
+		$this->secret_auth->check_token();
 		// validate
 		$this->secret_auth->super_escape('validate', 'int', $id);
 		// Sanitize
@@ -27,6 +28,7 @@ class Api extends CI_Controller {
 
 	public function add_user() {
 		$this->secret_auth->method('POST');
+		$this->secret_auth->check_token();
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
 
@@ -75,6 +77,7 @@ class Api extends CI_Controller {
 
 	public function update_user($id = null) {
 		$this->secret_auth->method('PATCH');
+		$this->secret_auth->check_token();
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
 
@@ -128,7 +131,7 @@ class Api extends CI_Controller {
 
 	public function delete_user($id = null) {
 		$this->secret_auth->method('DELETE');
-
+		$this->secret_auth->check_token();
 		// validate
 		$this->secret_auth->super_escape('validate', 'int', $id);
 
@@ -155,11 +158,13 @@ class Api extends CI_Controller {
 
 	public function all_shifts() {
 		$this->secret_auth->method('GET');
+		$this->secret_auth->check_token();
 		$this->secret_auth->http_response(200, 'OK', $this->shifts_model->get_all_shifts());
 	}
 
 	public function shifts($id = null) {
 		$this->secret_auth->method('GET');
+		$this->secret_auth->check_token();
 
 		// validate
 		$this->secret_auth->super_escape('validate', 'int', $id);
@@ -172,6 +177,7 @@ class Api extends CI_Controller {
 
 	public function add_shift() {
 		$this->secret_auth->method('POST'); 
+		$this->secret_auth->check_token();
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
 
@@ -225,7 +231,7 @@ class Api extends CI_Controller {
 
 	public function update_shift($id = null) {
 		$this->secret_auth->method('PATCH');
-
+		$this->secret_auth->check_token();
 		// Validate
 		$this->secret_auth->super_escape('validate', 'int', $id);
 		// Sanitize
@@ -284,7 +290,7 @@ class Api extends CI_Controller {
 
 	public function delete_shift($id = null) {
 		$this->secret_auth->method('DELETE');
-
+		$this->secret_auth->check_token();
 		// Validate
 		$this->secret_auth->super_escape('validate', 'int', $id);
 		// Sanitize
