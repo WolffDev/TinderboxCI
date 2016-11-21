@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col s12 center">
 				<div class="loading">
-					<p>Loading</p>
+					<p>Loading...</p>
 				</div>
 			</div>
 		</div>
