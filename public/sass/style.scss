@@ -1,1 +1,77 @@
 @import "colors";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../img/bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+/********************
+*       LOADING     *
+********************/
+.loading {
+    color: $yellow;
+    font-size: 4rem;
+}
+
+/********************
+*        LOGIN      *
+********************/
+.login-container {
+    position: relative;
+    .login-logo {
+        padding: 80px 18px 50px;
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+    }
+    .login-input {
+        padding-bottom: 60px;
+        max-width: 400px;
+        margin: 0 auto;
+        .forgot-pw {
+            position: absolute;
+            right: 18px;
+            bottom: -30px;
+            a {
+                font-size: 1.2rem;
+                color: $text_grey;
+                &:hover {
+                    color: rgba($yellow, .7);
+                }
+            }
+        }
+        input {
+            font-size: 1.2rem;
+            color: rgba($beige, .7);
+            &:focus {
+                color: $beige;
+                border-bottom: 1px solid $yellow;
+                box-shadow: 0 1px 0 0 $yellow; 
+                &+label {
+                    color: $yellow;
+                }
+            }
+            &+label {
+                font-size: 1.2rem;
+            }
+        }
+    }
+    .btn-login-submit {
+        min-width: 305px;
+        border-radius: 60px;
+        color:  $beige;
+        text-transform: uppercase;
+        background-color: rgba(153, 153, 153, 0.2);
+        &:hover {
+            background-color: $yellow;
+            color: $teal;
+        }
+    }
+}
