@@ -71,7 +71,6 @@ function loginScreen() {
 function login() {
 	var email = jQuery('#email').val();
 	var password = jQuery('#password').val();
-	
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
@@ -135,50 +134,51 @@ function mainMenu() {
 	}).done(function(data) {
 		loadMainMenu(data);
 	});
-
+	
 	function loadMainMenu(shifts) {
-		console.log(shifts.length, shifts);
+		var user = store.get('user');
+		console.log(shifts);
 		var header =
-			'<input type="checkbox" id="sidebarToggler">'
-			+'<header class="z-depth-2">'
-				+'<div class="logo">'
-					+'<img src="'+ RESS +'img/logo.png">'
-				+'</div>'
-				+'<label class="toggle-sidebar" for="sidebarToggler">'
-					+'<img src="'+ RESS +'img/menu.png" alt="" style="padding-top: 15px;">'
-				+'</label>'
+		'<input type="checkbox" id="sidebarToggler">'
+		+'<header class="z-depth-2">'
+			+'<div class="logo">'
+				+'<img src="'+ RESS +'img/logo.png">'
+			+'</div>'
+			+'<label class="toggle-sidebar" for="sidebarToggler">'
+				+'<img src="'+ RESS +'img/menu.png" alt="" style="padding-top: 15px;">'
+			+'</label>'
 
-				+'<div class="sidebar z-depth-2">'
-					+'<label class="toggle-close" for="sidebarToggler">✕</label>'
-					+'<div class="sidebar-wrapper">'
-						+'<div class="sidebar-profile">'
-							+'<img src="'+ RESS +'img/user.jpg" alt="">'
-							+'<h2>'
-								+ user.firstname
-							+'</h2>'
-							+'<p>'
-								+ user.email
-							+'</p>'
-						+'</div>'
-						+'<div class="sidebar-links">'
-							+'<ul>'
-								+'<li class="btn-notification">'
-									+'<img src="'+ RESS +'img/alarm.svg">Noticication'
-								+'</li>'
-								+'<li class="btn-settings">'
-									+'<img src="'+ RESS +'img/settings.svg">Settings'
-								+'</li>'
-								+'<li class="btn-logout">'
-									+'<img src="'+ RESS +'img/exit.svg">Logout'
-								+'</li>'
-							+'</ul>'
-						+'</div>'
-						+'<div class="sidebar-copy">'
-							+'<p>Tinderbox &copy; 2017<br>Version: Bravo Two Zero</p>'
-						+'</div>'
+			+'<div class="sidebar z-depth-2">'
+				+'<label class="toggle-close" for="sidebarToggler">✕</label>'
+				+'<div class="sidebar-wrapper">'
+					+'<div class="sidebar-profile">'
+						+'<img src="'+ RESS +'img/user.jpg" alt="">'
+						+'<h2>'
+							+ user.firstname
+						+'</h2>'
+						+'<p>'
+							+ user.email
+						+'</p>'
+					+'</div>'
+					+'<div class="sidebar-links">'
+						+'<ul>'
+							+'<li class="btn-notification">'
+								+'<img src="'+ RESS +'img/alarm.svg">Noticication'
+							+'</li>'
+							+'<li class="btn-settings">'
+								+'<img src="'+ RESS +'img/settings.svg">Settings'
+							+'</li>'
+							+'<li class="btn-logout">'
+								+'<img src="'+ RESS +'img/exit.svg">Logout'
+							+'</li>'
+						+'</ul>'
+					+'</div>'
+					+'<div class="sidebar-copy">'
+						+'<p>Tinderbox &copy; 2017<br>Version: Bravo Two Zero</p>'
 					+'</div>'
 				+'</div>'
-			+'</header>';
+			+'</div>'
+		+'</header>';
 
 		var html =
 			'<h1>Mainmenu</h1>'
