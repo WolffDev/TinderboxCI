@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo base_url('public/css/style.css'); ?>">
+
 </head>
 <body>
 	<div id="response"></div>
@@ -23,5 +24,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 <script src="<?php echo base_url('public/js/store.js'); ?>"></script>
 <script src="<?php echo base_url('public/js/main.js'); ?>"></script>
+<script src="<?php echo base_url('public/js/jssor.slider.min.js'); ?>"></script>
+<script src="<?php echo base_url('public/js/jssor.slider.debug.js'); ?>"></script>
+
+
+
 </body>
 </html>
