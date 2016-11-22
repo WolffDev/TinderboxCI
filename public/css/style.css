@@ -58,3 +58,36 @@ body {
     .login-container .btn-login-submit:hover {
       background-color: #ffd962;
       color: #043540; }
+
+/*=================================
+=            Main menu            =
+=================================*/
+/*=====  End of Main menu  ======*/
+/*===========================
+=            Map            =
+===========================*/
+/*=====  End of Map  ======*/
+/*============================
+=            Chat            =
+============================*/
+/*=====  End of Chat  ======*/
+/*===========================
+=            FAQ            =
+===========================*/
+/*=====  End of FAQ  ======*/
+/*============================
+=            Info            =
+============================*/
+.faq-container {
+  width: 90%;
+  background-color: #fdf9f4;
+  margin: 0, auto;
+  padding-top: 50px;
+  margin-top: 50px;
+  padding-bottom: 10px;
+  border-radius: 10px; }
+
+.collapsible-header {
+  background-color: #043540; }
+
+/*=====  End of Info  ======*/
