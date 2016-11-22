@@ -87,6 +87,22 @@ header {
   width: 100%;
   z-index: 10; }
 
+.arrow-back img {
+  height: 40px;
+  padding: 5px;
+  position: absolute;
+  top: 6px;
+  left: 10px; }
+
+.arrow-back:hover {
+  cursor: pointer; }
+
+.nav-header-text {
+  font-family: 'Eveleth', sans-serif;
+  margin-top: -15px;
+  text-align: center;
+  color: #fdf9f4; }
+
 .logo img {
   height: 35px; }
 

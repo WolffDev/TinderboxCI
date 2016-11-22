@@ -108,9 +108,9 @@ function backNav(title) {
 	var html =
 		'<header class="z-depth-2">'
 			+'<div class="arrow-back btn-back">'
-				+'<img src="">'
+				+'<img src="'+ RESS +'img/back-arrow.svg">'
 			+'</div>'
-			+'<div class="a-nav-header-text">'
+			+'<div class="nav-header-text">'
 				+'<h4>'+ title +'</h4>'
 			+'</div>'
 		+'</header>'
@@ -204,33 +204,25 @@ function mainMenu() {
 };
 
 function map() {
-	var html =
-		'<h1>MAP</h1>'
-		+'<button class="btn waves-effect btn-back">Back</button>';
+	var html;
 	var sendHtml = backNav('Map') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 };
 
 function chat() {
-	var html =
-		'<h1>CHAT</h1>'
-		+'<button class="btn waves-effect btn-back">Back</button>';
+	var html;
 	var sendHtml = backNav('Chat') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 }
 
 function information() {
-	var html =
-		'<h1>INFORMATION</h1>'
-		+'<button class="btn waves-effect btn-back">Back</button>';
+	var html;
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 }
 
 function faq() {
-	var html =
-		'<h1>FAQ</h1>'
-		+'<button class="btn waves-effect btn-back">Back</button>';
+	var html;
 	var sendHtml = backNav('Faq') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 }
@@ -250,17 +242,14 @@ function changeImage() {
 };
 
 function settings() {
-	var html =
-		'<h1>Settings</h1>'
-		+'<button class="btn waves-effect btn-back">Back</button>';
+	var html;
 	var sendHtml = backNav('Settings') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 };
 
 function notification(event) {
 	var html =
-		'<h1>notification ' + event.data.title + '</h1>'
-		+'<button class="btn waves-effect btn-back">Back</button>';
+		'<h1>notification ' + event.data.title + '</h1>';
 	var sendHtml = backNav('Notification') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 };
