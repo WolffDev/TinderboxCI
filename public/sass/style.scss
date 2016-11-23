@@ -4,10 +4,14 @@
     box-sizing: border-box;
 }
 
+@font-face { font-family: Eveleth; src: url('../fonts/Eveleth/Eveleth-Regular.otf'); }
+@font-face { font-family: Brown; src: url('../fonts/brown.otf'); }
+
 body {
     background-color: $teal;
     background-image: url("../img/bg2.jpg");
     background-repeat: no-repeat;
+    font-family: 'Brown', sans-serif;
     background-size: auto;
 }
 
@@ -277,13 +281,13 @@ hr {
 }
 
 .p-date {
-    margin: 0;
+    margin: -5px 0 0 0;
     padding: 0;
     font-size: 45px;
 }
 
 .p-month {
-    margin: -7px 0 0 0;
+    margin: -11px 0 0 0;
     padding: 0;
     font-size: 26px;
 }
@@ -308,12 +312,21 @@ hr {
     font-size: 18px;
 }
 
-.p-work-info {
+.p-work-info-rosa {
+    margin: 0 4px 0 0;
+    padding: 0;
+    font-size: 11px;
+    color: $rosa;
+    float: left;
+}
+
+.p-work-info-azur {
     margin: 0;
     padding: 0;
-    font-size: 13px;
-    color: #8bc7b9;
+    font-size: 11px;
+    color: $azur;
 }
+
 
 .card-third-3 {
     width: 20%;
@@ -324,7 +337,7 @@ hr {
 .slider-map-icon {
     width: 20px;
     height: 20px;
-    margin: 10px 0 0 -10px;
+    margin: 13px 0 0 -10px;
     float: left;
 }
 
@@ -335,6 +348,7 @@ hr {
 
 .p-see {
     font-size: 15px;
+    margin-top: 10px;
     margin-left: 5px;
     font-family: 'Eveleth', sans-serif;
 }
@@ -480,28 +494,31 @@ hr {
 }
 
 .main-menu-left {
-  width: 42.5%;
   margin-left: 5%;
   margin-right: 2.5%;
-  float: left;
 }
 
 .main-menu-right {
-  width: 42.5%;
   margin-left: 2.5%;
   margin-right: 5%;
+}
+
+.main-menu-right, .main-menu-left{
+  width: 42.5%;
+  margin-top: 10px;
+  margin-bottom: 10px;
   float: left;
+
 }
 
-.main-memu-icon {
-  height: 50px;
-  width: 50px;
-  background-image: url('../img/login-logo.png');
-  background-size: 100%;
+.main-menu-icon {
+    display: block;
+    width: 50px;
+    margin: 0 auto;
 }
 
-.p-tile-title {
-    font-size: 6px;
+.tile-title {
+    font-size: 16px;
     margin: 2px 0 0 0;
     font-family: 'Eveleth', sans-serif;
     color: #043540;
