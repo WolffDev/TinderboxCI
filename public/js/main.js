@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://webtinderbox:8888/';
+const URL = 'http://localhost:8888/tissekone/';
 const RESS = 'public/';
 
 /*=============================
@@ -547,7 +547,10 @@ function information() {
 			+'</div>';
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible();
+	 $('.collapsible').collapsible({
+	 	onOpen: iconOpen(), // Callback for Collapsible open
+     	onClose: iconClose()  // Callback for Collapsible close 
+	 });
 }
 
 function faq() {
@@ -555,7 +558,7 @@ function faq() {
 		'<button class="btn waves-effect btn-back">Back</button>'
 			+'<div class="row faq-container">'
 				+'<div class="col s12">'
-					+'<h1>VOLUNTEER/GOOD TO KNOW</h1>'
+					+'<h1>VOLUNTEER / GOOD TO KNOW</h1>'
 					+'<ul class="collapsible" data-collapsible="accordion">'
 			    		+'<li>'
 			      			+'<div class="collapsible-header white-text"><i class="material-icons">filter_drama</i>PERIODS OF EFFORT</div>'
@@ -563,7 +566,7 @@ function faq() {
 		      					+'<p>A period of effort is the period of time you can/will help Tinderbox. You can choose between 3 different periods, and you have to at least choose one of them. You can also select multiple periods, and thus increase your chances of getting on a team.'
 		      					+'<br>'
 		      					+'<br>'
-		      					+'<strong>NOTICE</strong>: Some before/after teams operate with one shift before AND one shift after. You will be notified about which team/teams this concern, prior to your selection.'
+		      					+'<b>NOTICE</b>: Some before/after teams operate with one shift before AND one shift after. You will be notified about which team/teams this concern, prior to your selection.'
 		      					+'<br>'
 		      					+'<br>'
 		      					+'<strong>Periods of effort:</strong>'
@@ -841,7 +844,10 @@ function faq() {
 			+'</div>';
 	var sendHtml = backNav('FAQ') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible();
+	 $('.collapsible').collapsible({
+	 	onOpen: iconOpen(), // Callback for Collapsible open
+     	onClose: iconClose() // Callback for Collapsible close 
+	 });
 }
 
 
@@ -880,6 +886,24 @@ function notification(event) {
  * ================================================== */
 function responseHandling(data){
 	Materialize.toast(data.message, 4000);
+}
+
+function iconOpen(){
+	$('.faq-container material-icons').animate({  textIndent: 0 }, {
+    step: function(now,fx) {
+      	$(this).css('-webkit-transform','rotate('+now+'deg)'); 
+    	},	
+    	duration:'slow'
+	},'linear');
+}
+
+function iconClose(){
+	$('.faq-container material-icons').animate({  textIndent: 0 }, {
+    step: function(now,fx) {
+      $(this).css('-webkit-transform','rotate('+now+'deg)'); 
+    },
+    duration:'slow'
+},'linear');
 }
 
 /* =======  End of Custom Functions  ======= */
