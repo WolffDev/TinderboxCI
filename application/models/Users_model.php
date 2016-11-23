@@ -103,8 +103,8 @@ class Users_model extends CI_Model {
             WHERE
             uid = "%s"'
             , $this->db->escape_like_str($token)
-            // , NULL
-            , date('Y-m-d H:i:s')
+            , NULL
+            //, date('Y-m-d H:i:s')
             , $this->db->escape_like_str($uid));
         $this->db->query($query);
         
