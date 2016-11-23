@@ -16,7 +16,7 @@ body {
 /**================================================== *
  * ==========  Loading Section  ========== *
  * ================================================== */
-/*#loading {
+#loading {
     display: none;
     position: absolute;
     top: 0;
@@ -28,7 +28,7 @@ body {
     background-image: url("http://i.stack.imgur.com/MnyxU.gif");
     background-repeat: no-repeat;
     background-position: center;
-}*/
+}
 .loading {
     color: $yellow;
     font-size: 4rem;
@@ -380,6 +380,9 @@ hr {
     margin-bottom: 0;
     font-family: 'Eveleth', sans-serif;
     text-align: center;
+    &:hover {
+        cursor: pointer;
+    }
   }
 
   .testbox {

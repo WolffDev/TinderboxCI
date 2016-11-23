@@ -74,6 +74,7 @@ function login() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
+			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
 		url: URL + 'api/login',
@@ -86,6 +87,7 @@ function login() {
 			responseHandling(err);
 		}
 	}).done(function(data, status, response) {
+		jQuery('#loading').css("display", "none");
 		store.set('user', {
 				userid: data.userid,
 				firstname: data.firstname,
@@ -132,6 +134,7 @@ function mainMenu() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
+			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("SecretToken", user.token);
 		},
 		url: URL + 'api/shifts/' + user.userid, //load token
@@ -144,6 +147,7 @@ function mainMenu() {
 			responseHandling(err);
 		}
 	}).done(function(data) {
+		jQuery('#loading').css("display", "none");
 		loadMainMenu(data);
 	});
 
@@ -249,7 +253,7 @@ function mainMenu() {
 				+ '</div>';
 		}
 
-		slider += '</div>'
+		var showMore = '</div>'
 			+ '<div data-u="navigator" class="jssorb05" style="bottom:16px;right:6px;" data-autocenter="1">'
 				+ '<div data-u="prototype" style="width:16px;height:16px;"></div>'
 			+ '</div>'
@@ -276,7 +280,7 @@ function mainMenu() {
 		+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
 		+ '</div>';
 				
-		var sendHtml = header + slider + mainMenu;
+		var sendHtml = header + slider + showMore + mainMenu;
 		jQuery('#app').html(sendHtml); //overwrites the content from the view
 
 		jssor_1_slider_init();
