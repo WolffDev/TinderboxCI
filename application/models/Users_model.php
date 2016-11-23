@@ -70,7 +70,7 @@ class Users_model extends CI_Model {
     }
 
     public function get_user_by_email_password($email, $password) {
-        $query = sprintf('SELECT uid, email, password
+        $query = sprintf('SELECT uid, firstname, lastname, email, password
             FROM users
             WHERE email = "%s"
             LIMIT 1'
@@ -81,7 +81,13 @@ class Users_model extends CI_Model {
         if(password_verify($password, $row->password)) {
             $token = bin2hex(openssl_random_pseudo_bytes(21));
             $this->insert_token_user($row->uid, $token);
-            $res = [$email, $token];
+            $res = [
+                'userid' => $row->uid,
+                'firstname' => $row->firstname,
+                'lastname' => $row->lastname,
+                'email' => $row->email,
+                'token' => $token
+            ];
             return $res;
             die();
         }
@@ -97,6 +103,7 @@ class Users_model extends CI_Model {
             WHERE
             uid = "%s"'
             , $this->db->escape_like_str($token)
+            // , NULL
             , date('Y-m-d H:i:s')
             , $this->db->escape_like_str($uid));
         $this->db->query($query);

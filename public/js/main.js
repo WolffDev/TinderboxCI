@@ -1,5 +1,5 @@
 jQuery(function() {
-	if(store.get('token') === undefined) {
+	if(store.get('user') === undefined || jQuery.isEmptyObject(store.get('user'))) {
 		loginScreen();
 	} else {
 		mainMenu();
@@ -15,7 +15,7 @@ const RESS = 'public/';
 =============================*/
 function loginScreen() {
 	storeCheck();
-	store.clear();
+	localStorage.removeItem('user');
     function storeCheck() {
 		// Use something else than alert()
         if (!store.enabled) {
@@ -34,7 +34,7 @@ function loginScreen() {
 					+'<div class="login-input">'
 						+'<div class="row">'
 							+'<div class="input-field col s12">'
-								+'<input id="email" name="email" type="text" class="" required>'
+								+'<input id="email" name="email" type="email" class="" required>'
 								+'<label for="email">Email</label>'
 							+'</div>'
 						+'</div>'
@@ -42,12 +42,15 @@ function loginScreen() {
 							+'<div class="input-field col s12">'
 								+'<input id="password" name="password" type="password" class="" required>'
 								+'<label for="password">Password</label>'
+								+'<div class="forgot-pw">'
+									+'<a href="#">Forgot Password?</a>'
+								+'</div>'
 							+'</div>'
 						+'</div>'
 						+'</div class="row">'
 							+'<div class="col s12 center">'
-								+'<button class="btn waves-effect waves-light btn-submit">'
-									+'Log ind'
+								+'<button class="btn waves-effect waves-dark btn-login-submit">'
+									+'Login'
 								+'</button>'
 							+'</div>'
 						+'</div>'
@@ -61,10 +64,6 @@ function loginScreen() {
 }
 
 
-
-
-
-
 /*=============================
 =            Login            =
 =============================*/
@@ -72,20 +71,32 @@ function loginScreen() {
 function login() {
 	var email = jQuery('#email').val();
 	var password = jQuery('#password').val();
-	
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
-			xhr.setRequestHeader ("Authorization", "Basic " + btoa(email + ":" + password));
+			jQuery('#loading').css("display", "inherit");
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
 		url: URL + 'api/login',
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
-			console.log(data);
+		success: function(data, status, response) {
+		},
+		error: function(xhr, status, error) {
+			var err = JSON.parse(xhr.responseText);
+			responseHandling(err);
 		}
-	}).done(mainMenu());
+	}).done(function(data, status, response) {
+		jQuery('#loading').css("display", "none");
+		store.set('user', {
+				userid: data.userid,
+				firstname: data.firstname,
+				lastname: data.lastname,
+				email: data.email,
+				token: data.secretToken
+			});
+			mainMenu();
+	});
 };
 
 
@@ -93,31 +104,24 @@ function login() {
 
 
 /*=====================================
-=            Topnavigation            =
+=            Back Navigation            =
 =====================================*/
+function backNav(title) {
+	var html =
+		'<header class="z-depth-2">'
+			+'<div class="arrow-back btn-back">'
+				+'<img src="'+ RESS +'img/back-arrow.svg">'
+			+'</div>'
+			+'<div class="nav-header-text">'
+				+'<h4>'+ title +'</h4>'
+			+'</div>'
+		+'</header>'
 
-function topNav() {
-	jQuery.ajax({
-		// url: URL + 'api/users',
-		contentType: 'application/json',
-		// type: 'GET',
-		success: function(data, status, response)
-		{
-			var html = '<h1>topNav</h1>'
-					+ '<button class="waves-effect waves-light btn btn-back">back</button>';
+	return html;
+}
 
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-};
 
-/*
- * Buttons
- */
-
- jQuery('#app').on('click', '.btn-back', mainMenu);
-
-/*=====  End of Topnavigation  ======*/
+/*=====  End of Back Navigation  ======*/
 
 
 /*=============================================
@@ -125,27 +129,172 @@ function topNav() {
 =============================================*/
 
 function mainMenu() {
+	var user = store.get('user');
 	console.log("Main menu loaded!");
+
 	jQuery.ajax({
+<<<<<<< HEAD
 		url: URL + 'api/shifts/1', //load token
+=======
+		beforeSend: function(xhr) {
+			jQuery('#loading').css("display", "inherit");
+			xhr.setRequestHeader("SecretToken", user.token);
+		},
+		url: URL + 'api/shifts/' + user.userid, //load token
+>>>>>>> fc40a847d61e530c12369406c5ffd2c0976a3c79
 		contentType: 'application/json',
 		type: 'GET',
-		success: function(data, status, response)
-		{
-			console.log(data);
-			var html = '<h1>Mainmenu</h1>'
-					+ '<button class="waves-effect waves-light btn btn-map">Map</button>'
-					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
-					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
+		success: function(data, status, response) {
+		},
+		error: function(xhr, status, error) {
+			var err = JSON.parse(xhr.responseText);
+			responseHandling(err);
 		}
-	})
+	}).done(function(data) {
+		jQuery('#loading').css("display", "none");
+		loadMainMenu(data);
+	});
+
+	function loadMainMenu(shifts) {
+		var user = store.get('user');
+		console.log(shifts);
+		var header =
+		'<input type="checkbox" id="sidebarToggler">'
+		+'<header class="z-depth-2">'
+			+'<div class="logo">'
+				+'<img src="'+ RESS +'img/logo.png">'
+			+'</div>'
+			+'<label class="toggle-sidebar" for="sidebarToggler">'
+				+'<img src="'+ RESS +'img/menu.png" alt="" style="padding-top: 15px;">'
+			+'</label>'
+
+			+'<div class="sidebar z-depth-2">'
+				+'<label class="toggle-close" for="sidebarToggler">✕</label>'
+				+'<div class="sidebar-wrapper">'
+					+'<div class="sidebar-profile">'
+						+'<img src="'+ RESS +'img/user.jpg" alt="">'
+						+'<h2>'
+							+ user.firstname
+						+'</h2>'
+						+'<p>'
+							+ user.email
+						+'</p>'
+					+'</div>'
+					+'<div class="sidebar-links">'
+						+'<ul>'
+							+'<li class="btn-notification">'
+								+'<img src="'+ RESS +'img/alarm.svg">Noticication'
+							+'</li>'
+							+'<li class="btn-settings">'
+								+'<img src="'+ RESS +'img/settings.svg">Settings'
+							+'</li>'
+							+'<li class="btn-logout">'
+								+'<img src="'+ RESS +'img/exit.svg">Logout'
+							+'</li>'
+						+'</ul>'
+					+'</div>'
+					+'<div class="sidebar-copy">'
+						+'<p>Tinderbox &copy; 2017<br>Version: Bravo Two Zero</p>'
+					+'</div>'
+				+'</div>'
+			+'</div>'
+		+'</header>';
+
+		var slider =
+			'<div class="main-content">'
+				    + '<h1 class="h1-title">YOUR SCHEDULE</h1>'
+				    + '<div class="card-bg">'
+				        + '<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden; visibility: hidden;">'		            
+				            + '<div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden;">';
+								
+		var i;
+		for(i = 0; i < shifts.length; i++) {
+			var ts = shifts[i].shift_start.split(/[- :]/);
+			var shift_start = new Date(Date.UTC(ts[0], ts[1]-1, ts[2], ts[3], ts[4], ts[5]));
+			var shift_start = shift_start.toString();
+
+			var te = shifts[i].shift_end.split(/[- :]/);
+			var shift_end = new Date(Date.UTC(te[0], te[1]-1, te[2], te[3], te[4], te[5]));
+			var shift_end = shift_end.toString();
+
+			console.log(shift_start);
+
+			var shiftStartDay = shift_start.substring(0, 3);
+			var shiftStartDate = shift_start.substring(8, 10);
+			var shiftStartMonth = shift_start.substring(4, 7);
+			var shiftStartTime = shift_start.substring(16, 21);
+			var shiftEndTime = shift_end.substring(16, 21);
+			var shiftTitle = shifts[i].shift_name;
+			var shiftStation = shifts[i].shift_station;
+			var shiftMapLocation = shifts[i].shift_location;
+			var shiftContent = shifts[i].shift_content;
+
+			slider += '<div data-p="225.00" style="display: none;">'
+					+ '<div class="shift-container">'
+						+ '<div class="card-third-1">'
+							+ '<div class="date">'
+								+ '<p class="p-date">'+ shiftStartDate +'</p>'
+							+ '</div>'
+							+ '<div class="date">'
+								+ '<p class="p-day">'+ shiftStartDay +'</p>'
+								+ '<p class="p-month">'+ shiftStartMonth +'</p>'
+							+ '</div>'
+						+ '</div>'
+						+ '<div class="card-third-2">'
+							+ '<p class="p-hours">'+ shiftStartTime + ' - ' + shiftEndTime +'</p>'
+							+ '<p class="p-work-info">'+ shiftStation + ' - ' + shiftTitle +'</p>'
+						+ '</div>'
+						+ '<div class="card-third-3">'
+							+ '<div class="slider-map-icon">'
+								+ '<img src="'+ RESS +'img/map2.svg">'
+							+ '</div>'
+							+ '<div class="card-third-3-holder">'
+								+ '<p class="p-see">SEE</p>'
+								+ '<p class="p-map"> MAP</p>'
+							+ '</div>'
+						+ '</div>'
+					+ '</div>'
+				+ '</div>';
+		}
+
+		var showMore = '</div>'
+			+ '<div data-u="navigator" class="jssorb05" style="bottom:16px;right:6px;" data-autocenter="1">'
+				+ '<div data-u="prototype" style="width:16px;height:16px;"></div>'
+			+ '</div>'
+			+ '</div>'
+			+ '<hr>'
+			+ '<div class="show-more">'
+				
+			+ '</div> <!-- show more END -->'
+			+ '<h1 class="expand">SHOW MORE</h1>' 				   
+			+ '</div>'
+		+ '</div>';
+
+		var mainMenu = '<h1>Mainmenu</h1>'
+		+ '<div class="main-menu-left">'
+		+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
+		+ '</div>'
+		+ '<div class="main-menu-right">'
+		+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+		+ '</div>'
+		+ '<div class="main-menu-left">'
+		+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+		+ '</div>'
+		+ '<div class="main-menu-right">'
+		+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+		+ '</div>';
+				
+		var sendHtml = header + slider + showMore + mainMenu;
+		jQuery('#app').html(sendHtml); //overwrites the content from the view
+
+		jssor_1_slider_init();
+
+		$(".expand").click(function() {$(".show-more").toggle("slow");});
+	};
 };
 
-
 function map() {
+<<<<<<< HEAD
 	jQuery.ajax({
 		url: URL + 'api/shifts/1',
 		contentType: 'application/json',
@@ -172,34 +321,29 @@ function chat() {
 			jQuery('#app').html(html); //overwrites the content from the view
 		}
 	})
+=======
+	var html;
+	var sendHtml = backNav('Map') + html;
+	jQuery('#app').html(sendHtml); //overwrites the content from the view
+};
+
+function chat() {
+	var html;
+	var sendHtml = backNav('Chat') + html;
+	jQuery('#app').html(sendHtml); //overwrites the content from the view
+>>>>>>> fc40a847d61e530c12369406c5ffd2c0976a3c79
 }
 
 function information() {
-	jQuery.ajax({
-		contentType: 'application/json',
-		success: function()
-		{
-			var html = topNav();
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-
+	var html;
+	var sendHtml = backNav('Information') + html;
+	jQuery('#app').html(sendHtml); //overwrites the content from the view
 }
 
 function faq() {
-	jQuery.ajax({
-		contentType: 'application/json',
-		success: function()
-		{
-
-			var html = topNav();
-			html += '<h1>TEST</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-
+	var html;
+	var sendHtml = backNav('Faq') + html;
+	jQuery('#app').html(sendHtml); //overwrites the content from the view
 }
 
 
@@ -209,61 +353,51 @@ function faq() {
 =            Burgermenu            =
 ==================================*/
 function changeImage() {
-	jQuery.ajax({
-		url: URL + 'api/users',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response)
-		{
-			var html = '<h1>changeImage</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+	var html =
+		'<h1>changeImage</h1>'
+		+'<button class="btn waves-effect btn-back">Back</button>';
+	var sendHtml = backNav('Change Image') + html;
+	jQuery('#app').html(sendhtml); //overwrites the content from the view
 };
 
 function settings() {
-	jQuery.ajax({
-		url: URL + 'api/settings',
-		contentType: 'application/json',
-		type: 'PUT',
-		success: function(data, status, response)
-		{
-			var html = '<h1>Settings</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+	var html;
+	var sendHtml = backNav('Settings') + html;
+	jQuery('#app').html(sendHtml); //overwrites the content from the view
 };
 
-function notification() {
-	jQuery.ajax({
-		url: URL + 'api/notification',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response)
-		{
-			var html = '<h1>notification</h1>';
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
+function notification(event) {
+	var html =
+		'<h1>notification ' + event.data.title + '</h1>';
+	var sendHtml = backNav('Notification') + html;
+	jQuery('#app').html(sendHtml); //overwrites the content from the view
 };
 
 
 /*=====  End of Burgermenu  ======*/
 
-/*==================================
-=              BUTTONS             =
-==================================*/
 
- jQuery('#app').on('click', '.btn-submit', login);
- jQuery('#app').on('click', '.btn-map', map);
- jQuery('#app').on('click', '.btn-chat', chat);
- jQuery('#app').on('click', '.btn-info', information);
- jQuery('#app').on('click', '.btn-faq', faq);
+/**================================================== *
+ * ==========  Custom Functions  ========== *
+ * ================================================== */
+function responseHandling(data){
+	Materialize.toast(data.message, 4000);
+}
+
+/* =======  End of Custom Functions  ======= */
 
 
+/**================================================== *
+ * ==========  Buttons  ========== *
+ * ================================================== */
+jQuery('#app').on('click', '.btn-login-submit', login);
+jQuery('#app').on('click', '.btn-map', map);
+jQuery('#app').on('click', '.btn-chat', chat);
+jQuery('#app').on('click', '.btn-info', information);
+jQuery('#app').on('click', '.btn-faq', faq);
+jQuery('#app').on('click', '.btn-back', mainMenu);
+jQuery('#app').on('click', '.btn-notification', {title: "notification"}, notification);
+jQuery('#app').on('click', '.btn-settings', settings);
+jQuery('#app').on('click', '.btn-logout', loginScreen);
+
+/* =======  End of Buttons  ======= */

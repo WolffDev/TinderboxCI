@@ -12,3 +12,4 @@ desktop.ini
 public/dist
 application/config/database.php
 application/config/config.php
+public/css
