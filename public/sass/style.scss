@@ -540,7 +540,19 @@ hr {
 =            Info            =
 ============================*/
 
+.faq-container {
+    width: 90%;
+    background-color: $beige;
+    margin: 0, auto;
+    padding-top: 50px;
+    margin-top: 50px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
 
+.collapsible-header {
+    background-color: $teal
+}
 
 /*=====  End of Info  ======*/
 
