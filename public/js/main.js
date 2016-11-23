@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://webtinderbox:8888/';
+const URL = 'http://localhost/TinderboxCI/';
 const RESS = 'public/';
 
 /*=============================
@@ -133,15 +133,11 @@ function mainMenu() {
 	console.log("Main menu loaded!");
 
 	jQuery.ajax({
-<<<<<<< HEAD
-		url: URL + 'api/shifts/1', //load token
-=======
 		beforeSend: function(xhr) {
 			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("SecretToken", user.token);
 		},
 		url: URL + 'api/shifts/' + user.userid, //load token
->>>>>>> fc40a847d61e530c12369406c5ffd2c0976a3c79
 		contentType: 'application/json',
 		type: 'GET',
 		success: function(data, status, response) {
@@ -294,34 +290,6 @@ function mainMenu() {
 };
 
 function map() {
-<<<<<<< HEAD
-	jQuery.ajax({
-		url: URL + 'api/shifts/1',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response)
-		{
-			var html = topNav();
-
-			jQuery('#app').html(html); //overwrites the content from the view
-
-		}
-	})
-};
-
-function chat() {
-	jQuery.ajax({
-		url: URL + 'api/shifts/1',
-		contentType: 'application/json',
-		type: 'GET',
-		success: function(data, status, response)
-		{
-			var html = topNav();
-
-			jQuery('#app').html(html); //overwrites the content from the view
-		}
-	})
-=======
 	var html;
 	var sendHtml = backNav('Map') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
@@ -331,7 +299,6 @@ function chat() {
 	var html;
 	var sendHtml = backNav('Chat') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
->>>>>>> fc40a847d61e530c12369406c5ffd2c0976a3c79
 }
 
 function information() {
