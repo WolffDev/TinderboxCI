@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://localhost/TinderboxCI/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -192,176 +192,96 @@ function mainMenu() {
 			+'</div>'
 		+'</header>';
 
-		var html =
+		var slider =
 			'<div class="main-content">'
 				    + '<h1 class="h1-title">YOUR SCHEDULE</h1>'
 				    + '<div class="card-bg">'
 				        + '<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden; visibility: hidden;">'		            
-				            + '<div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden;">'
-				                + '<div data-p="225.00" style="display: none;">'
-				                    + '<div class="shift-container">'
-				                        + '<div class="card-third-1">'
-				                            + '<div class="date">'
-				                                + '<p class="p-date">15</p>'
-				                            + '</div>'
-				                            + '<div class="date">'
-				                                + '<p class="p-day">SAT</p>'
-				                                + '<p class="p-month">JUL</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                        + '<div class="card-third-2">'
-				                            + '<p class="p-hours">16:00 - 22:00</p>'
-				                            + '<p class="p-work-info">Bar 7 - Bartender</p>'
-				                        + '</div>'
-				                        + '<div class="card-third-3">'
-				                            + '<div class="slider-map-icon">'
-				                                + '<img src="'+ RESS +'img/map2.svg">'
-				                            + '</div>'
-				                            + '<div class="card-third-3-holder">'
-				                                + '<p class="p-see">SEE</p>'
-				                                + '<p class="p-map"> MAP</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                    + '</div>'
-				                + '</div>'
-				                + '<div data-p="225.00" style="display: none;">'
-				                    + '<div class="shift-container">'
-				                        + '<div class="card-third-1">'
-				                            + '<div class="date">'
-				                                + '<p class="p-date">17</p>'
-				                            + '</div>'
-				                            + '<div class="date">'
-				                               + '<p class="p-day">MON</p>'
-				                               + '<p class="p-month">JUL</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                        + '<div class="card-third-2">'
-				                            + '<p class="p-hours">16:00 - 22:00</p>'
-				                            + '<p class="p-work-info">Res 9 - Cleaner</p>'
-				                        + '</div>'
-				                        + '<div class="card-third-3">'
-				                            + '<div class="slider-map-icon">'
-				                                + '<img src="'+ RESS +'img/map2.svg">'
-				                            + '</div>'
-				                            + '<div class="card-third-3-holder">'
-				                                + '<p class="p-see">SEE</p>'
-				                                + '<p class="p-map"> MAP</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                    + '</div>'
-				                + '</div>'
-				                + '<div data-p="225.00" style="display: none;">'
-				                    + '<div class="shift-container">'
-				                        + '<div class="card-third-1">'
-				                            + '<div class="date">'
-				                                + '<p class="p-date">20</p>'
-				                            + '</div>'
-				                            + '<div class="date">'
-				                                + '<p class="p-day">THU</p>'
-				                                + '<p class="p-month">JUL</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                        + '<div class="card-third-2">'
-				                            + '<p class="p-hours">20:00 - 23:50</p>'
-				                            + '<p class="p-work-info">Bar 11 - Bartender</p>'
-				                        + '</div>'
-				                        + '<div class="card-third-3">'
-				                            + '<div class="slider-map-icon">'
-				                                + '<img src="'+ RESS +'img/map2.svg">'
-				                            + '</div>'
-				                            + '<div class="card-third-3-holder">'
-				                                + '<p class="p-see">SEE</p>'
-				                                + '<p class="p-map"> MAP</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                    + '</div>'
-				                + '</div>'
-				                + '<div data-p="225.00" style="display: none;">'
-				                    + '<div class="shift-container">'
-				                        + '<div class="card-third-1">'
-				                            + '<div class="date">'
-				                                + '<p class="p-date">24</p>'
-				                            + '</div>'
-				                            + '<div class="date">'
-				                                + '<p class="p-day">SAT</p>'
-				                                + '<p class="p-month">JUL</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                        + '<div class="card-third-2">'
-				                            + '<p class="p-hours">09:00 - 14:00</p>'
-				                            + '<p class="p-work-info">Bar 1 - Cleaner</p>'
-				                        + '</div>'
-				                        + '<div class="card-third-3">'
-				                            + '<div class="slider-map-icon">'
-				                                + '<img src="'+ RESS +'img/map2.svg">'
-				                            + '</div>'
-				                            + '<div class="card-third-3-holder">'
-				                                + '<p class="p-see">SEE</p>'
-				                                + '<p class="p-map"> MAP</p>'
-				                            + '</div>'
-				                        + '</div>'
-				                    + '</div>'
-				                + '</div>'
-				            + '</div>' 
-				            + '<div data-u="navigator" class="jssorb05" style="bottom:16px;right:6px;" data-autocenter="1">'
-				                + '<div data-u="prototype" style="width:16px;height:16px;"></div>'
-				            + '</div>'
-				        + '</div>'
-				        + '<hr>'
-				        + '<div class="show-more">'
-				            + '<div class="p-weather-days-third">'
-				                + '<h1 class="p-weather-days">NOW</h1>'
-				            + '</div>'
-				            + '<div class="p-weather-days-third">'
-				                + '<h1 class="p-weather-days">1 HOUR</h1>'
-				            + '</div>'
-				        + '<div class="p-weather-days-third">'
-				                + '<h1 class="p-weather-days">2 HOURS</h1>'
-				            + '</div>'
-				            + '<div class="weather-container">'
-				                + '<div class="weather-third">'
-				                    + '<img src="'+ RESS +'img/weather.svg">'
-				                + '</div>'
-				            + '</div>'
-				            + '<div class="p-weather-days-third">'
-				                + '<h1 class="p-weather-degree">22°C</h1>'
-				            + '</div>'
-				            + '<div class="p-weather-days-third">'
-				               + ' <h1 class="p-weather-degree">20°C</h1>'
-				            + '</div>'
-				        + '<div class="p-weather-days-third">'
-				                + '<h1 class="p-weather-degree">19°C</h1>'
-				            + '</div>'
-				            + '<div class="weather-container">'
-				            + '</div>'
-				        + '</div> <!-- show more END -->'
-				        + '<h1 class="expand">SHOW MORE</h1>' 				   
-				    + '</div>'
-				+ '</div>'
+				            + '<div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden;">';
+								
+		var i;
+		for(i = 0; i < shifts.length; i++) {
+			var ts = shifts[i].shift_start.split(/[- :]/);
+			var shift_start = new Date(Date.UTC(ts[0], ts[1]-1, ts[2], ts[3], ts[4], ts[5]));
+			var shift_start = shift_start.toString();
 
-				+ '<script>jssor_1_slider_init();</script>'
+			var te = shifts[i].shift_end.split(/[- :]/);
+			var shift_end = new Date(Date.UTC(te[0], te[1]-1, te[2], te[3], te[4], te[5]));
+			var shift_end = shift_end.toString();
 
-				/*+ '<script>src="'+ RESS +'js/expand.js"</script>';*/
+			console.log(shift_start);
 
-				+ '<script>$( ".expand" ).click(function() {$( ".show-more" ).toggle( "slow" );});</script>'
+			var shiftStartDay = shift_start.substring(0, 3);
+			var shiftStartDate = shift_start.substring(8, 10);
+			var shiftStartMonth = shift_start.substring(4, 7);
+			var shiftStartTime = shift_start.substring(16, 21);
+			var shiftEndTime = shift_end.substring(16, 21);
+			var shiftTitle = shifts[i].shift_name;
+			var shiftStation = shifts[i].shift_station;
+			var shiftMapLocation = shifts[i].shift_location;
+			var shiftContent = shifts[i].shift_content;
 
-				+ '<h1>Mainmenu</h1>'
-
-				+ '<div class="main-menu-left">'
-					+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
-				+ '</div>'
-				+ '<div class="main-menu-right">'
-					+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
-				+ '</div>'
-				+ '<div class="main-menu-left">'
-					+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-				+ '</div>'
-				+ '<div class="main-menu-right">'
-					+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+			slider += '<div data-p="225.00" style="display: none;">'
+					+ '<div class="shift-container">'
+						+ '<div class="card-third-1">'
+							+ '<div class="date">'
+								+ '<p class="p-date">'+ shiftStartDate +'</p>'
+							+ '</div>'
+							+ '<div class="date">'
+								+ '<p class="p-day">'+ shiftStartDay +'</p>'
+								+ '<p class="p-month">'+ shiftStartMonth +'</p>'
+							+ '</div>'
+						+ '</div>'
+						+ '<div class="card-third-2">'
+							+ '<p class="p-hours">'+ shiftStartTime + ' - ' + shiftEndTime +'</p>'
+							+ '<p class="p-work-info">'+ shiftStation + ' - ' + shiftTitle +'</p>'
+						+ '</div>'
+						+ '<div class="card-third-3">'
+							+ '<div class="slider-map-icon">'
+								+ '<img src="'+ RESS +'img/map2.svg">'
+							+ '</div>'
+							+ '<div class="card-third-3-holder">'
+								+ '<p class="p-see">SEE</p>'
+								+ '<p class="p-map"> MAP</p>'
+							+ '</div>'
+						+ '</div>'
+					+ '</div>'
 				+ '</div>';
+		}
+
+		slider += '</div>'
+			+ '<div data-u="navigator" class="jssorb05" style="bottom:16px;right:6px;" data-autocenter="1">'
+				+ '<div data-u="prototype" style="width:16px;height:16px;"></div>'
+			+ '</div>'
+			+ '</div>'
+			+ '<hr>'
+			+ '<div class="show-more">'
 				
-		var sendHtml = header + html;
+			+ '</div> <!-- show more END -->'
+			+ '<h1 class="expand">SHOW MORE</h1>' 				   
+			+ '</div>'
+		+ '</div>';
+
+		var mainMenu = '<h1>Mainmenu</h1>'
+		+ '<div class="main-menu-left">'
+		+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
+		+ '</div>'
+		+ '<div class="main-menu-right">'
+		+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+		+ '</div>'
+		+ '<div class="main-menu-left">'
+		+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+		+ '</div>'
+		+ '<div class="main-menu-right">'
+		+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+		+ '</div>';
+				
+		var sendHtml = header + slider + mainMenu;
 		jQuery('#app').html(sendHtml); //overwrites the content from the view
+
+		jssor_1_slider_init();
+
+		$(".expand").click(function() {$(".show-more").toggle("slow");});
 	};
 };
 
