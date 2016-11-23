@@ -192,7 +192,7 @@ function mainMenu() {
 			+'</div>'
 		+'</header>';
 
-		var html =
+		var slider =
 			'<div class="main-content">'
 				    + '<h1 class="h1-title">YOUR SCHEDULE</h1>'
 				    + '<div class="card-bg">'
@@ -221,7 +221,7 @@ function mainMenu() {
 			var shiftMapLocation = shifts[i].shift_location;
 			var shiftContent = shifts[i].shift_content;
 
-			html += '<div data-p="225.00" style="display: none;">'
+			slider += '<div data-p="225.00" style="display: none;">'
 					+ '<div class="shift-container">'
 						+ '<div class="card-third-1">'
 							+ '<div class="date">'
@@ -249,67 +249,39 @@ function mainMenu() {
 				+ '</div>';
 		}
 
-
-html += '</div>'
-		+ '<div data-u="navigator" class="jssorb05" style="bottom:16px;right:6px;" data-autocenter="1">'
-			+ '<div data-u="prototype" style="width:16px;height:16px;"></div>'
-		+ '</div>'
-		+ '</div>'
-		+ '<hr>'
-		+ '<div class="show-more">'
-			+ '<div class="p-weather-days-third">'
-				+ '<h1 class="p-weather-days">NOW</h1>'
+		slider += '</div>'
+			+ '<div data-u="navigator" class="jssorb05" style="bottom:16px;right:6px;" data-autocenter="1">'
+				+ '<div data-u="prototype" style="width:16px;height:16px;"></div>'
 			+ '</div>'
-			+ '<div class="p-weather-days-third">'
-				+ '<h1 class="p-weather-days">1 HOUR</h1>'
 			+ '</div>'
-			+ '<div class="p-weather-days-third">'
-				+ '<h1 class="p-weather-days">2 HOURS</h1>'
-			+ '</div>'
-			+ '<div class="weather-container">'
-				+ '<div class="weather-third">'
-					+ '<img src="'+ RESS +'img/weather.svg">'
-				+ '</div>'
-			+ '</div>'
-			+ '<div class="p-weather-days-third">'
-				+ '<h1 class="p-weather-degree">22°C</h1>'
-			+ '</div>'
-			+ '<div class="p-weather-days-third">'
-				+ ' <h1 class="p-weather-degree">20°C</h1>'
-			+ '</div>'
-			+ '<div class="p-weather-days-third">'
-				+ '<h1 class="p-weather-degree">19°C</h1>'
-			+ '</div>'
-			+ '<div class="weather-container">'
-			+ '</div>'
-		+ '</div> <!-- show more END -->'
-		+ '<h1 class="expand">SHOW MORE</h1>' 				   
-		+ '</div>'
-	+ '</div>'
-
-+ '<script>jssor_1_slider_init();</script>'
-
-/*+ '<script>src="'+ RESS +'js/expand.js"</script>';*/
-
-+ '<script>$( ".expand" ).click(function() {$( ".show-more" ).toggle( "slow" );});</script>'
-
-+ '<h1>Mainmenu</h1>'
-
-+ '<div class="main-menu-left">'
-+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
-+ '</div>'
-+ '<div class="main-menu-right">'
-+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
-+ '</div>'
-+ '<div class="main-menu-left">'
-+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
-+ '</div>'
-+ '<div class="main-menu-right">'
-+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
-+ '</div>';
+			+ '<hr>'
+			+ '<div class="show-more">'
 				
-		var sendHtml = header + html;
+			+ '</div> <!-- show more END -->'
+			+ '<h1 class="expand">SHOW MORE</h1>' 				   
+			+ '</div>'
+		+ '</div>';
+
+		var mainMenu = '<h1>Mainmenu</h1>'
+		+ '<div class="main-menu-left">'
+		+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
+		+ '</div>'
+		+ '<div class="main-menu-right">'
+		+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+		+ '</div>'
+		+ '<div class="main-menu-left">'
+		+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+		+ '</div>'
+		+ '<div class="main-menu-right">'
+		+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+		+ '</div>';
+				
+		var sendHtml = header + slider + mainMenu;
 		jQuery('#app').html(sendHtml); //overwrites the content from the view
+
+		jssor_1_slider_init();
+
+		$(".expand").click(function() {$(".show-more").toggle("slow");});
 	};
 };
 
