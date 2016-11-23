@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://localhost/TinderboxCI/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -198,6 +198,7 @@ function mainMenu() {
 				    + '<div class="card-bg">'
 				        + '<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden; visibility: hidden;">'		            
 				            + '<div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden;">'
+							
 				                + '<div data-p="225.00" style="display: none;">'
 				                    + '<div class="shift-container">'
 				                        + '<div class="card-third-1">'
@@ -224,6 +225,7 @@ function mainMenu() {
 				                        + '</div>'
 				                    + '</div>'
 				                + '</div>'
+
 				                + '<div data-p="225.00" style="display: none;">'
 				                    + '<div class="shift-container">'
 				                        + '<div class="card-third-1">'
