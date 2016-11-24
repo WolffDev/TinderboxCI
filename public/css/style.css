@@ -335,7 +335,8 @@ hr {
   width: 300px;
   height: 150px;
   margin: 0 auto;
-  display: none; }
+  display: none;
+  overflow: scroll; }
 
 .expand {
   font-size: 20px;
@@ -377,13 +378,15 @@ hr {
   margin: 35px auto 0 auto; }
 
 .weather-container {
-  width: 100%;
-  padding: 5% 8%; }
+  width: 700px;
+  background-color: blue;
+  height: 150px; }
 
-.weather-third {
-  width: 84%;
-  display: block;
-  left: 50%;
+.weather-block {
+  width: 50px;
+  height: 130px;
+  margin: 10px 10px;
+  background-color: red;
   float: left; }
 
 .p-weather-days {
