@@ -16,6 +16,10 @@ body {
   font-family: 'Brown', sans-serif;
   background-size: auto; }
 
+#app {
+  min-height: 500px;
+  margin-top: 50px; }
+
 /**================================================== *
  * ==========  Loading Section  ========== *
  * ================================================== */
@@ -284,6 +288,8 @@ hr {
   width: 20%;
   margin: 0 1%;
   float: left; }
+  .card-third-3:hover {
+    cursor: pointer; }
 
 .slider-map-icon {
   width: 20px;

@@ -14,18 +14,11 @@
 <body>
 	<div id="response"></div>
 	<div id="loading"></div>
-	<div id="app">
-		<!--<div class="row">
-			<div class="col s12 center">
-				<div class="loading">
-					<p>Loading...</p>
-				</div>
-			</div>
-		</div>-->
-	</div>
+	<div id="app"></div>
 <!-- Compiled and minified JavaScript -->
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbO6MrlSuKnLv7Q2bmDHYERx4t3_zHrAM"></script>
 <script src="<?php echo base_url('public/js/store.js'); ?>"></script>
 <script src="<?php echo base_url('public/js/jssor.slider.min.js'); ?>"></script>
 <!--<script src="<?php echo base_url('public/js/jssor.slider.debug.js'); ?>"></script>-->
