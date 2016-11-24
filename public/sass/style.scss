@@ -1,5 +1,4 @@
 @import "colors";
-@import "fonts";
 
 * {
     box-sizing: border-box;
@@ -12,6 +11,10 @@ body {
     background-size: auto;
 }
 
+#app {
+    min-height: 500px;
+    margin-top: 50px;
+}
 
 
 /**================================================== *
@@ -320,6 +323,9 @@ hr {
     width: 20%;
     margin: 0 1%;
     float: left;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .slider-map-icon {
@@ -534,6 +540,7 @@ hr {
 ===========================*/
 
 
+
 /*=====  End of FAQ  ======*/
 
 /*============================
@@ -548,13 +555,6 @@ hr {
     margin-top: 50px;
     padding-bottom: 10px;
     border-radius: 10px;
-    font-family: "Eveleth";
-    p {
-        font-family: "Brown";
-    }
-    h1 {
-        font-size: 2rem;
-    }
 }
 
 .collapsible-header {

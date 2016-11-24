@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://localhost:8888/tissekone/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -155,7 +155,6 @@ function mainMenu() {
 
 	function loadMainMenu(shifts) {
 		var user = store.get('user');
-		console.log(shifts);
 		var header =
 		'<input type="checkbox" id="sidebarToggler">'
 		+'<header class="z-depth-2">'
@@ -215,7 +214,6 @@ function mainMenu() {
 			var shift_end = new Date(Date.UTC(te[0], te[1]-1, te[2], te[3], te[4], te[5]));
 			var shift_end = shift_end.toString();
 
-			console.log(shift_start);
 
 			var shiftStartDay = shift_start.substring(0, 3);
 			var shiftStartDate = shift_start.substring(8, 10);
@@ -242,7 +240,7 @@ function mainMenu() {
 							+ '<p class="p-hours">'+ shiftStartTime + ' - ' + shiftEndTime +'</p>'
 							+ '<p class="p-work-info">'+ shiftStation + ' - ' + shiftTitle +'</p>'
 						+ '</div>'
-						+ '<div class="card-third-3">'
+						+ '<div class="card-third-3 btn-shift-map" data-location="'+ shiftMapLocation +'">'
 							+ '<div class="slider-map-icon">'
 								+ '<img src="'+ RESS +'img/map2.svg">'
 							+ '</div>'
@@ -291,10 +289,112 @@ function mainMenu() {
 	};
 };
 
-function map() {
-	var html;
-	var sendHtml = backNav('Map') + html;
-	jQuery('#app').html(sendHtml); //overwrites the content from the view
+function map(shiftLocation) {
+	var shiftLocation = shiftLocation;
+	var overlay;
+      USGSOverlay.prototype = new google.maps.OverlayView();
+
+      // Initialize the map and the custom overlay.
+
+      function initMap(shiftLocation) {
+        var map = new google.maps.Map(document.getElementById('app'), {
+          zoom: 15,
+          center: {lat: 55.380, lng: 10.342652},
+          mapTypeId: 'satellite'
+        });
+
+        var bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(55.3769012, 10.333567),
+            new google.maps.LatLng(55.384621, 10.3473));
+			
+        // The photograph is courtesy of the U.S. Geological Survey.
+        var srcImage = RESS + 'img/barmap.svg';
+
+		var marker = new google.maps.Marker({
+          position: shiftLocation,
+          map: map,
+          title: 'Be here!?!'
+        });
+
+        // The custom USGSOverlay object contains the USGS image,
+        // the bounds of the image, and a reference to the map.
+        overlay = new USGSOverlay(bounds, srcImage, map);
+      }
+
+      /** @constructor */
+      function USGSOverlay(bounds, image, map) {
+
+        // Initialize all properties.
+        this.bounds_ = bounds;
+        this.image_ = image;
+        this.map_ = map;
+
+        // Define a property to hold the image's div. We'll
+        // actually create this div upon receipt of the onAdd()
+        // method so we'll leave it null for now.
+        this.div_ = null;
+
+        // Explicitly call setMap on this overlay.
+        this.setMap(map);
+      }
+
+      /**
+       * onAdd is called when the map's panes are ready and the overlay has been
+       * added to the map.
+       */
+      USGSOverlay.prototype.onAdd = function() {
+
+        var div = document.createElement('div');
+        div.style.borderStyle = 'none';
+        div.style.borderWidth = '0px';
+        div.style.position = 'absolute';
+
+        // Create the img element and attach it to the div.
+        var img = document.createElement('img');
+        img.src = this.image_;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.position = 'absolute';
+        div.appendChild(img);
+
+        this.div_ = div;
+
+        // Add the element to the "overlayLayer" pane.
+        var panes = this.getPanes();
+        panes.overlayLayer.appendChild(div);
+      };
+
+      USGSOverlay.prototype.draw = function() {
+
+        // We use the south-west and north-east
+        // coordinates of the overlay to peg it to the correct position and size.
+        // To do this, we need to retrieve the projection from the overlay.
+        var overlayProjection = this.getProjection();
+
+        // Retrieve the south-west and north-east coordinates of this overlay
+        // in LatLngs and convert them to pixel coordinates.
+        // We'll use these coordinates to resize the div.
+        var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+        var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+        // Resize the image's div to fit the indicated dimensions.
+        var div = this.div_;
+        div.style.left = sw.x + 'px';
+        div.style.top = ne.y + 'px';
+        div.style.width = (ne.x - sw.x) + 'px';
+        div.style.height = (sw.y - ne.y) + 'px';
+      };
+
+      // The onRemove() method will be called automatically from the API if
+      // we ever set the overlay's map property to 'null'.
+      USGSOverlay.prototype.onRemove = function() {
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+      };
+	  initMap(shiftLocation);
+	  jQuery(backNav("Map")).insertBefore("#app div");
+    //   google.maps.event.addDomListener(window, 'load', initMap);
+
 };
 
 function chat() {
@@ -547,10 +647,7 @@ function information() {
 			+'</div>';
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible({
-	 	onOpen: iconOpen(), // Callback for Collapsible open
-     	onClose: iconClose()  // Callback for Collapsible close 
-	 });
+	 $('.collapsible').collapsible();
 }
 
 function faq() {
@@ -558,24 +655,24 @@ function faq() {
 		'<button class="btn waves-effect btn-back">Back</button>'
 			+'<div class="row faq-container">'
 				+'<div class="col s12">'
-					+'<h1>VOLUNTEER / GOOD TO KNOW</h1>'
+					+'<h1>VOLUNTEER/GOOD TO KNOW</h1>'
 					+'<ul class="collapsible" data-collapsible="accordion">'
 			    		+'<li>'
 			      			+'<div class="collapsible-header white-text"><i class="material-icons">filter_drama</i>PERIODS OF EFFORT</div>'
 		      				+'<div class="collapsible-body">'
-		      					+'<p>A period of effort is the period of time you can/will help Tinderbox. You can choose between 3 different periods, and you have to at least choose one of them. You can also select multiple periods, and thus increase your chances of getting on a team.'
+		      					+'<p>•A period of effort is the period of time you can/will help Tinderbox. You can choose between 3 different periods, and you have to at least choose one of them. You can also select multiple periods, and thus increase your chances of getting on a team.'
 		      					+'<br>'
 		      					+'<br>'
-		      					+'<b>NOTICE</b>: Some before/after teams operate with one shift before AND one shift after. You will be notified about which team/teams this concern, prior to your selection.'
+		      					+'<strong>NOTICE</strong>: Some before/after teams operate with one shift before AND one shift after. You will be notified about which team/teams this concern, prior to your selection.'
 		      					+'<br>'
 		      					+'<br>'
-		      					+'<strong>Periods of effort:</strong>'
+		      					+'Periods of effort:'
 		      					+'<br>'
-		      					+'<strong>Before</strong> Tinderbox'
+		      					+'Before Tinderbox'
 		      					+'<br>'
-		      					+'<strong>During</strong> Tinderbox'
+		      					+'During Tinderbox'
 		      					+'<br>'
-								+'<strong>After</strong> Tinderbox</p>'
+								+'After Tinderbox</p>'
 							+'</div>'
 			    		+'</li>'
 			    		+'<li>'
@@ -641,12 +738,12 @@ function faq() {
 			      				+'Here you can collect your things until Wednesday June 29th until around 5 p.m. After June 29th everything will be moved to our headquarters, which you can contact by writing an e-mail to <a href="mailto:info@tinderbox.dk">info@tinderbox.dk.</a>'
 			      				+'<br>'
 			      				+'<br>'
-			      				+'During volunteers will have access to 2 sandwiches.'
+			      				+'• During volunteers will have access to 2 sandwiches.'
 			      				+'<br>'
 			      				+'<br>'
 			      				+'Describe in detail what you are missing, and we will look for it and get back to you.'
 			      				+'<br>'
-			      				+'Volunteers are allowed to bring food, fruit and snacks.'
+			      				+'• Volunteers are allowed to bring food, fruit and snacks.'
 			      				+'<br>'
 			      				+'<br>'
 			      				+'We keep lost property until July 6th after which everything of value (purses, mobiles, keys, cash, jewelry, handbags and the like) will be given to <a href="https://www.politi.dk/Fyn/da/Borgerservice/Hittegods/">Fyns Politis Hittegodskontor.</a> All clothing and the like will be donated to non-profit or charitable purposes after July 6th.</p>'
@@ -812,7 +909,7 @@ function faq() {
 		      					+'<p>Do you have a suspicion that there was a technical error, or are you experiencing mood swings from RUBY?'
 		      					+'<br>'
 		      					+'<br>'
-		      					+'Write an email with a detailed description of what you see and send it to our support: <a href="mailto:techsupport@tinderbox.dk">techsupport@tinderbox.dk</a></p>'
+		      					+'Write an email with a detailed description of what you see and send it to our support: <a href="mailto:techsupport@tinderbox.dk">mailto:techsupport@tinderbox.dk</a></p>'
 		      				+'</div>'
 			    		+'</li>'
 			    		+'<li>'
@@ -844,10 +941,7 @@ function faq() {
 			+'</div>';
 	var sendHtml = backNav('FAQ') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible({
-	 	onOpen: iconOpen(), // Callback for Collapsible open
-     	onClose: iconClose() // Callback for Collapsible close 
-	 });
+	 $('.collapsible').collapsible();
 }
 
 
@@ -888,24 +982,6 @@ function responseHandling(data){
 	Materialize.toast(data.message, 4000);
 }
 
-function iconOpen(){
-	$('.faq-container material-icons').animate({  textIndent: 0 }, {
-    step: function(now,fx) {
-      	$(this).css('-webkit-transform','rotate('+now+'deg)'); 
-    	},	
-    	duration:'slow'
-	},'linear');
-}
-
-function iconClose(){
-	$('.faq-container material-icons').animate({  textIndent: 0 }, {
-    step: function(now,fx) {
-      $(this).css('-webkit-transform','rotate('+now+'deg)'); 
-    },
-    duration:'slow'
-},'linear');
-}
-
 /* =======  End of Custom Functions  ======= */
 
 
@@ -913,6 +989,16 @@ function iconClose(){
  * ==========  Buttons  ========== *
  * ================================================== */
 jQuery('#app').on('click', '.btn-login-submit', login);
+jQuery('#app').on('click', '.btn-shift-map', function(e) {
+	var arrLocation = $(this).data("location").split(' ');
+	var floatLat = parseFloat(arrLocation[0]);
+	var floatLng = parseFloat(arrLocation[1]);
+	shiftLocation = {
+		lat: floatLat,
+		lng: floatLng
+	};
+	map(shiftLocation);
+});
 jQuery('#app').on('click', '.btn-map', map);
 jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
