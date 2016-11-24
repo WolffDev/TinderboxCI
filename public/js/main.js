@@ -7,7 +7,7 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://webtinderbox:8888/';
+const URL = 'http://localhost/tinderbox/TinderboxCI/';
 const RESS = 'public/';
 
 /*=============================
