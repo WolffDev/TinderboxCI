@@ -151,6 +151,28 @@ function mainMenu() {
 		jQuery('#loading').css("display", "none");
 		loadMainMenu(data);
 	});
+	/*Weather API starts here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=52e05f0dc1fb0a6a2ca57e4de06c823f';
+            
+
+        jQuery.ajax({
+            url: weatherAPI,
+            contentType: 'application/json',
+            type: 'GET',
+            data: JSON.stringify('weather: id'),
+            success: function(data, status, response) {
+                if (data) {
+                	console.log('pls work');
+                    loadData();
+
+                }
+                else {
+                    alert('nope...');
+                }
+            }
+        });
+	/*Weather API ends here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	
 
 	function loadMainMenu(shifts) {
 		var user = store.get('user');
