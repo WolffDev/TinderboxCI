@@ -369,7 +369,7 @@ function map(shiftLocation) {
         // We use the south-west and north-east
         // coordinates of the overlay to peg it to the correct position and size.
         // To do this, we need to retrieve the projection from the overlay.
-        var overlayProjection = this.getProjection();
+    	var overlayProjection = this.getProjection();
 
         // Retrieve the south-west and north-east coordinates of this overlay
         // in LatLngs and convert them to pixel coordinates.
@@ -391,9 +391,9 @@ function map(shiftLocation) {
         this.div_.parentNode.removeChild(this.div_);
         this.div_ = null;
       };
-	  initMap(shiftLocation);
-	  jQuery(backNav("Map")).insertBefore("#app div");
-    //   google.maps.event.addDomListener(window, 'load', initMap);
+	//   initMap(shiftLocation);
+      google.maps.event.addDomListener(window, 'load', initMap(shiftLocation));
+	  jQuery("#app").prepend(backNav("Map"));
 
 };
 
