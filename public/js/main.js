@@ -8,7 +8,7 @@ jQuery(function() {
 });
 
 
-const URL = 'http://localhost/TinderboxCI/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -459,8 +459,7 @@ function chat() {
 function information() {
 
 	var html =
-		'<button class="btn waves-effect btn-back">Back</button>'
-			+'<div class="row faq-container">'
+			'<div class="row faq-container">'
 				+'<div class="col s12">'
 					+'<ul class="collapsible" data-collapsible="accordion">'
 			    		+'<li>'
@@ -704,8 +703,7 @@ function information() {
 
 function faq() {
 	var html =
-		'<button class="btn waves-effect btn-back">Back</button>'
-			+'<div class="row faq-container">'
+			'<div class="row faq-container">'
 				+'<div class="col s12">'
 					+'<h1>VOLUNTEER/GOOD TO KNOW</h1>'
 					+'<ul class="collapsible" data-collapsible="accordion">'
