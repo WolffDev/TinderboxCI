@@ -150,28 +150,6 @@ function mainMenu() {
 	}).done(function(data) {
 		loadMainMenu(data);
 	});
-	/*Weather API starts here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-	var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=52e05f0dc1fb0a6a2ca57e4de06c823f';
-            
-
-        jQuery.ajax({
-            url: weatherAPI,
-            contentType: 'application/json',
-            type: 'GET',
-            data: JSON.stringify('weather: id'),
-            success: function(data, status, response) {
-                if (data) {
-                	console.log('pls work');
-                    loadData();
-
-                }
-                else {
-                    alert('nope...');
-                }
-            }
-        });
-	/*Weather API ends here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-	
 
 	function loadMainMenu(shifts) {
 		var user = store.get('user');
@@ -281,16 +259,6 @@ function mainMenu() {
 			+ '<hr>'
 			+ '<div class="show-more">'
 				+ '<div class="weather-container">'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
 				+ '</div>'
 			+ '</div> <!-- show more END -->'
 			+ '<h1 class="expand">SHOW MORE</h1>' 				   
@@ -335,10 +303,30 @@ function mainMenu() {
 		jQuery('#app').html(sendHtml); //overwrites the content from the view
 
 		jssor_1_slider_init();
+		getWeather();
 
 		$(".expand").click(function() {$(".show-more").toggle("slow");});
 	};
 };
+
+function getWeather() {
+	jQuery.ajax({
+		url: 'http://api.openweathermap.org/data/2.5/forecast?appid=86c5feb02fda028e8f79c6ad579e066e&id=2615876&units=metric',
+		// contentType: 'application/json',
+		dataType: 'json',
+		method: 'GET',
+		success: function(data, status, response) {
+        },
+        error: function(xhr, status, error) {
+		}
+	}).done(function(data) {
+		loadWeather(data);
+	});
+}
+
+function loadWeather(data) {
+	console.log(data);
+}
 
 function map(shiftLocation) {
 	var shiftLocation = shiftLocation;
