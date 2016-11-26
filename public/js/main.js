@@ -74,12 +74,15 @@ function login() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
-			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
+		// headers: {
+		// 	'Authorization': 'Basic ' + btoa(email + ':' + password),
+		// 	'contentType': 'application/json',
+		// },
 		url: URL + 'api/login',
-		contentType: 'application/json',
-		type: 'GET',
+		dataType: 'json',
+		method: 'GET',
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
@@ -87,7 +90,6 @@ function login() {
 			responseHandling(err);
 		}
 	}).done(function(data, status, response) {
-		jQuery('#loading').css("display", "none");
 		store.set('user', {
 				userid: data.userid,
 				firstname: data.firstname,
@@ -133,15 +135,13 @@ function mainMenu() {
 	console.log("Main menu loaded!");
 
 	jQuery.ajax({
-		
 		beforeSend: function(xhr) {
-			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("SecretToken", user.token);
 		},
 		url: URL + 'api/shifts/' + user.userid, //load token
-
 		contentType: 'application/json',
-		type: 'GET',
+		dataType: 'json',
+		method: 'GET',
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
@@ -149,7 +149,6 @@ function mainMenu() {
 			responseHandling(err);
 		}
 	}).done(function(data) {
-		jQuery('#loading').css("display", "none");
 		loadMainMenu(data);
 	});
 
