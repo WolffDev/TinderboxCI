@@ -7,7 +7,8 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://webtinderbox:8888/';
+
+const URL = 'http://localhost/TinderboxCI/';
 const RESS = 'public/';
 
 /*=============================
@@ -151,6 +152,28 @@ function mainMenu() {
 	}).done(function(data) {
 		loadMainMenu(data);
 	});
+	/*Weather API starts here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=52e05f0dc1fb0a6a2ca57e4de06c823f';
+            
+
+        jQuery.ajax({
+            url: weatherAPI,
+            contentType: 'application/json',
+            type: 'GET',
+            data: JSON.stringify('weather: id'),
+            success: function(data, status, response) {
+                if (data) {
+                	console.log('pls work');
+                    loadData();
+
+                }
+                else {
+                    alert('nope...');
+                }
+            }
+        });
+	/*Weather API ends here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	
 
 	function loadMainMenu(shifts) {
 		var user = store.get('user');
@@ -237,7 +260,7 @@ function mainMenu() {
 						+ '</div>'
 						+ '<div class="card-third-2">'
 							+ '<p class="p-hours">'+ shiftStartTime + ' - ' + shiftEndTime +'</p>'
-							+ '<p class="p-work-info">'+ shiftStation + ' - ' + shiftTitle +'</p>'
+							+ '<p class="p-work-info-rosa">'+ shiftStation + '</p> <p class="p-work-info-azur">' + shiftTitle +'</p>'
 						+ '</div>'
 						+ '<div class="card-third-3 btn-shift-map" data-location="'+ shiftMapLocation +'">'
 							+ '<div class="slider-map-icon">'
@@ -259,24 +282,55 @@ function mainMenu() {
 			+ '</div>'
 			+ '<hr>'
 			+ '<div class="show-more">'
-				
+				+ '<div class="weather-container">'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+				+ '</div>'
 			+ '</div> <!-- show more END -->'
 			+ '<h1 class="expand">SHOW MORE</h1>' 				   
 			+ '</div>'
 		+ '</div>';
 
-		var mainMenu = '<h1>Mainmenu</h1>'
+		var mainMenu = '<h1 class="h1-title">Mainmenu</h1>'
 		+ '<div class="main-menu-left">'
-		+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
+			+ '<button class="btn-flat btn-map">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/map-location.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">MAP</h1>'
+			+ '</button>'
 		+ '</div>'
 		+ '<div class="main-menu-right">'
-		+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+			+ '<button class="btn-flat btn-chat">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/chat.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">Chat</h1>'
+			+ '</button>'
 		+ '</div>'
 		+ '<div class="main-menu-left">'
-		+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+			+ '<button class="btn-flat btn-info">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/info.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">Info</h1>'
+			+ '</button>'
 		+ '</div>'
 		+ '<div class="main-menu-right">'
-		+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+			+ '<button class="btn-flat btn-faq">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/FAQ.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">FAQ</h1>'
+			+ '</button>'
 		+ '</div>';
 				
 		var sendHtml = header + slider + showMore + mainMenu;
@@ -400,7 +454,6 @@ function chat() {
 	var html;
 	var sendHtml = backNav('Chat') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-
 }
 
 function information() {
