@@ -75,13 +75,10 @@ function login() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
+            xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
-		// headers: {
-		// 	'Authorization': 'Basic ' + btoa(email + ':' + password),
-		// 	'contentType': 'application/json',
-		// },
 		url: URL + 'api/login',
+        contentType: "application/x-www-form-urlencoded", //added this
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
@@ -136,6 +133,7 @@ function mainMenu() {
 	console.log("Main menu loaded!");
 
 	jQuery.ajax({
+		
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader("SecretToken", user.token);
 		},
@@ -144,8 +142,8 @@ function mainMenu() {
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
-		},
-		error: function(xhr, status, error) {
+        },
+        error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
 			responseHandling(err);
 		}
