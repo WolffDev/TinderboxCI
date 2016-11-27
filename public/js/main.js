@@ -132,18 +132,12 @@ function backNav(title) {
 function mainMenu() {
 	var user = store.get('user');
 	console.log("Main menu loaded!");
-	console.log(user.token);
 
 	jQuery.ajax({
-		
-		// beforeSend: function(xhr) {
-		// 	xhr.setRequestHeader("Secrettoken", user.token);
-		// },
 		headers: {
 			'Secrettoken': user.token
 		},
 		url: encodeURI(URL + 'api/shifts/' + user.userid), //load token
-		// contentType: 'application/json',
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
@@ -263,7 +257,7 @@ function mainMenu() {
 			+ '</div>'
 			+ '<hr>'
 			+ '<div class="show-more">'
-				+ '<div class="weather-container">'
+				+ '<div id="weather-container">'
 					+ '<p>Reload the page to recieve weather updates</p>'
 				+ '</div>'
 			+ '</div> <!-- show more END -->'
@@ -321,8 +315,8 @@ function mainMenu() {
 			if(checkDate > convertStoreDate) {
 				localStorage.removeItem('tinderboxWeather');
 				getWeather();
-			}
-			if(jQuery.isReady) {
+				insertWeather();
+			} else {
 				insertWeather();
 			}
 		}
@@ -330,6 +324,11 @@ function mainMenu() {
 		console.log(store.get('tinderboxWeather'));
 		
 		jQuery(".expand").click(function() {
+			if (jQuery.trim(jQuery(this).text()) === 'SHOW MORE') {
+				jQuery(this).text('SHOW LESS');
+			} else {
+				jQuery(this).text('SHOW MORE');        
+			}
 			jQuery(".show-more").toggle("slow");
 		});
 	};
@@ -1079,7 +1078,13 @@ function degToCompass(num) {
 	// return arr[(val % 16)];
 
 function insertWeather() {
-	
+	if(jQuery.isReady) {
+		var tinderboxWeather = store.get('tinderboxWeather');
+		var weather;
+		var i;
+		// for(i = 0; i < )
+		jQuery('#weather-container').html("TEST");
+	}
 }
 
 
