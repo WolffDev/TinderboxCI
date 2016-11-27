@@ -2,8 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
-
+	
 	public function __construct() {
+		// header('Access-Control-Allow-Origin: *');
+  		// header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 		parent::__construct();
 		$this->load->library('secret_auth');
 		$this->load->model('users_model');
@@ -28,7 +30,7 @@ class Api extends CI_Controller {
 
 	public function add_user() {
 		$this->secret_auth->method('POST');
-		$this->secret_auth->check_token();
+		// $this->secret_auth->check_token();
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
 

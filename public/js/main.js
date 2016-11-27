@@ -7,7 +7,8 @@ jQuery(function() {
 	// mainMenu();
 });
 
-const URL = 'http://localhost:8888/tissekone/';
+
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -74,12 +75,15 @@ function login() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
-			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
+		// headers: {
+		// 	'Authorization': 'Basic ' + btoa(email + ':' + password),
+		// 	'contentType': 'application/json',
+		// },
 		url: URL + 'api/login',
-		contentType: 'application/json',
-		type: 'GET',
+		dataType: 'json',
+		method: 'GET',
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
@@ -87,7 +91,6 @@ function login() {
 			responseHandling(err);
 		}
 	}).done(function(data, status, response) {
-		jQuery('#loading').css("display", "none");
 		store.set('user', {
 				userid: data.userid,
 				firstname: data.firstname,
@@ -133,15 +136,13 @@ function mainMenu() {
 	console.log("Main menu loaded!");
 
 	jQuery.ajax({
-		
 		beforeSend: function(xhr) {
-			jQuery('#loading').css("display", "inherit");
 			xhr.setRequestHeader("SecretToken", user.token);
 		},
 		url: URL + 'api/shifts/' + user.userid, //load token
-
 		contentType: 'application/json',
-		type: 'GET',
+		dataType: 'json',
+		method: 'GET',
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
@@ -149,13 +150,33 @@ function mainMenu() {
 			responseHandling(err);
 		}
 	}).done(function(data) {
-		jQuery('#loading').css("display", "none");
 		loadMainMenu(data);
 	});
+	/*Weather API starts here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=52e05f0dc1fb0a6a2ca57e4de06c823f';
+            
+
+        jQuery.ajax({
+            url: weatherAPI,
+            contentType: 'application/json',
+            type: 'GET',
+            data: JSON.stringify('weather: id'),
+            success: function(data, status, response) {
+                if (data) {
+                	console.log('pls work');
+                    loadData();
+
+                }
+                else {
+                    alert('nope...');
+                }
+            }
+        });
+	/*Weather API ends here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	
 
 	function loadMainMenu(shifts) {
 		var user = store.get('user');
-		console.log(shifts);
 		var header =
 		'<input type="checkbox" id="sidebarToggler">'
 		+'<header class="z-depth-2">'
@@ -215,7 +236,6 @@ function mainMenu() {
 			var shift_end = new Date(Date.UTC(te[0], te[1]-1, te[2], te[3], te[4], te[5]));
 			var shift_end = shift_end.toString();
 
-			console.log(shift_start);
 
 			var shiftStartDay = shift_start.substring(0, 3);
 			var shiftStartDate = shift_start.substring(8, 10);
@@ -240,9 +260,9 @@ function mainMenu() {
 						+ '</div>'
 						+ '<div class="card-third-2">'
 							+ '<p class="p-hours">'+ shiftStartTime + ' - ' + shiftEndTime +'</p>'
-							+ '<p class="p-work-info">'+ shiftStation + ' - ' + shiftTitle +'</p>'
+							+ '<p class="p-work-info-rosa">'+ shiftStation + '</p> <p class="p-work-info-azur">' + shiftTitle +'</p>'
 						+ '</div>'
-						+ '<div class="card-third-3">'
+						+ '<div class="card-third-3 btn-shift-map" data-location="'+ shiftMapLocation +'">'
 							+ '<div class="slider-map-icon">'
 								+ '<img src="'+ RESS +'img/map2.svg">'
 							+ '</div>'
@@ -262,24 +282,55 @@ function mainMenu() {
 			+ '</div>'
 			+ '<hr>'
 			+ '<div class="show-more">'
-				
+				+ '<div class="weather-container">'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+					+ '<div class="weather-block"></div>'
+				+ '</div>'
 			+ '</div> <!-- show more END -->'
 			+ '<h1 class="expand">SHOW MORE</h1>' 				   
 			+ '</div>'
 		+ '</div>';
 
-		var mainMenu = '<h1>Mainmenu</h1>'
+		var mainMenu = '<h1 class="h1-title">Mainmenu</h1>'
 		+ '<div class="main-menu-left">'
-		+ '<button class="btn-flat btn-map">Map<div class="main-menu-icon"></div></button>'
+			+ '<button class="btn-flat btn-map">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/map-location.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">MAP</h1>'
+			+ '</button>'
 		+ '</div>'
 		+ '<div class="main-menu-right">'
-		+ '<button class="waves-effect waves-light btn btn-chat">Chat</button>'
+			+ '<button class="btn-flat btn-chat">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/chat.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">Chat</h1>'
+			+ '</button>'
 		+ '</div>'
 		+ '<div class="main-menu-left">'
-		+ '<button class="waves-effect waves-light btn btn-info">Info</button>'
+			+ '<button class="btn-flat btn-info">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/info.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">Info</h1>'
+			+ '</button>'
 		+ '</div>'
 		+ '<div class="main-menu-right">'
-		+ '<button class="waves-effect waves-light btn btn-faq">FAQ</button>'
+			+ '<button class="btn-flat btn-faq">'
+				+ '<div class="main-menu-icon">'
+					+ '<img src="'+ RESS +'img/FAQ.svg">'
+				+ '</div>'
+				+ '<h1 class="tile-title">FAQ</h1>'
+			+ '</button>'
 		+ '</div>';
 				
 		var sendHtml = header + slider + showMore + mainMenu;
@@ -291,24 +342,124 @@ function mainMenu() {
 	};
 };
 
-function map() {
-	var html;
-	var sendHtml = backNav('Map') + html;
-	jQuery('#app').html(sendHtml); //overwrites the content from the view
+function map(shiftLocation) {
+	var shiftLocation = shiftLocation;
+	var overlay;
+      USGSOverlay.prototype = new google.maps.OverlayView();
+
+      // Initialize the map and the custom overlay.
+
+      function initMap(shiftLocation) {
+        var map = new google.maps.Map(document.getElementById('app'), {
+          zoom: 15,
+          center: {lat: 55.380, lng: 10.342652},
+          mapTypeId: 'satellite'
+        });
+
+        var bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(55.3769012, 10.333567),
+            new google.maps.LatLng(55.384621, 10.3473));
+			
+        // The photograph is courtesy of the U.S. Geological Survey.
+        var srcImage = RESS + 'img/barmap.svg';
+
+		var marker = new google.maps.Marker({
+          position: shiftLocation,
+          map: map,
+          title: 'Be here!?!'
+        });
+
+        // The custom USGSOverlay object contains the USGS image,
+        // the bounds of the image, and a reference to the map.
+        overlay = new USGSOverlay(bounds, srcImage, map);
+      }
+
+      /** @constructor */
+      function USGSOverlay(bounds, image, map) {
+
+        // Initialize all properties.
+        this.bounds_ = bounds;
+        this.image_ = image;
+        this.map_ = map;
+
+        // Define a property to hold the image's div. We'll
+        // actually create this div upon receipt of the onAdd()
+        // method so we'll leave it null for now.
+        this.div_ = null;
+
+        // Explicitly call setMap on this overlay.
+        this.setMap(map);
+      }
+
+      /**
+       * onAdd is called when the map's panes are ready and the overlay has been
+       * added to the map.
+       */
+      USGSOverlay.prototype.onAdd = function() {
+
+        var div = document.createElement('div');
+        div.style.borderStyle = 'none';
+        div.style.borderWidth = '0px';
+        div.style.position = 'absolute';
+
+        // Create the img element and attach it to the div.
+        var img = document.createElement('img');
+        img.src = this.image_;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.position = 'absolute';
+        div.appendChild(img);
+
+        this.div_ = div;
+
+        // Add the element to the "overlayLayer" pane.
+        var panes = this.getPanes();
+        panes.overlayLayer.appendChild(div);
+      };
+
+      USGSOverlay.prototype.draw = function() {
+
+        // We use the south-west and north-east
+        // coordinates of the overlay to peg it to the correct position and size.
+        // To do this, we need to retrieve the projection from the overlay.
+    	var overlayProjection = this.getProjection();
+
+        // Retrieve the south-west and north-east coordinates of this overlay
+        // in LatLngs and convert them to pixel coordinates.
+        // We'll use these coordinates to resize the div.
+        var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+        var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+        // Resize the image's div to fit the indicated dimensions.
+        var div = this.div_;
+        div.style.left = sw.x + 'px';
+        div.style.top = ne.y + 'px';
+        div.style.width = (ne.x - sw.x) + 'px';
+        div.style.height = (sw.y - ne.y) + 'px';
+      };
+
+      // The onRemove() method will be called automatically from the API if
+      // we ever set the overlay's map property to 'null'.
+      USGSOverlay.prototype.onRemove = function() {
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+      };
+	//   initMap(shiftLocation);
+      google.maps.event.addDomListener(window, 'load', initMap(shiftLocation));
+	  jQuery("#app").prepend(backNav("Map"));
+
 };
 
 function chat() {
 	var html;
 	var sendHtml = backNav('Chat') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-
 }
 
 function information() {
 
 	var html =
-		'<button class="btn waves-effect btn-back">Back</button>'
-			+'<div class="row faq-container">'
+			'<div class="row faq-container">'
 				+'<div class="col s12">'
 					+'<ul class="collapsible" data-collapsible="accordion">'
 			    		+'<li>'
@@ -547,28 +698,25 @@ function information() {
 			+'</div>';
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible({
-	 	onOpen: iconOpen(), // Callback for Collapsible open
-     	onClose: iconClose()  // Callback for Collapsible close 
-	 });
+	 $('.collapsible').collapsible();
 }
 
 function faq() {
 	var html =
-		'<button class="btn waves-effect btn-back">Back</button>'
-			+'<div class="row faq-container">'
+			'<div class="row faq-container">'
 				+'<div class="col s12">'
-					+'<h1>VOLUNTEER / GOOD TO KNOW</h1>'
+					+'<h1>VOLUNTEER/GOOD TO KNOW</h1>'
 					+'<ul class="collapsible" data-collapsible="accordion">'
 			    		+'<li>'
 			      			+'<div class="collapsible-header white-text"><i class="material-icons">play_arrow</i>PERIODS OF EFFORT</div>'
 		      				+'<div class="collapsible-body">'
-		      					+'<p>A period of effort is the period of time you can/will help Tinderbox. You can choose between 3 different periods, and you have to at least choose one of them. You can also select multiple periods, and thus increase your chances of getting on a team.'
+		      					+'<p>•A period of effort is the period of time you can/will help Tinderbox. You can choose between 3 different periods, and you have to at least choose one of them. You can also select multiple periods, and thus increase your chances of getting on a team.'
 		      					+'<br>'
 		      					+'<br>'
-		      					+'<b>NOTICE</b>: Some before/after teams operate with one shift before AND one shift after. You will be notified about which team/teams this concern, prior to your selection.'
+		      					+'<strong>NOTICE</strong>: Some before/after teams operate with one shift before AND one shift after. You will be notified about which team/teams this concern, prior to your selection.'
 		      					+'<br>'
 		      					+'<br>'
+
 		      					+'<b>Periods of effort:</b>'
 		      					+'<br>'
 		      					+'<b>Before</b> Tinderbox'
@@ -576,6 +724,15 @@ function faq() {
 		      					+'<b>During</b> Tinderbox'
 		      					+'<br>'
 								+'<b>After</b> Tinderbox</p>'
+
+		      					+'Periods of effort:'
+		      					+'<br>'
+		      					+'Before Tinderbox'
+		      					+'<br>'
+		      					+'During Tinderbox'
+		      					+'<br>'
+								+'After Tinderbox</p>'
+
 							+'</div>'
 			    		+'</li>'
 			    		+'<li>'
@@ -641,12 +798,12 @@ function faq() {
 			      				+'Here you can collect your things until Wednesday June 29th until around 5 p.m. After June 29th everything will be moved to our headquarters, which you can contact by writing an e-mail to <a href="mailto:info@tinderbox.dk">info@tinderbox.dk.</a>'
 			      				+'<br>'
 			      				+'<br>'
-			      				+'During volunteers will have access to 2 sandwiches.'
+			      				+'• During volunteers will have access to 2 sandwiches.'
 			      				+'<br>'
 			      				+'<br>'
 			      				+'Describe in detail what you are missing, and we will look for it and get back to you.'
 			      				+'<br>'
-			      				+'Volunteers are allowed to bring food, fruit and snacks.'
+			      				+'• Volunteers are allowed to bring food, fruit and snacks.'
 			      				+'<br>'
 			      				+'<br>'
 			      				+'We keep lost property until July 6th after which everything of value (purses, mobiles, keys, cash, jewelry, handbags and the like) will be given to <a href="https://www.politi.dk/Fyn/da/Borgerservice/Hittegods/">Fyns Politis Hittegodskontor.</a> All clothing and the like will be donated to non-profit or charitable purposes after July 6th.</p>'
@@ -812,7 +969,7 @@ function faq() {
 		      					+'<p>Do you have a suspicion that there was a technical error, or are you experiencing mood swings from RUBY?'
 		      					+'<br>'
 		      					+'<br>'
-		      					+'Write an email with a detailed description of what you see and send it to our support: <a href="mailto:techsupport@tinderbox.dk">techsupport@tinderbox.dk</a></p>'
+		      					+'Write an email with a detailed description of what you see and send it to our support: <a href="mailto:techsupport@tinderbox.dk">mailto:techsupport@tinderbox.dk</a></p>'
 		      				+'</div>'
 			    		+'</li>'
 			    		+'<li>'
@@ -844,10 +1001,14 @@ function faq() {
 			+'</div>';
 	var sendHtml = backNav('FAQ') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
+
 	 $('.collapsible').collapsible({
 	 	onOpen: function(el) { console.log(el); }, // Callback for Collapsible open
      	onClose: function(el) { console.log(el); } // Callback for Collapsible close 
 	 });
+
+	 $('.collapsible').collapsible();
+
 }
 
 
@@ -888,6 +1049,7 @@ function responseHandling(data){
 	Materialize.toast(data.message, 4000);
 }
 
+
 function iconOpen(){
 	console.log('Hej David');
 }
@@ -901,6 +1063,7 @@ function iconClose(){
 },'linear');
 }
 
+
 /* =======  End of Custom Functions  ======= */
 
 
@@ -908,6 +1071,16 @@ function iconClose(){
  * ==========  Buttons  ========== *
  * ================================================== */
 jQuery('#app').on('click', '.btn-login-submit', login);
+jQuery('#app').on('click', '.btn-shift-map', function(e) {
+	var arrLocation = $(this).data("location").split(' ');
+	var floatLat = parseFloat(arrLocation[0]);
+	var floatLng = parseFloat(arrLocation[1]);
+	shiftLocation = {
+		lat: floatLat,
+		lng: floatLng
+	};
+	map(shiftLocation);
+});
 jQuery('#app').on('click', '.btn-map', map);
 jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
