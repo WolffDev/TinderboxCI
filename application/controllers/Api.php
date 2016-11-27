@@ -11,7 +11,7 @@ class Api extends CI_Controller {
 		$this->load->model('users_model');
 		$this->load->model('shifts_model');
 		header('Access-Control-Allow-Origin: *');
-	    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, SecretToken");
+	    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Data-Type, Accept, Access-Control-Request-Method, Authorization, Secrettoken");
 	    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PATCH, DELETE");
 	    $method = $_SERVER['REQUEST_METHOD'];
 	    if($method == "OPTIONS") {

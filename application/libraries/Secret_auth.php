@@ -54,7 +54,7 @@ class Secret_auth {
                 'firstname' => $userdata['firstname'],
                 'lastname' => $userdata['lastname'],
                 'email' => $userdata['email'],
-                'secretToken' => $encoded_token
+                'Secrettoken' => $encoded_token
             ]);
         } else {
             $this->http_response(401, 'Unauthorized', [
@@ -69,7 +69,7 @@ class Secret_auth {
         $this->ci->load->helper('url');
         $this->method('GET');
 
-        if(!isset(getallheaders()['SecretToken'])) {
+        if(!isset(getallheaders()['Secrettoken'])) {
             // redirect('/', 'location', 'dassad');
             $this->http_response(401, 'Unauthorized', [
                 'message' => 'Token is not set',
@@ -77,7 +77,7 @@ class Secret_auth {
             ]);
         }
 
-        $basic_token = getallheaders()['SecretToken'];
+        $basic_token = getallheaders()['Secrettoken'];
         $decoded_token = base64_decode($basic_token);
         $credentials = explode(':', $decoded_token);
 

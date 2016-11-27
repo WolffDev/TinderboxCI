@@ -77,15 +77,16 @@ function login() {
 		beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
-		url: URL + 'api/login',
-        contentType: "application/x-www-form-urlencoded", //added this
+		url: encodeURI(URL + 'api/login'),
+        // contentType: "application/x-www-form-urlencoded", //added this
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
-			var err = JSON.parse(xhr.responseText);
-			responseHandling(err);
+			console.log(xhr.responseText);
+			// var err = JSON.parse(xhr);
+			// responseHandling(err);
 		}
 	}).done(function(data, status, response) {
 		store.set('user', {
@@ -93,7 +94,7 @@ function login() {
 				firstname: data.firstname,
 				lastname: data.lastname,
 				email: data.email,
-				token: data.secretToken
+				token: data.Secrettoken
 			});
 			mainMenu();
 	});
@@ -131,14 +132,18 @@ function backNav(title) {
 function mainMenu() {
 	var user = store.get('user');
 	console.log("Main menu loaded!");
+	console.log(user.token);
 
 	jQuery.ajax({
 		
-		beforeSend: function(xhr) {
-			xhr.setRequestHeader("SecretToken", user.token);
+		// beforeSend: function(xhr) {
+		// 	xhr.setRequestHeader("Secrettoken", user.token);
+		// },
+		headers: {
+			'Secrettoken': user.token
 		},
-		url: URL + 'api/shifts/' + user.userid, //load token
-		contentType: 'application/json',
+		url: encodeURI(URL + 'api/shifts/' + user.userid), //load token
+		// contentType: 'application/json',
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
@@ -301,15 +306,36 @@ function mainMenu() {
 				
 		var sendHtml = header + slider + showMore + mainMenu;
 		jQuery('#app').html(sendHtml); //overwrites the content from the view
-
 		jssor_1_slider_init();
-		getWeather();
+		if(store.get('tinderboxWeather') === undefined || jQuery.isEmptyObject(store.get('tinderboxWeather'))) {
+			getWeather();
+		} 
 
-		$(".expand").click(function() {$(".show-more").toggle("slow");});
+		if(store.get('tinderboxWeather') !== undefined) {
+			var checkDate = new Date(new Date().valueOf());
+			var localWeather = store.get('tinderboxWeather');
+			var storeDate = localWeather[1].unixTime - (60*60);
+			var convertStoreDate = new Date(storeDate*1000);
+
+			if(checkDate > convertStoreDate) {
+				localStorage.removeItem('tinderboxWeather');
+				getWeather();
+			}
+			if(jQuery.isReady) {
+				insertWeather();
+			}
+		}
+		
+		console.log(store.get('tinderboxWeather'));
+		
+		jQuery(".expand").click(function() {
+			jQuery(".show-more").toggle("slow");
+		});
 	};
 };
 
 function getWeather() {
+	console.log("getWeather called!");
 	jQuery.ajax({
 		url: 'http://api.openweathermap.org/data/2.5/forecast?appid=86c5feb02fda028e8f79c6ad579e066e&id=2615876&units=metric',
 		// contentType: 'application/json',
@@ -321,11 +347,35 @@ function getWeather() {
 		}
 	}).done(function(data) {
 		loadWeather(data);
+		console.log(data); // DEBUGGING
 	});
 }
 
 function loadWeather(data) {
-	console.log(data);
+	var data = data;
+
+	function handleWeather(data) {
+		weatherArr = [];
+		var i;
+		for(i = 0; i < data.list.length; i++) {
+			var obj = {};
+			obj['date'] = data.list[i].dt_txt; //date in clear text
+			obj['unixTime'] = data.list[i].dt; // date in unix time stamp
+			obj['weatherDesc'] = data.list[i].weather[0].description; // weather with more description
+			obj['weather'] = data.list[i].weather[0].main; // weather short
+			obj['id'] = data.list[i].weather[0].id; // weather id
+			obj['temp'] = data.list[i].main.temp; // avg. tempature
+			obj['humid'] = data.list[i].main.humidity; // humidity
+			obj['windDeg'] = data.list[i].wind.deg; // wind direction in degreese
+			obj['windSpeed'] = data.list[i].wind.speed; // wind speed in meter/sec
+			obj['cloudsPer'] = data.list[i].clouds.all; // Percent of clouds in the sky
+			
+			weatherArr.push(obj);
+		}
+		return weatherArr;
+	}
+
+	store.set('tinderboxWeather', handleWeather(data));
 }
 
 function map(shiftLocation) {
@@ -684,7 +734,7 @@ function information() {
 			+'</div>';
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible();
+	 jQuery('.collapsible').collapsible();
 }
 
 function faq() {
@@ -977,7 +1027,7 @@ function faq() {
 			+'</div>';
 	var sendHtml = backNav('FAQ') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible();
+	jQuery('.collapsible').collapsible();
 }
 
 
@@ -1018,6 +1068,20 @@ function responseHandling(data){
 	Materialize.toast(data.message, 4000);
 }
 
+function degToCompass(num) {
+	// returns where the wind is coming from, depending on the wind direction in degrees
+	var val = Math.floor((num / 22.5) + 0.5);
+	var arr = ["south", "south-southwest", "southwest", "west-southwest", "west", "west-northwest", "northwest", "nort-northwest", "north", "north-northeast", "northeast", "east-northeast", "east", "east-southeast", "southeast",  "south-southeast"];
+	return arr[(val % 16)];
+}
+// var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+	// return arr[(val % 16)];
+
+function insertWeather() {
+	
+}
+
+
 /* =======  End of Custom Functions  ======= */
 
 
@@ -1026,7 +1090,7 @@ function responseHandling(data){
  * ================================================== */
 jQuery('#app').on('click', '.btn-login-submit', login);
 jQuery('#app').on('click', '.btn-shift-map', function(e) {
-	var arrLocation = $(this).data("location").split(' ');
+	var arrLocation = jQuery(this).data("location").split(' ');
 	var floatLat = parseFloat(arrLocation[0]);
 	var floatLng = parseFloat(arrLocation[1]);
 	shiftLocation = {
