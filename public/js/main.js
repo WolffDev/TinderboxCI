@@ -35,13 +35,13 @@ function loginScreen() {
 					+'<div class="login-input">'
 						+'<div class="row">'
 							+'<div class="input-field col s12">'
-								+'<input id="email" name="email" type="email" class="" required>'
+								+'<input id="email" name="email" type="email" class="" required tabindex="1">'
 								+'<label for="email">Email</label>'
 							+'</div>'
 						+'</div>'
 						+'<div class="row">'
 							+'<div class="input-field col s12">'
-								+'<input id="password" name="password" type="password" class="" required>'
+								+'<input id="password" name="password" type="password" class="" required tabindex="2">'
 								+'<label for="password">Password</label>'
 								+'<div class="forgot-pw">'
 									+'<a href="#">Forgot Password?</a>'
@@ -50,7 +50,7 @@ function loginScreen() {
 						+'</div>'
 						+'</div class="row">'
 							+'<div class="col s12 center">'
-								+'<button class="btn waves-effect waves-dark btn-login-submit">'
+								+'<button class="btn waves-effect waves-dark btn-login-submit" tabindex="3">'
 									+'Login'
 								+'</button>'
 							+'</div>'
@@ -1077,14 +1077,55 @@ function degToCompass(num) {
 // var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
 	// return arr[(val % 16)];
 
-function insertWeather() {
-	if(jQuery.isReady) {
-		var tinderboxWeather = store.get('tinderboxWeather');
-		var weather;
-		var i;
-		// for(i = 0; i < )
-		jQuery('#weather-container').html("TEST");
+function windToText(num) {
+	// https://en.wikipedia.org/wiki/Beaufort_scale
+	switch (true) {
+		case (num < 1.6):
+			return "Calm";
+		case (num < 3.3):
+			return "Light breeze";
+		case (num < 5.5):
+			return "Gentle breeze";
+		case (num < 7.9):
+			return "Moderate breeze";
+		case (num < 10.7):
+			return "Fresh breeze";
+		case (num < 13.8):
+			return "Strong breeze";
+		case (num < 17.1):
+			return "High wind";
+		case (num < 20.7):
+			return "Gale";
+		case (num < 24.4):
+			return "Severe gale";
+		case (num < 28.4):
+			return "Storm";
+		case (num < 32.6):
+			return "Violent storm";
+		case (num >= 32.6):
+			return "Hurricane";
 	}
+}
+
+function insertWeather() {
+	var tw = store.get('tinderboxWeather');
+	var weather = '<div>';
+	var i;
+	for(i = 0; i < 5; i++) {
+		weather += 
+		'<div class="weather-block center">'
+			+'<div>Weather Icon</div>'
+			+'<div>' + Math.round(tw[i].temp) + '&#176;C</div>' // no floating point
+			+'<div>' + tw[i].date.substring(11, 16) + '</div>' // only show the hour
+			+'<div>' + tw[i].weather + '</div>'
+			+'<div>' + tw[i].weatherDesc + '</div>'
+			+'<div>' + tw[i].windSpeed + ' m/s</div>' // needs to be converted to clear text
+			+'<div>' + windToText(tw[i].windSpeed) + '</div>' // needs to be converted to clear text
+		+'</div>';
+	}
+	weather += '</div>';
+	// console.log(weather);
+	jQuery('#weather-container').html(weather);
 }
 
 

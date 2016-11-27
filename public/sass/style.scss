@@ -393,6 +393,7 @@ hr {
     margin: 0 auto;
     display: none;
     overflow-x: scroll;
+    overflow-y: hidden;
   }
 
   .expand {
@@ -446,13 +447,9 @@ hr {
 
   .weather-block {
     width: 160px;
-    padding: 10px 15px;
+    padding: 5px;
     height: 100%;
     float: left;
-    background-color: blue;
-    &:nth-child(2n) {
-        background-color: red;
-    }
   }
 
   .p-weather-days {
