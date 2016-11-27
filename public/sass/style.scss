@@ -516,7 +516,10 @@ hr {
   margin-top: 10px;
   margin-bottom: 10px;
   float: left;
+}
 
+.btn-flat:hover {
+    background: $yellow;
 }
 
 .main-menu-icon {
