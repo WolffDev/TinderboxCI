@@ -264,6 +264,7 @@ function mainMenu() {
 			+ '<hr>'
 			+ '<div class="show-more">'
 				+ '<div class="weather-container">'
+					+ '<p>Reload the page to recieve weather updates</p>'
 				+ '</div>'
 			+ '</div> <!-- show more END -->'
 			+ '<h1 class="expand">SHOW MORE</h1>' 				   
