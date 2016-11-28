@@ -582,12 +582,29 @@ hr {
     margin-top: 50px;
     padding-bottom: 10px;
     border-radius: 10px;
+    a {
+        color: rgb(255, 0, 255);
+    }
+}
+.faq-container h2 {
+    font-size: 1.5em;
 }
 
 .collapsible-header {
     background-color: $teal;
     color: white;
 
+
+}
+
+.ani-down {
+    transform: rotate(90deg);
+    transition: transform .3s linear;
+}
+
+.ani-back {
+    transform: rotate(0deg);
+    transition: transform .3s linear;
 }
 
 /*=====  End of Info  ======*/

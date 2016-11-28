@@ -265,7 +265,7 @@ function mainMenu() {
 			+ '</div>'
 		+ '</div>';
 
-		var mainMenu = '<h1 class="h1-title">Mainmenu</h1>'
+		var mainMenu = '<h1-title class="h1-title">Mainmenu</h1>'
 		+ '<div class="main-menu-left">'
 			+ '<button class="btn-flat btn-map btn waves-effect waves-yellow">'
 				+ '<div class="main-menu-icon">'
@@ -749,7 +749,7 @@ function faq() {
 	var html =
 			'<div class="row faq-container">'
 				+'<div class="col s12">'
-					+'<h1>VOLUNTEER/GOOD TO KNOW</h1>'
+					+'<h2>VOLUNTEER/GOOD TO KNOW</h2>'
 					+'<ul class="collapsible" data-collapsible="accordion">'
 			    		+'<li>'
 			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i>PERIODS OF EFFORT</div>'
@@ -900,7 +900,7 @@ function faq() {
 								+'It is very important, that you know what you can expect from us, and what we expect of you.</p>'
 		      				+'</div>'
 			    		+'</li>' 
-			    		+'<h1>VOLUNTEER / REGISTRATION AND CANCELLATION</h1>'
+			    		+'<h2>VOLUNTEER / REGISTRATION AND CANCELLATION</h2>'
 			    		+'<li>'
 			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i>CANCELLATION AND ILLNESS</div>'
 		      				+'<div class="collapsible-body">'
@@ -1039,9 +1039,12 @@ function faq() {
 		onOpen: function(el) { 
 
 			el[0].firstChild.style.color = "rgb(255, 217, 98)";
+			el[0].childNodes[0].firstChild.className = "material-icons ani-down";
+		
 		},
 		onClose: function(el) {
 			el[0].firstChild.style.color = "white";
+			el[0].childNodes[0].firstChild.className = "material-icons ani-back";
 		}
 	});
 
