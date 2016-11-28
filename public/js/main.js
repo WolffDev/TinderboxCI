@@ -176,12 +176,12 @@ function mainMenu() {
 					+'</div>'
 					+'<div class="sidebar-links">'
 						+'<ul>'
-							+'<li class="btn-notification">'
-								+'<img src="'+ RESS +'img/alarm.svg">Noticication'
-							+'</li>'
-							+'<li class="btn-settings">'
-								+'<img src="'+ RESS +'img/settings.svg">Settings'
-							+'</li>'
+							// +'<li class="btn-notification">'
+							// 	+'<img src="'+ RESS +'img/alarm.svg">Noticication'
+							// +'</li>'
+							// +'<li class="btn-settings">'
+							// 	+'<img src="'+ RESS +'img/settings.svg">Settings'
+							// +'</li>'
 							+'<li class="btn-logout">'
 								+'<img src="'+ RESS +'img/exit.svg">Logout'
 							+'</li>'
@@ -1120,17 +1120,17 @@ function windToText(num) {
 function idToIcon(id) {
 	switch (true) {
 		case (id >= 200 && id < 300):
-			return "<img src=" + RESS + "img/lighting.svg>"; 
+			return "<img src=" + RESS + "img/lightingBack.svg>"; 
 		case (id >= 300 && id < 322):
-			return "<img src=" + RESS + "img/drizzle.svg>"; 
+			return "<img src=" + RESS + "img/drizzleBack.svg>"; 
 		case (id >= 500 && id < 600):
-			return "<img src=" + RESS + "img/rainy-day.svg>"; 
+			return "<img src=" + RESS + "img/rainy-dayBack.svg>"; 
 		case (id >= 600 && id < 700):
-			return "<img src=" + RESS + "img/snow.svg>"; 
+			return "<img src=" + RESS + "img/snowBack.svg>"; 
 		case (id == 800):
-			return "<img src=" + RESS + "img/sunny-day.svg>"; 
+			return "<img src=" + RESS + "img/sunny-dayBack.svg>"; 
 		case (id > 800 && id < 805):
-			return "<img src=" + RESS + "img/overcast-day.svg>"; 
+			return "<img src=" + RESS + "img/overcast-dayBack.svg>"; 
 	}
 }
 
@@ -1140,14 +1140,14 @@ function insertWeather() {
 	var i;
 	for(i = 0; i < 5; i++) {
 		weather += 
-		'<div class="weather-block center">'
-			+'<div>'+ idToIcon(tw[i].id) +'</div>'
-			+'<div>' + Math.round(tw[i].temp) + '&#176;C</div>' // no floating point
-			+'<div>' + tw[i].date.substring(11, 16) + '</div>' // only show the hour
-			+'<div>' + tw[i].weather + '</div>'
-			+'<div>' + tw[i].weatherDesc + '</div>'
-			+'<div>' + tw[i].windSpeed + ' m/s</div>' // needs to be converted to clear text
-			+'<div>' + windToText(tw[i].windSpeed) + '</div>' // needs to be converted to clear text
+		'<div class="weather-block">'
+			+'<div class="tbw-img tbw">'+ idToIcon(tw[i].id) +'</div>'
+			+'<div class="tbw-temp tbw">' + Math.round(tw[i].temp) + '&#176;C</div>' // no floating point
+			+'<div class="tbw-date tbw">' + tw[i].date.substring(11, 16) + '</div>' // only show the hour
+			+'<div class="tbw-weather tbw">' + tw[i].weather + '</div>'
+			+'<div class="tbw-desc tbw">' + tw[i].weatherDesc + '</div>'
+			+'<div class="tbw-speed tbw">' + tw[i].windSpeed + ' m/s</div>' // needs to be converted to clear text
+			+'<div class="tbw-wtext tbw">' + windToText(tw[i].windSpeed) + '</div>' // needs to be converted to clear text
 		+'</div>';
 	}
 	weather += '</div>';
@@ -1178,8 +1178,21 @@ jQuery('#app').on('click', '.btn-chat', chat);
 jQuery('#app').on('click', '.btn-info', information);
 jQuery('#app').on('click', '.btn-faq', faq);
 jQuery('#app').on('click', '.btn-back', mainMenu);
-jQuery('#app').on('click', '.btn-notification', {title: "notification"}, notification);
-jQuery('#app').on('click', '.btn-settings', settings);
+//jQuery('#app').on('click', '.btn-notification', {title: "notification"}, notification);
+//jQuery('#app').on('click', '.btn-settings', settings);
 jQuery('#app').on('click', '.btn-logout', loginScreen);
 
 /* =======  End of Buttons  ======= */
+
+
+
+/**================================================== *
+ * ==========  Further Development  ========== *
+ * ================================================== *
+ * 
+ * changeImage()
+ * settings()
+ * notifications()
+ * chat module
+ *  
+/* =======  End of Further Development  ======= */
