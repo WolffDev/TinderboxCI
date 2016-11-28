@@ -35,13 +35,13 @@ function loginScreen() {
 					+'<div class="login-input">'
 						+'<div class="row">'
 							+'<div class="input-field col s12">'
-								+'<input id="email" name="email" type="email" class="" required>'
+								+'<input id="email" name="email" type="email" class="" required tabindex="1">'
 								+'<label for="email">Email</label>'
 							+'</div>'
 						+'</div>'
 						+'<div class="row">'
 							+'<div class="input-field col s12">'
-								+'<input id="password" name="password" type="password" class="" required>'
+								+'<input id="password" name="password" type="password" class="" required tabindex="2">'
 								+'<label for="password">Password</label>'
 								+'<div class="forgot-pw">'
 									+'<a href="#">Forgot Password?</a>'
@@ -50,7 +50,7 @@ function loginScreen() {
 						+'</div>'
 						+'</div class="row">'
 							+'<div class="col s12 center">'
-								+'<button class="btn waves-effect waves-dark btn-login-submit">'
+								+'<button class="btn waves-effect waves-dark btn-login-submit" tabindex="3">'
 									+'Login'
 								+'</button>'
 							+'</div>'
@@ -75,20 +75,18 @@ function login() {
 
 	jQuery.ajax({
 		beforeSend: function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
+            xhr.setRequestHeader("Authorization", "Basic " + btoa(email + ":" + password));
 		},
-		// headers: {
-		// 	'Authorization': 'Basic ' + btoa(email + ':' + password),
-		// 	'contentType': 'application/json',
-		// },
-		url: URL + 'api/login',
+		url: encodeURI(URL + 'api/login'),
+        // contentType: "application/x-www-form-urlencoded", //added this
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
-			var err = JSON.parse(xhr.responseText);
-			responseHandling(err);
+			console.log(xhr.responseText);
+			// var err = JSON.parse(xhr);
+			// responseHandling(err);
 		}
 	}).done(function(data, status, response) {
 		store.set('user', {
@@ -96,7 +94,7 @@ function login() {
 				firstname: data.firstname,
 				lastname: data.lastname,
 				email: data.email,
-				token: data.secretToken
+				token: data.Secrettoken
 			});
 			mainMenu();
 	});
@@ -136,44 +134,21 @@ function mainMenu() {
 	console.log("Main menu loaded!");
 
 	jQuery.ajax({
-		beforeSend: function(xhr) {
-			xhr.setRequestHeader("SecretToken", user.token);
+		headers: {
+			'Secrettoken': user.token
 		},
-		url: URL + 'api/shifts/' + user.userid, //load token
-		contentType: 'application/json',
+		url: encodeURI(URL + 'api/shifts/' + user.userid), //load token
 		dataType: 'json',
 		method: 'GET',
 		success: function(data, status, response) {
-		},
-		error: function(xhr, status, error) {
+        },
+        error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
 			responseHandling(err);
 		}
 	}).done(function(data) {
 		loadMainMenu(data);
 	});
-	/*Weather API starts here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-	var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?q=London&APPID=52e05f0dc1fb0a6a2ca57e4de06c823f';
-            
-
-        jQuery.ajax({
-            url: weatherAPI,
-            contentType: 'application/json',
-            type: 'GET',
-            data: JSON.stringify('weather: id'),
-            success: function(data, status, response) {
-                if (data) {
-                	console.log('pls work');
-                    loadData();
-
-                }
-                else {
-                    alert('nope...');
-                }
-            }
-        });
-	/*Weather API ends here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-	
 
 	function loadMainMenu(shifts) {
 		var user = store.get('user');
@@ -282,17 +257,8 @@ function mainMenu() {
 			+ '</div>'
 			+ '<hr>'
 			+ '<div class="show-more">'
-				+ '<div class="weather-container">'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
-					+ '<div class="weather-block"></div>'
+				+ '<div id="weather-container">'
+					+ '<p>Reload the page to recieve weather updates</p>'
 				+ '</div>'
 			+ '</div> <!-- show more END -->'
 			+ '<h1 class="expand">SHOW MORE</h1>' 				   
@@ -335,12 +301,82 @@ function mainMenu() {
 				
 		var sendHtml = header + slider + showMore + mainMenu;
 		jQuery('#app').html(sendHtml); //overwrites the content from the view
-
 		jssor_1_slider_init();
+		if(store.get('tinderboxWeather') === undefined || jQuery.isEmptyObject(store.get('tinderboxWeather'))) {
+			getWeather();
+		} 
 
-		$(".expand").click(function() {$(".show-more").toggle("slow");});
+		if(store.get('tinderboxWeather') !== undefined) {
+			var checkDate = new Date(new Date().valueOf());
+			var localWeather = store.get('tinderboxWeather');
+			var storeDate = localWeather[1].unixTime - (60*60);
+			var convertStoreDate = new Date(storeDate*1000);
+
+			if(checkDate > convertStoreDate) {
+				localStorage.removeItem('tinderboxWeather');
+				getWeather();
+				insertWeather();
+			} else {
+				insertWeather();
+			}
+		}
+		
+		console.log(store.get('tinderboxWeather'));
+		
+		jQuery(".expand").click(function() {
+			if (jQuery.trim(jQuery(this).text()) === 'SHOW MORE') {
+				jQuery(this).text('SHOW LESS');
+			} else {
+				jQuery(this).text('SHOW MORE');        
+			}
+			jQuery(".show-more").toggle("slow");
+		});
 	};
 };
+
+function getWeather() {
+	console.log("getWeather called!");
+	jQuery.ajax({
+		url: 'http://api.openweathermap.org/data/2.5/forecast?appid=86c5feb02fda028e8f79c6ad579e066e&id=2615876&units=metric',
+		// contentType: 'application/json',
+		dataType: 'json',
+		method: 'GET',
+		success: function(data, status, response) {
+        },
+        error: function(xhr, status, error) {
+		}
+	}).done(function(data) {
+		loadWeather(data);
+		console.log(data); // DEBUGGING
+	});
+}
+
+function loadWeather(data) {
+	var data = data;
+
+	function handleWeather(data) {
+		weatherArr = [];
+		var i;
+		for(i = 0; i < data.list.length; i++) {
+			var obj = {};
+			obj['date'] = data.list[i].dt_txt; //date in clear text
+			obj['unixTime'] = data.list[i].dt; // date in unix time stamp
+			obj['weatherDesc'] = data.list[i].weather[0].description; // weather with more description
+			obj['weather'] = data.list[i].weather[0].main; // weather short
+			obj['id'] = data.list[i].weather[0].id; // weather id
+			obj['temp'] = data.list[i].main.temp; // avg. tempature
+			obj['humid'] = data.list[i].main.humidity; // humidity
+			obj['windDeg'] = data.list[i].wind.deg; // wind direction in degreese
+			obj['windSpeed'] = data.list[i].wind.speed; // wind speed in meter/sec
+			obj['cloudsPer'] = data.list[i].clouds.all; // Percent of clouds in the sky
+			
+			weatherArr.push(obj);
+		}
+		return weatherArr;
+	}
+
+	store.set('tinderboxWeather', handleWeather(data));
+}
 
 function map(shiftLocation) {
 	var shiftLocation = shiftLocation;
@@ -698,7 +734,7 @@ function information() {
 			+'</div>';
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-	 $('.collapsible').collapsible();
+	 jQuery('.collapsible').collapsible();
 }
 
 function faq() {
@@ -1001,14 +1037,7 @@ function faq() {
 			+'</div>';
 	var sendHtml = backNav('FAQ') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
-
-	 $('.collapsible').collapsible({
-	 	onOpen: function(el) { console.log(el); }, // Callback for Collapsible open
-     	onClose: function(el) { console.log(el); } // Callback for Collapsible close 
-	 });
-
-	 $('.collapsible').collapsible();
-
+	jQuery('.collapsible').collapsible();
 }
 
 
@@ -1049,18 +1078,64 @@ function responseHandling(data){
 	Materialize.toast(data.message, 4000);
 }
 
+function degToCompass(num) {
+	// returns where the wind is coming from, depending on the wind direction in degrees
+	var val = Math.floor((num / 22.5) + 0.5);
+	var arr = ["south", "south-southwest", "southwest", "west-southwest", "west", "west-northwest", "northwest", "nort-northwest", "north", "north-northeast", "northeast", "east-northeast", "east", "east-southeast", "southeast",  "south-southeast"];
+	return arr[(val % 16)];
+}
+// var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+	// return arr[(val % 16)];
 
-function iconOpen(){
-	console.log('Hej David');
+function windToText(num) {
+	// https://en.wikipedia.org/wiki/Beaufort_scale
+	switch (true) {
+		case (num < 1.6):
+			return "Calm";
+		case (num < 3.3):
+			return "Light breeze";
+		case (num < 5.5):
+			return "Gentle breeze";
+		case (num < 7.9):
+			return "Moderate breeze";
+		case (num < 10.7):
+			return "Fresh breeze";
+		case (num < 13.8):
+			return "Strong breeze";
+		case (num < 17.1):
+			return "High wind";
+		case (num < 20.7):
+			return "Gale";
+		case (num < 24.4):
+			return "Severe gale";
+		case (num < 28.4):
+			return "Storm";
+		case (num < 32.6):
+			return "Violent storm";
+		case (num >= 32.6):
+			return "Hurricane";
+	}
 }
 
-function iconClose(){
-	$('.faq-container material-icons').animate({  textIndent: 0 }, {
-    step: function(now,fx) {
-      $(this).css('-webkit-transform','rotate('+9+'deg)'); 
-    },
-    duration:'slow'
-},'linear');
+function insertWeather() {
+	var tw = store.get('tinderboxWeather');
+	var weather = '<div>';
+	var i;
+	for(i = 0; i < 5; i++) {
+		weather += 
+		'<div class="weather-block center">'
+			+'<div>Weather Icon</div>'
+			+'<div>' + Math.round(tw[i].temp) + '&#176;C</div>' // no floating point
+			+'<div>' + tw[i].date.substring(11, 16) + '</div>' // only show the hour
+			+'<div>' + tw[i].weather + '</div>'
+			+'<div>' + tw[i].weatherDesc + '</div>'
+			+'<div>' + tw[i].windSpeed + ' m/s</div>' // needs to be converted to clear text
+			+'<div>' + windToText(tw[i].windSpeed) + '</div>' // needs to be converted to clear text
+		+'</div>';
+	}
+	weather += '</div>';
+	// console.log(weather);
+	jQuery('#weather-container').html(weather);
 }
 
 
@@ -1072,7 +1147,7 @@ function iconClose(){
  * ================================================== */
 jQuery('#app').on('click', '.btn-login-submit', login);
 jQuery('#app').on('click', '.btn-shift-map', function(e) {
-	var arrLocation = $(this).data("location").split(' ');
+	var arrLocation = jQuery(this).data("location").split(' ');
 	var floatLat = parseFloat(arrLocation[0]);
 	var floatLng = parseFloat(arrLocation[1]);
 	shiftLocation = {
