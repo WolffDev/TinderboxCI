@@ -1117,6 +1117,23 @@ function windToText(num) {
 	}
 }
 
+function idToIcon(id) {
+	switch (true) {
+		case (id >= 200 && id < 300):
+			return "<img src=" + RESS + "img/lighting.svg>"; 
+		case (id >= 300 && id < 322):
+			return "<img src=" + RESS + "img/drizzle.svg>"; 
+		case (id >= 500 && id < 600):
+			return "<img src=" + RESS + "img/rainy-day.svg>"; 
+		case (id >= 600 && id < 700):
+			return "<img src=" + RESS + "img/snow.svg>"; 
+		case (id == 800):
+			return "<img src=" + RESS + "img/sunny-day.svg>"; 
+		case (id > 800 && id < 805):
+			return "<img src=" + RESS + "img/overcast-day.svg>"; 
+	}
+}
+
 function insertWeather() {
 	var tw = store.get('tinderboxWeather');
 	var weather = '<div>';
@@ -1124,7 +1141,7 @@ function insertWeather() {
 	for(i = 0; i < 5; i++) {
 		weather += 
 		'<div class="weather-block center">'
-			+'<div>Weather Icon</div>'
+			+'<div>'+ idToIcon(tw[i].id) +'</div>'
 			+'<div>' + Math.round(tw[i].temp) + '&#176;C</div>' // no floating point
 			+'<div>' + tw[i].date.substring(11, 16) + '</div>' // only show the hour
 			+'<div>' + tw[i].weather + '</div>'
