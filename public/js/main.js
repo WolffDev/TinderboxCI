@@ -735,24 +735,27 @@ function information() {
 	var sendHtml = backNav('Information') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 	 jQuery('.collapsible').collapsible({
-	 	onOpen: function(el) { 
+		onOpen: function(el) { 
 
 			el[0].firstChild.style.color = "rgb(255, 217, 98)";
+			el[0].childNodes[0].firstChild.className = "material-icons ani-down";
+		
 		},
 		onClose: function(el) {
 			el[0].firstChild.style.color = "white";
+			el[0].childNodes[0].firstChild.className = "material-icons ani-back";
 		}
-	 });
+	});
 }
 
 function faq() {
 	var html =
 			'<div class="row faq-container">'
 				+'<div class="col s12">'
-					+'<h2>VOLUNTEER/GOOD TO KNOW</h2>'
 					+'<ul class="collapsible" data-collapsible="accordion">'
+						+'<h2>VOLUNTEER/GOOD TO KNOW</h2>'
 			    		+'<li>'
-			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i>PERIODS OF EFFORT</div>'
+			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i><span>PERIODS OF EFFORT</div>'
 		      				+'<div class="collapsible-body">'
 		      					+'<p>A period of effort is the period of time you can/will help Tinderbox. You can choose between 3 different periods, and you have to at least choose one of them. You can also select multiple periods, and thus increase your chances of getting on a team.'
 		      					+'<br>'
@@ -911,7 +914,7 @@ function faq() {
 		      				+'</div>'
 			    		+'</li>'
 			    		+'<li>'
-			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i>DEADLINE OF CANCELLATION / MANDATORY REGISTRATION</div>'
+			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i><span>DEADLINE OF CANCELLATION / MANDATORY REGISTRATION</span></div>'
 		      				+'<div class="collapsible-body">'
 		      					+'<p>All registrations are binding after June 1st 2016. Then apply our <a href="http://www.tinderbox.dk/en/rules-of-engagement/">Rules of Engagement</a> in order for late cancellation.</p>'
 		      				+'</div>'
@@ -983,7 +986,7 @@ function faq() {
 		      				+'</div>'
 			    		+'</li>'
 			    		+'<li>'
-			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i>SIGN-UP AS A VOLUNTEER AT TINDERBOX</div>'
+			      			+'<div class="collapsible-header"><i class="material-icons">play_arrow</i><span>SIGN-UP AS A VOLUNTEER AT TINDERBOX</span></div>'
 		      				+'<div class="collapsible-body">'
 		      					+'<p>Your sign up as a volunteer <a href="http://ruby.tinderbox.dk/">here</a> from March 15th at 10:00 AM. We reserve the right to screen all the entries we receive.</p>'
 		      				+'</div>'

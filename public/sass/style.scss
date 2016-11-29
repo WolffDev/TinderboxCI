@@ -578,13 +578,14 @@ hr {
     width: 90%;
     background-color: $beige;
     margin: 0, auto;
-    padding-top: 50px;
+    padding-top: 4px;
     margin-top: 50px;
     padding-bottom: 10px;
     border-radius: 10px;
     a {
         color: rgb(255, 0, 255);
     }
+
 }
 .faq-container h2 {
     font-size: 1.5em;
@@ -593,10 +594,17 @@ hr {
 .collapsible-header {
     background-color: $teal;
     color: white;
-
-
 }
 
+.collapsible {
+    border: none;
+    box-shadow: none;
+}
+
+.collapsible-body {
+    border-right: 1px solid gray;
+    border-left: 1px solid gray;
+}
 .ani-down {
     transform: rotate(90deg);
     transition: transform .3s linear;
