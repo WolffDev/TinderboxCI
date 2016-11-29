@@ -37,7 +37,7 @@ class Api extends CI_Controller {
 
 	public function add_user() {
 		$this->secret_auth->method('POST');
-		// $this->secret_auth->check_token();
+		$this->secret_auth->check_token();
 		$post = file_get_contents('php://input');
 		$post = json_decode($post);
 
