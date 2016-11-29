@@ -61,6 +61,9 @@ body {
         padding-bottom: 60px;
         max-width: 400px;
         margin: 0 auto;
+        p {
+            color: white;
+        }
         .forgot-pw {
             position: absolute;
             right: 18px;
@@ -598,7 +601,12 @@ hr {
 /*============================
 =            Chat            =
 ============================*/
-
+.chat-container {
+    img {
+        width: 100%;
+        max-width: 550px;
+    }
+}
 
 
 /*=====  End of Chat  ======*/
@@ -618,7 +626,7 @@ hr {
 .faq-container {
     width: 90%;
     background-color: $beige;
-    margin: 0, auto;
+    margin: 0 auto;
     padding-top: 50px;
     margin-top: 50px;
     padding-bottom: 10px;

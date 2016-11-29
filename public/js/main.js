@@ -8,7 +8,7 @@ jQuery(function() {
 });
 
 
-const URL = 'http://localhost:8888/tissekone/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
@@ -34,6 +34,7 @@ function loginScreen() {
 					+'</div>'
 					+'<div class="login-input">'
 						+'<div class="row">'
+						+'<p>Email: demo@demo.com<br>Password: qwerty!23</p>'
 							+'<div class="input-field col s12">'
 								+'<input id="email" name="email" type="email" class="" required tabindex="1">'
 								+'<label for="email">Email</label>'
@@ -265,7 +266,7 @@ function mainMenu() {
 			+ '</div>'
 		+ '</div>';
 
-		var mainMenu = '<h1-title class="h1-title">Mainmenu</h1>'
+		var mainMenu = '<h1 class="h1-title">Mainmenu</h1>'
 		+ '<div class="main-menu-left">'
 			+ '<button class="btn-flat btn-map btn waves-effect waves-yellow">'
 				+ '<div class="main-menu-icon">'
@@ -487,7 +488,12 @@ function map(shiftLocation) {
 };
 
 function chat() {
-	var html;
+	var html =
+		'<div class="chat-container row">'
+			+'<div class="col s12">'
+				+'<img src="'+ RESS +'img/chatbox.png">'
+			+'</div>'
+		+'</div>';
 	var sendHtml = backNav('Chat') + html;
 	jQuery('#app').html(sendHtml); //overwrites the content from the view
 }
