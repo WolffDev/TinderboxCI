@@ -8,7 +8,7 @@ jQuery(function() {
 });
 
 
-const URL = 'http://localhost:8888/tissekone/';
+const URL = 'http://webtinderbox:8888/';
 const RESS = 'public/';
 
 /*=============================
