@@ -1211,5 +1211,6 @@ jQuery('#app').on('click', '.btn-logout', loginScreen);
  * settings()
  * notifications()
  * chat module
+ * Use a view framework, like VueJS, ReactJS, Handlebars etc
  *  
 /* =======  End of Further Development  ======= */
