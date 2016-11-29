@@ -263,9 +263,4 @@ class Secret_auth {
                 die();
         }
     }
-
-
-
-
-
 }
