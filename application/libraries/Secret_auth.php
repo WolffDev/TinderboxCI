@@ -163,7 +163,7 @@ class Secret_auth {
                         }
                         break;
                     case 'password':
-                        if(preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{8,24}$/', $data)) {
+                        if(preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{10,24}$/', $data)) {
                             return true;
                         } else {
                             $this->http_response(400, 'Bad Request', [
@@ -183,7 +183,7 @@ class Secret_auth {
 
 
                     case 'passwordLogin':
-                        if(preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{8,24}$/', $data)) {
+                        if(preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%\/]{10,24}$/', $data)) {
                             return true;
                         } else {
                             $this->http_response(400, 'Bad Request', [
