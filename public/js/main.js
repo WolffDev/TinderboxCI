@@ -34,7 +34,6 @@ function loginScreen() {
 					+'</div>'
 					+'<div class="login-input">'
 						+'<div class="row">'
-						+'<p>Email: demo@demo.com<br>Password: qwerty!23</p>'
 							+'<div class="input-field col s12">'
 								+'<input id="email" name="email" type="email" class="" required tabindex="1">'
 								+'<label for="email">Email</label>'
@@ -85,7 +84,7 @@ function login() {
 		success: function(data, status, response) {
 		},
 		error: function(xhr, status, error) {
-			console.log(xhr.responseText);
+		
 			// var err = JSON.parse(xhr);
 			// responseHandling(err);
 		}
@@ -197,7 +196,7 @@ function mainMenu() {
 
 		var slider =
 			'<div class="main-content">'
-				    + '<h1 class="h1-title">YOUR SCHEDULE</h1>'
+				    + '<h1 class="schedule">SCHEDULE</h1>'
 				    + '<div class="card-bg">'
 				        + '<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden; visibility: hidden;">'		            
 				            + '<div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 300px; min-height: 110px; overflow: hidden;">';
@@ -262,11 +261,11 @@ function mainMenu() {
 					+ '<p>Reload the page to recieve weather updates</p>'
 				+ '</div>'
 			+ '</div> <!-- show more END -->'
-			+ '<h1 class="expand">SHOW MORE</h1>' 				   
+			+ '<h1 class="expand">SHOW WEATHER</h1>' 				   
 			+ '</div>'
 		+ '</div>';
 
-		var mainMenu = '<h1 class="h1-title">Mainmenu</h1>'
+		var mainMenu = '<h1 class="h1-title"></h1>'
 		+ '<div class="main-menu-left">'
 			+ '<button class="btn-flat btn-map btn waves-effect waves-yellow">'
 				+ '<div class="main-menu-icon">'
@@ -322,13 +321,13 @@ function mainMenu() {
 			}
 		}
 		
-		console.log(store.get('tinderboxWeather'));
+		
 		
 		jQuery(".expand").click(function() {
-			if (jQuery.trim(jQuery(this).text()) === 'SHOW MORE') {
+			if (jQuery.trim(jQuery(this).text()) === 'SHOW WEATHER') {
 				jQuery(this).text('SHOW LESS');
 			} else {
-				jQuery(this).text('SHOW MORE');        
+				jQuery(this).text('SHOW WEATHER');        
 			}
 			jQuery(".show-more").toggle("slow");
 		});
@@ -348,7 +347,6 @@ function getWeather() {
 		}
 	}).done(function(data) {
 		loadWeather(data);
-		console.log(data); // DEBUGGING
 	});
 }
 
@@ -1171,7 +1169,6 @@ function insertWeather() {
 		+'</div>';
 	}
 	weather += '</div>';
-	// console.log(weather);
 	jQuery('#weather-container').html(weather);
 }
 
