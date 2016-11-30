@@ -539,6 +539,9 @@ hr {
   height: 150px;
   color: $teal;
   -webkit-tap-highlight-color: white;
+  &:focus{
+    background-color: white;
+  }
 }
 
 .main-menu-left {
