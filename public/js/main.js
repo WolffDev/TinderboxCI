@@ -145,6 +145,9 @@ function mainMenu() {
         error: function(xhr, status, error) {
 			var err = JSON.parse(xhr.responseText);
 			responseHandling(err);
+			if(xhr.status === 401) {
+				loginScreen();
+			}
 		}
 	}).done(function(data) {
 		loadMainMenu(data);

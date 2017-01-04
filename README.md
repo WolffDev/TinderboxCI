@@ -25,7 +25,7 @@ public/js/main.js:10
 application/config/database.php:78-81
 application/config/config.php:26
 ```
-## Deplaoouyayment
+## Deployment
 To deploy, minify css and js files
 ```
 gulp build
