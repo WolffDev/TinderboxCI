@@ -81,7 +81,7 @@ class Api extends CI_Controller {
 			}
 		}
 		
-		$this->secret_auth->http_response(406, 'Not Acceptable', ['message' => 'Check the JSON data - properties are not correctly']);
+		$this->secret_auth->http_response(406, 'Not Acceptable', ['message' => 'Check the JSON data - properties are not set correctly']);
 	}
 
 	public function update_user($id = null) {
@@ -131,7 +131,7 @@ class Api extends CI_Controller {
 				$this->secret_auth->http_response(200, 'OK', [
 					'message' => 'User Updated',
 					'id' => $res
-					]);
+				]);
 			}
 		}
 		

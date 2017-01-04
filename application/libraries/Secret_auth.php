@@ -66,8 +66,8 @@ class Secret_auth {
 
     public function check_token() {
         $this->ci->load->model('users_model');
-        $this->ci->load->helper('url');
-        $this->method('GET');
+        // $this->ci->load->helper('url');
+        // $this->method('GET');
 
         if(!isset(getallheaders()['Secrettoken'])) {
             // redirect('/', 'location', 'dassad');
@@ -194,17 +194,17 @@ class Secret_auth {
 
                     case 'email':
                         if(!filter_var($data, FILTER_VALIDATE_EMAIL) || empty($data)) {
-                            redirect('/', 'location', $this->http_response(400, 'Bad Request', [
+                            $this->http_response(400, 'Bad Request', [
                                 'message' => 'You did not pass a valid email'
-                            ]));
+                            ]);
                         }
                         break;
 
                     case 'emailLogin':
                         if(!filter_var($data, FILTER_VALIDATE_EMAIL) || empty($data)) {
-                            redirect('/', 'location', $this->http_response(400, 'Bad Request', [
+                            $this->http_response(400, 'Bad Request', [
                                 'message' => 'Email and/or password is wrong'
-                            ]));
+                            ]);
                         }
                         break;
 
